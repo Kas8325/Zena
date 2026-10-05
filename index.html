@@ -3,14 +3,21 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Zena — African Markets Intelligence</title>
+<title>Zena — African Intelligence &amp; Payment System</title>
 <meta name="description" content="Real-time African capital markets data, FX rates, news intelligence, and remittance comparison. Africa's financial intelligence platform.">
 <meta property="og:title" content="Zena — African Markets Intelligence">
 <meta property="og:description" content="Real-time African capital markets data, cross-currency FX, central bank tracking, and money transfer comparison.">
 <meta property="og:type" content="website">
 <meta property="og:url" content="https://zenagroup.com">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="theme-color" content="#0a0e17">
+<meta name="theme-color" content="#FAF6F0">
+<script>
+  (function () {
+    var t = 'light';
+    try { t = localStorage.getItem('zena-theme') || 'light'; } catch (e) {}
+    document.documentElement.setAttribute('data-theme', t);
+  })();
+</script>
 <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>Z</text></svg>">
 <!-- Google Analytics: replace GA_MEASUREMENT_ID with your tracking ID -->
 <!-- <script async src="https://www.googletagmanager.com/gtag/js?id=GA_MEASUREMENT_ID"></script>
@@ -35,8 +42,45 @@
     --accent-orange: #f59e0b;
     --accent-purple: #8b5cf6;
     --accent-teal: #14b8a6;
-    --accent-gold: #d4a017;
+    --accent-gold: #d4a017;   /* primary brand accent (terracotta in light theme) */
+    --gold: #d4a017;          /* true gold, used for highlights */
+    --gold-hi: #f0d68a;
+    --on-accent: #0a0e17;     /* text on accent-coloured buttons */
+    --bar-bg: linear-gradient(135deg, #0f1724, #162033);
+    --brand: #d4a017;
+    --best: #D4A017;          /* the one highlight: best provider */
+    --best-soft: rgba(212,160,23,.12);
+    --on-best: #111111;
   }
+
+  :root[data-theme="light"] {
+    --bg-primary: #FAF6F0;
+    --bg-secondary: #F2EBE1;
+    --bg-card: #FFFFFF;
+    --bg-card-hover: #F8F2EA;
+    --border: #E4D9CB;
+    --text-primary: #111111;
+    --text-secondary: #5B5048;
+    --text-muted: #7D7268;
+    --accent-green: #11845B;
+    --accent-red: #C0392B;
+    --accent-blue: #2563EB;
+    --accent-orange: #B86E00;
+    --accent-purple: #7C3AED;
+    --accent-teal: #0F8C80;
+    --accent-gold: #111111;
+    --gold: #B8891A;
+    --gold-hi: #D9B24C;
+    --brand: #B4472C;
+    --on-accent: #FFFFFF;
+    --bar-bg: #FFFFFF;
+  }
+  :root[data-theme="light"] .zx-modal { background: rgba(34,28,24,.45); }
+  :root[data-theme="light"] .ticker-strip { background: var(--bg-card); }
+  :root[data-theme="light"] .matrix-diagonal { background: var(--bg-secondary); }
+  .zx-top-acct { white-space: nowrap; }
+  .theme-btn { background: transparent; border: 1px solid var(--border); color: var(--text-secondary); border-radius: 6px; width: 30px; height: 26px; cursor: pointer; font-size: 13px; line-height: 1; }
+  .theme-btn:hover { color: var(--accent-gold); border-color: var(--accent-gold); }
 
   body {
     font-family: 'Inter', -apple-system, sans-serif;
@@ -51,9 +95,10 @@
     display: flex;
     align-items: center;
     justify-content: space-between;
-    padding: 0 20px;
-    height: 48px;
-    background: linear-gradient(135deg, #0f1724, #162033);
+    gap: 16px;
+    padding: 6px 20px;
+    min-height: 44px;
+    background: var(--bar-bg);
     border-bottom: 1px solid var(--border);
     position: sticky;
     top: 0;
@@ -76,7 +121,7 @@
     justify-content: center;
     font-weight: 700;
     font-size: 14px;
-    color: #0a0e17;
+    color: var(--on-accent);
   }
 
   .logo-text {
@@ -116,10 +161,44 @@
     50% { opacity: 0.4; }
   }
 
+  /* Single line, always. Scrolls horizontally rather than wrapping. */
   .clock {
     font-family: 'JetBrains Mono', monospace;
-    font-size: 13px;
+    font-size: 12px;
     color: var(--accent-gold);
+    display: flex;
+    flex-wrap: nowrap;
+    align-items: center;
+    justify-content: flex-start;
+    white-space: nowrap;
+    flex: 1 1 auto;
+    min-width: 0;
+    overflow-x: auto;
+    overflow-y: hidden;
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+  }
+  .clock::-webkit-scrollbar { display: none; }
+  .clock-sep { color: var(--text-muted); margin: 0 7px; opacity: .55; }
+
+  /* Step the type down before the row ever needs to scroll */
+  @media (max-width: 1320px) { .clock { font-size: 11px; } .clock-sep { margin: 0 6px; } }
+  @media (max-width: 1120px) { .clock { font-size: 10px; } .clock-sep { margin: 0 5px; } }
+
+  /* Phones: controls on top, clock gets its own full-width swipeable row */
+  @media (max-width: 760px) {
+    .topbar { flex-wrap: wrap; padding: 6px 12px; gap: 4px; }
+    .topbar-right { order: 1; margin-left: auto; }
+    .clock {
+      order: 2;
+      flex: 1 1 100%;
+      font-size: 10.5px;
+      padding-bottom: 2px;
+      -webkit-overflow-scrolling: touch;
+      mask-image: linear-gradient(to right, #000 92%, transparent 100%);
+      -webkit-mask-image: linear-gradient(to right, #000 92%, transparent 100%);
+    }
+    .clock-sep { margin: 0 6px; }
   }
 
   /* NAVIGATION */
@@ -159,6 +238,132 @@
 
   .layer-panel { display: none; }
   .layer-panel.active { display: block; }
+
+  /* ===== STABLECOIN EXCHANGE BOARD ===== */
+  .sc-toggle { display: flex; gap: 5px; }
+  .sc-chip {
+    padding: 5px 13px; border-radius: 16px; border: 1px solid var(--border);
+    background: transparent; color: var(--text-muted);
+    font-size: 11px; font-weight: 700; cursor: pointer;
+    font-family: 'Inter', sans-serif; transition: all .15s; letter-spacing: .3px;
+  }
+  .sc-chip:hover { border-color: var(--accent-gold); color: var(--accent-gold); }
+  .sc-chip.active { background: rgba(212,160,23,0.16); border-color: var(--accent-gold); color: var(--accent-gold); }
+
+  .sc-table { width: 100%; border-collapse: collapse; min-width: 720px; }
+  .sc-table thead th {
+    font-size: 9.5px; font-weight: 700; letter-spacing: .9px; text-transform: uppercase;
+    color: var(--text-muted); text-align: right; padding: 9px 14px;
+    border-bottom: 1px solid var(--border); white-space: nowrap; background: var(--bg-secondary);
+  }
+  .sc-table thead th.l { text-align: left; }
+  .sc-table thead th.c { text-align: center; }
+  .sc-table tbody td {
+    padding: 10px 14px; text-align: right; font-size: 12.5px;
+    border-bottom: 1px solid rgba(42,48,68,0.5);
+    font-family: 'JetBrains Mono', monospace; white-space: nowrap; color: var(--text-secondary);
+  }
+  .sc-table tbody td.l { text-align: left; font-family: 'Inter', sans-serif; }
+  .sc-table tbody td.c { text-align: center; font-family: 'Inter', sans-serif; }
+  .sc-table tbody tr:last-child td { border-bottom: none; }
+  .sc-table tbody tr:hover { background: rgba(255,255,255,0.025); }
+  .sc-ccy { font-size: 12.5px; font-weight: 700; color: var(--text-primary); }
+  .sc-country { font-size: 10px; color: var(--text-muted); }
+  .sc-prem { font-weight: 700; }
+  .sc-prem.up { color: var(--accent-orange); }
+  .sc-prem.dn { color: var(--accent-green); }
+  .sc-venue {
+    font-size: 10.5px; padding: 3px 9px; border-radius: 4px;
+    background: rgba(255,255,255,0.05); color: var(--text-secondary);
+  }
+
+  /* ===== HOME — deliberately quiet ===== */
+  .home-wrap {
+    max-width: 760px;
+    margin: 0 auto;
+    padding: 88px 24px 80px;
+    text-align: center;
+  }
+
+  .home-brand { margin-bottom: 40px; }
+  .home-title {
+    font-size: clamp(46px, 9vw, 78px);
+    font-weight: 800;
+    letter-spacing: 14px;
+    margin: 0 0 14px;
+    background: linear-gradient(135deg, var(--brand) 0%, var(--gold-hi) 45%, var(--brand) 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    text-indent: 14px; /* balance the trailing letter-spacing */
+  }
+  .home-tagline {
+    font-size: clamp(13px, 2vw, 16px);
+    font-weight: 400;
+    color: var(--text-secondary);
+    letter-spacing: 3.5px;
+    text-transform: uppercase;
+    margin: 0;
+  }
+  .home-tagline .amp { color: var(--gold); }
+
+  .home-quote {
+    max-width: 560px;
+    margin: 0 auto 52px;
+    padding: 26px 20px;
+    border-top: 1px solid var(--border);
+    border-bottom: 1px solid var(--border);
+    min-height: 96px;
+    display: flex; flex-direction: column; justify-content: center;
+  }
+  .hq-text {
+    font-size: 16px;
+    line-height: 1.65;
+    color: var(--text-primary);
+    font-style: italic;
+    font-weight: 300;
+    margin-bottom: 12px;
+  }
+  .hq-attr {
+    font-size: 11px;
+    letter-spacing: 1.2px;
+    text-transform: uppercase;
+    color: var(--text-muted);
+    font-weight: 600;
+  }
+  .hq-attr .hq-origin { color: var(--gold); font-weight: 500; text-transform: none; letter-spacing: .3px; font-style: italic; }
+
+  .home-nav {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 12px;
+    max-width: 560px;
+    margin: 0 auto;
+  }
+  .home-card {
+    display: flex; flex-direction: column; gap: 4px;
+    padding: 18px 20px;
+    background: transparent;
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    cursor: pointer;
+    text-align: left;
+    transition: border-color .18s, background .18s, transform .18s;
+    font-family: 'Inter', sans-serif;
+  }
+  .home-card:hover {
+    border-color: var(--accent-gold);
+    background: rgba(212,175,55,0.05);
+    transform: translateY(-2px);
+  }
+  .hc-label { font-size: 14px; font-weight: 700; color: var(--text-primary); }
+  .hc-desc  { font-size: 11.5px; color: var(--text-muted); line-height: 1.4; }
+
+  @media (max-width: 600px) {
+    .home-wrap { padding-top: 52px; }
+    .home-nav { grid-template-columns: 1fr; }
+    .home-title { letter-spacing: 8px; text-indent: 8px; }
+  }
 
   /* TICKER STRIP */
   .ticker-strip {
@@ -474,7 +679,7 @@
     font-weight: 600;
     cursor: pointer;
     background: linear-gradient(135deg, var(--accent-gold), var(--accent-orange));
-    color: #0a0e17;
+    color: var(--on-accent);
     transition: opacity 0.2s;
   }
 
@@ -563,6 +768,253 @@
     border-color: var(--accent-gold);
     color: var(--accent-gold);
   }
+
+  /* QUICK CORRIDOR CHIPS */
+  .quick-chip {
+    padding: 5px 12px;
+    border-radius: 16px;
+    border: 1px solid var(--border);
+    background: transparent;
+    color: var(--text-muted);
+    font-size: 11px;
+    cursor: pointer;
+    transition: all 0.2s;
+    font-family: 'Inter', sans-serif;
+    white-space: nowrap;
+  }
+  .quick-chip:hover { border-color: var(--accent-gold); color: var(--accent-gold); }
+  .quick-chip.active { background: rgba(212,160,23,0.15); border-color: var(--accent-gold); color: var(--accent-gold); }
+
+  /* ===== FXALL-STYLE RFQ TICKET + LIVE QUOTE BLOTTER ===== */
+
+  /* TICKET (top panel) */
+  .rfq-ticket {
+    background: linear-gradient(180deg, var(--bg-card) 0%, rgba(26,31,46,0.7) 100%);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 16px 18px;
+    margin-bottom: 14px;
+  }
+  .rfq-ticket-head {
+    display: flex; align-items: center; justify-content: space-between;
+    margin-bottom: 14px; flex-wrap: wrap; gap: 8px;
+  }
+  .rfq-title { font-size: 15px; font-weight: 700; letter-spacing: 0.2px; }
+  .rfq-status { display: flex; align-items: center; gap: 10px; font-size: 11px; color: var(--text-muted); }
+  .rfq-dot {
+    width: 7px; height: 7px; border-radius: 50%;
+    background: var(--accent-green); display: inline-block; margin-right: 5px;
+    animation: rfqpulse 1.6s ease-in-out infinite;
+  }
+  @keyframes rfqpulse { 0%,100%{opacity:1;box-shadow:0 0 0 0 rgba(16,185,129,0.5)} 50%{opacity:.55;box-shadow:0 0 0 4px rgba(16,185,129,0)} }
+
+  .rfq-grid {
+    display: grid;
+    grid-template-columns: 1.25fr auto 1.25fr 1.4fr;
+    gap: 12px;
+    align-items: end;
+  }
+  .rfq-cell { min-width: 0; }
+  .rfq-lbl {
+    display: block; font-size: 10px; font-weight: 700; color: var(--text-muted);
+    text-transform: uppercase; letter-spacing: 0.8px; margin-bottom: 5px;
+  }
+  .rfq-box {
+    display: flex; align-items: stretch;
+    border: 1px solid var(--border); border-radius: 8px;
+    background: var(--bg-secondary); overflow: hidden;
+    transition: border-color .15s;
+  }
+  .rfq-box:focus-within { border-color: var(--accent-gold); }
+  .rfq-amt {
+    flex: 1; min-width: 0; padding: 11px 12px;
+    background: transparent; border: none; outline: none;
+    color: var(--text-primary); font-size: 18px; font-weight: 700;
+    font-family: 'JetBrains Mono', monospace;
+  }
+  .rfq-amt::-webkit-inner-spin-button { -webkit-appearance: none; }
+  .rfq-amt { -moz-appearance: textfield; }
+  .rfq-ccy {
+    padding: 11px 8px; min-width: 118px;
+    background: rgba(255,255,255,0.03); border: none;
+    border-left: 1px solid var(--border);
+    color: var(--text-primary); font-size: 12px; font-weight: 700;
+    font-family: 'Inter', sans-serif; cursor: pointer; outline: none;
+  }
+  .rfq-swap {
+    width: 34px; height: 34px; margin-bottom: 4px;
+    border-radius: 8px; border: 1px solid var(--border);
+    background: var(--bg-primary); color: var(--accent-gold);
+    font-size: 15px; cursor: pointer; transition: all .2s;
+    display: flex; align-items: center; justify-content: center;
+  }
+  .rfq-swap:hover { border-color: var(--accent-gold); transform: rotate(180deg); }
+
+  /* Best-quote readout inside ticket */
+  .rfq-best {
+    display: flex; align-items: center; gap: 14px;
+    padding: 10px 12px; border-radius: 8px;
+    background: rgba(16,185,129,0.07); border: 1px solid rgba(16,185,129,0.22);
+    height: 100%;
+  }
+  .rfq-best-col { display: flex; flex-direction: column; gap: 1px; min-width: 0; }
+  .rfq-best-k { font-size: 9px; text-transform: uppercase; letter-spacing: .8px; color: var(--text-muted); font-weight: 700; }
+  .rfq-best-v { font-size: 15px; font-weight: 800; color: var(--accent-green); font-family: 'JetBrains Mono', monospace; white-space: nowrap; }
+  .rfq-best-v.name { font-family: 'Inter', sans-serif; }
+  .rfq-best-v.gold { color: var(--accent-gold); }
+
+  .rfq-meta {
+    display: flex; flex-wrap: wrap; gap: 16px;
+    margin-top: 12px; padding-top: 11px; border-top: 1px solid var(--border);
+    font-size: 11px; color: var(--text-muted);
+  }
+  .rfq-meta b { color: var(--text-secondary); font-family: 'JetBrains Mono', monospace; font-weight: 600; }
+
+  .rfq-chips { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 11px; }
+
+  /* ===== BLOTTER (bottom panel) ===== */
+  .blot-head {
+    display: flex; align-items: center; justify-content: space-between;
+    margin-bottom: 8px; flex-wrap: wrap; gap: 8px;
+  }
+  .blot-title { font-size: 13px; font-weight: 700; }
+  .blot-sub { font-size: 11px; color: var(--text-muted); margin-left: 8px; font-weight: 400; }
+  .blot-timer {
+    font-family: 'JetBrains Mono', monospace; font-size: 11px;
+    color: var(--accent-gold); background: rgba(212,160,23,0.1);
+    border: 1px solid rgba(212,160,23,0.25); border-radius: 12px; padding: 3px 10px;
+  }
+
+  .blot-wrap {
+    background: var(--bg-card); border: 1px solid var(--border);
+    border-radius: 10px; overflow: hidden;
+  }
+  .blot-scroll { overflow-x: auto; }
+  .blot-table { width: 100%; border-collapse: collapse; min-width: 1040px; }
+  .th-sub {
+    display: block; font-size: 8.5px; font-weight: 500;
+    text-transform: none; letter-spacing: 0; color: var(--text-muted);
+    margin-top: 2px; opacity: .85;
+  }
+  .th-ccy { font-size: 9px; color: var(--accent-gold); font-weight: 700; }
+  /* vertical rules to group the cost breakdown */
+  .blot-table th.grp, .blot-table td.grp { border-left: 1px solid rgba(42,48,68,0.9); }
+  .bl-allin { font-family: 'JetBrains Mono', monospace; font-size: 13px; font-weight: 800; color: var(--accent-gold); }
+  .bl-quoted { color: var(--text-primary); font-weight: 600; }
+  .bl-bps { font-size: 9.5px; color: var(--text-muted); font-weight: 500; }
+  .blot-table thead th {
+    position: sticky; top: 0; z-index: 2;
+    background: var(--bg-secondary);
+    font-size: 9.5px; font-weight: 700; letter-spacing: .9px; text-transform: uppercase;
+    color: var(--text-muted); text-align: right;
+    padding: 9px 12px; border-bottom: 1px solid var(--border); white-space: nowrap;
+  }
+  .blot-table thead th.l { text-align: left; }
+  .blot-table thead th.c { text-align: center; }
+  .blot-table tbody td {
+    padding: 9px 12px; text-align: right; font-size: 12.5px;
+    border-bottom: 1px solid rgba(42,48,68,0.55);
+    font-family: 'JetBrains Mono', monospace; white-space: nowrap;
+    color: var(--text-secondary);
+  }
+  .blot-table tbody td.l { text-align: left; font-family: 'Inter', sans-serif; }
+  .blot-table tbody td.c { text-align: center; }
+  .blot-table tbody tr { transition: background .12s; }
+  .blot-table tbody tr:hover { background: rgba(255,255,255,0.028); }
+  .blot-table tbody tr:last-child td { border-bottom: none; }
+  .blot-table tbody tr.is-best { background: rgba(16,185,129,0.055); }
+  .blot-table tbody tr.is-best:hover { background: rgba(16,185,129,0.085); }
+
+  .bl-rank {
+    display: inline-flex; align-items: center; justify-content: center;
+    width: 19px; height: 19px; border-radius: 4px;
+    background: var(--bg-secondary); color: var(--text-muted);
+    font-size: 10px; font-weight: 800; font-family: 'JetBrains Mono', monospace;
+  }
+  tr.is-best .bl-rank { background: var(--accent-green); color: #05130d; }
+
+  .bl-name { font-size: 12.5px; font-weight: 700; color: var(--text-primary); display: block; line-height: 1.25; }
+  .bl-tag { font-size: 9.5px; color: var(--text-muted); font-weight: 500; }
+  .bl-badge {
+    display: inline-block; font-size: 8.5px; font-weight: 800; letter-spacing: .6px;
+    padding: 1.5px 5px; border-radius: 3px; margin-left: 5px; vertical-align: 1px;
+    background: rgba(16,185,129,0.16); color: var(--accent-green);
+  }
+
+  .bl-rate { color: var(--text-primary); font-weight: 600; }
+  .bl-recv { color: var(--text-primary); font-weight: 800; font-size: 13px; }
+  .bl-vs { font-size: 10px; font-weight: 600; }
+  .bl-vs.neg { color: var(--accent-red); }
+  .bl-vs.zero { color: var(--accent-green); }
+
+  .bl-cost-g { color: var(--accent-green); font-weight: 700; }
+  .bl-cost-o { color: var(--accent-orange); font-weight: 700; }
+  .bl-cost-r { color: var(--accent-red); font-weight: 700; }
+  .bl-pct { font-size: 10px; color: var(--text-muted); font-weight: 500; }
+
+  .bl-spd { font-size: 11px; color: var(--text-secondary); font-family: 'Inter', sans-serif; }
+
+  /* tick flash on price update */
+  @keyframes flashUp { 0%{background:rgba(16,185,129,0.34)} 100%{background:transparent} }
+  @keyframes flashDn { 0%{background:rgba(239,68,68,0.34)} 100%{background:transparent} }
+  .tick-up { animation: flashUp .75s ease-out; border-radius: 3px; }
+  .tick-dn { animation: flashDn .75s ease-out; border-radius: 3px; }
+
+  /* Deal button */
+  .bl-deal {
+    padding: 6px 15px; border-radius: 6px; border: 1px solid var(--border);
+    background: transparent; color: var(--text-secondary);
+    font-size: 11px; font-weight: 800; letter-spacing: .5px;
+    font-family: 'Inter', sans-serif; cursor: pointer; transition: all .15s;
+    text-transform: uppercase;
+  }
+  .bl-deal:hover { border-color: var(--accent-gold); color: var(--accent-gold); background: rgba(212,160,23,0.1); }
+  tr.is-best .bl-deal {
+    background: linear-gradient(135deg, var(--accent-green), #0e9f6e);
+    border-color: transparent; color: #05130d;
+  }
+  tr.is-best .bl-deal:hover { filter: brightness(1.12); color: #05130d; background: linear-gradient(135deg, var(--accent-green), #0e9f6e); }
+
+  /* Confirmation toast */
+  .deal-toast {
+    position: fixed; bottom: 22px; left: 50%; transform: translateX(-50%) translateY(90px);
+    background: var(--bg-card); border: 1px solid var(--accent-green);
+    border-radius: 10px; padding: 13px 20px; z-index: 9999;
+    box-shadow: 0 10px 40px rgba(0,0,0,.55);
+    opacity: 0; transition: all .3s cubic-bezier(.2,.8,.3,1); max-width: 92vw;
+  }
+  .deal-toast.show { transform: translateX(-50%) translateY(0); opacity: 1; }
+  .deal-toast .dt-t { font-size: 13px; font-weight: 700; color: var(--accent-green); margin-bottom: 3px; }
+  .deal-toast .dt-s { font-size: 11.5px; color: var(--text-secondary); font-family: 'JetBrains Mono', monospace; }
+
+  @media (max-width: 860px) {
+    .rfq-grid { grid-template-columns: 1fr auto 1fr; }
+    .rfq-best { grid-column: 1 / -1; margin-top: 4px; }
+  }
+  @media (max-width: 560px) {
+    .rfq-grid { grid-template-columns: 1fr; }
+    .rfq-swap { transform: rotate(90deg); margin: 0 auto; }
+    .rfq-swap:hover { transform: rotate(270deg); }
+    .rfq-ccy { min-width: 100px; font-size: 11px; }
+    .rfq-amt { font-size: 16px; }
+  }
+
+
+  /* CB SIDEBAR ROW */
+  .cb-side-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 0;
+    border-bottom: 1px solid var(--border);
+  }
+  .cb-side-row:last-child { border-bottom: none; }
+  .cb-side-flag { font-size: 20px; margin-right: 8px; }
+  .cb-side-name { font-size: 12px; font-weight: 600; color: var(--text-primary); }
+  .cb-side-bank { font-size: 10px; color: var(--text-muted); }
+  .cb-side-rate { font-family: 'JetBrains Mono', monospace; font-size: 16px; font-weight: 700; }
+  .cb-side-meta { font-size: 10px; color: var(--text-muted); text-align: right; }
+  .cb-side-exp { display: inline-block; padding: 2px 8px; border-radius: 10px; font-size: 10px; font-weight: 600; margin-top: 2px; }
 
   /* SAVINGS HIGHLIGHT */
   .savings-box {
@@ -659,6 +1111,8 @@
   @media (max-width: 768px) {
     .grid-2, .grid-3, .grid-4 { grid-template-columns: 1fr; }
     .provider-row { grid-template-columns: 1fr 1fr; gap: 8px; }
+    #transfer-layout { grid-template-columns: 1fr !important; }
+    #corridor-picker { grid-template-columns: 1fr !important; }
   }
 
   /* SPARKLINE SVG */
@@ -695,10 +1149,10 @@
   /* SEARCH BAR */
   .search-container {
     position: relative;
-    flex: 1;
-    max-width: 420px;
-    margin: 0 24px;
+    max-width: 480px;
+    margin: 0 0 16px;
   }
+  .tab-search-mount:empty { display: none; }
 
   .search-input {
     width: 100%;
@@ -1653,34 +2107,268 @@
     background: rgba(139,92,246,0.25);
     border-color: var(--accent-purple);
   }
+
+  /* ===== SIMPLE SEND FLOW, ACCOUNT & WALLET (zx-) ===== */
+  .zx-wrap { max-width: 1040px; margin: 0 auto; }
+  .zx-muted { color: var(--text-muted); font-weight: 400; }
+  .zx-h { font-size: 15px; font-weight: 700; color: var(--text-primary); }
+
+  /* Ticket: the currencies, nothing else */
+  .zx-ticket { background: var(--bg-card); border: 1px solid var(--border); border-radius: 14px; padding: 18px 20px; margin-bottom: 22px; }
+  .zx-ticket-row { display: grid; grid-template-columns: 1fr auto 1fr; gap: 12px; align-items: end; }
+  .zx-field { min-width: 0; }
+  .zx-field > label { display: block; font-size: 11.5px; color: var(--text-secondary); font-weight: 600; margin-bottom: 6px; }
+  .zx-box { display: flex; align-items: stretch; background: var(--bg-primary); border: 1px solid var(--border); border-radius: 10px; overflow: hidden; }
+  .zx-box:focus-within { border-color: var(--accent-gold); }
+  .zx-box input { flex: 1; min-width: 0; background: transparent; border: 0; color: var(--text-primary); font: 600 20px 'JetBrains Mono', monospace; padding: 12px 14px; outline: none; -moz-appearance: textfield; }
+  .zx-box input::-webkit-inner-spin-button { -webkit-appearance: none; }
+  .zx-box input[readonly] { color: var(--accent-green); }
+  .zx-box select { background: var(--bg-secondary); border: 0; border-left: 1px solid var(--border); color: var(--text-primary); font: 600 14px 'Inter', sans-serif; padding: 0 12px; min-height: 50px; cursor: pointer; outline: none; }
+  .zx-box select:disabled { display: none; }
+  .zx-swap { width: 40px; height: 40px; border-radius: 50%; border: 1px solid var(--border); background: var(--bg-secondary); color: var(--text-secondary); font-size: 16px; cursor: pointer; margin-bottom: 5px; transition: all .2s; }
+  .zx-swap:hover { border-color: var(--accent-gold); color: var(--accent-gold); }
+  .zx-box select.zx-full { flex: 1; border-left: 0; background: transparent; font-size: 17px; padding: 0 14px; }
+  .zx-to-crypto { flex: 1; display: flex; align-items: center; padding: 0 14px; min-height: 50px; font-weight: 600; }
+  .zx-to-crypto[hidden] { display: none; }
+  .zx-mid { margin-top: 14px; padding: 12px 14px; border-radius: 10px; background: var(--bg-secondary); display: flex; flex-wrap: wrap; align-items: baseline; gap: 4px 12px; }
+  .zx-mid-k { font-size: 11px; text-transform: uppercase; letter-spacing: .6px; color: var(--text-muted); font-weight: 700; }
+  .zx-mid b { font: 700 18px 'JetBrains Mono', monospace; color: var(--text-primary); }
+  .zx-mid-s { flex-basis: 100%; font-size: 11.5px; color: var(--text-muted); }
+  .zx-q-c .s.up { color: var(--text-secondary); }
+  .zx-ticket-foot { display: flex; flex-wrap: wrap; gap: 10px 18px; align-items: center; justify-content: space-between; margin-top: 14px; font-size: 12px; color: var(--text-muted); }
+  .zx-ticket-foot b { color: var(--text-secondary); font-family: 'JetBrains Mono', monospace; font-weight: 600; }
+
+  /* Recipient */
+  .zx-recip-btn { background: transparent; border: 1px dashed var(--border); color: var(--text-primary); border-radius: 999px; padding: 7px 14px; font: 600 12.5px 'Inter', sans-serif; cursor: pointer; }
+  .zx-recip-btn span { color: var(--text-muted); font-weight: 400; margin-left: 4px; }
+  .zx-recip-btn:hover { border-color: var(--accent-gold); }
+  .zx-chip { display: inline-flex; flex-wrap: wrap; align-items: center; gap: 8px; background: rgba(16,185,129,.08); border: 1px solid rgba(16,185,129,.35); border-radius: 999px; padding: 5px 6px 5px 14px; font-size: 12.5px; color: var(--text-secondary); }
+  .zx-chip b { color: var(--text-primary); }
+  .zx-chip-k { color: var(--accent-green); font-weight: 700; font-size: 11px; text-transform: uppercase; letter-spacing: .5px; }
+  .zx-chip button { background: transparent; border: 0; color: var(--text-muted); cursor: pointer; font-size: 12px; padding: 3px 7px; border-radius: 999px; }
+  .zx-chip button:hover { color: var(--text-primary); background: rgba(255,255,255,.06); }
+
+  /* Provider list */
+  .zx-list-top { display: flex; justify-content: space-between; align-items: baseline; flex-wrap: wrap; gap: 6px; margin-bottom: 10px; font-size: 12px; }
+  .zx-list-head, .zx-q { display: grid; grid-template-columns: 1.25fr 1fr 1.55fr 1.2fr 96px; gap: 14px; align-items: center; }
+  .zx-list-head { font-size: 10.5px; text-transform: uppercase; letter-spacing: .6px; color: var(--text-muted); font-weight: 700; padding: 0 16px 8px; }
+  .zx-q { background: var(--bg-card); border: 1px solid var(--border); border-radius: 12px; padding: 14px 16px; margin-bottom: 8px; }
+  .zx-q.best { border-color: var(--best); background: var(--best-soft); }
+  .zx-q-prov { display: flex; align-items: center; gap: 12px; min-width: 0; }
+  .zx-q-prov b { display: block; font-size: 14px; }
+  .zx-q-prov span { font-size: 11.5px; color: var(--text-muted); }
+  .zx-q-prov em { color: var(--text-primary); font-style: normal; font-weight: 700; }
+  .zx-rank { flex: none; width: 24px; height: 24px; border-radius: 50%; background: var(--bg-secondary); border: 1px solid var(--border); display: flex; align-items: center; justify-content: center; font-size: 11px; font-weight: 700; color: var(--text-secondary); }
+  .zx-q.best .zx-rank { background: var(--best); border-color: var(--best); color: var(--on-best); }
+  .zx-q-c { min-width: 0; display: flex; flex-direction: column; gap: 2px; }
+  .zx-q-c .k { display: none; font-size: 10px; text-transform: uppercase; letter-spacing: .5px; color: var(--text-muted); font-weight: 700; }
+  .zx-q-c .v { font: 600 14px 'JetBrains Mono', monospace; color: var(--text-primary); }
+  .zx-q-c .v i { font-style: normal; color: var(--text-muted); font-size: 12px; margin-left: 4px; }
+  .zx-q-c .v.g { color: var(--text-primary); }
+  .zx-q-c .v.recv { color: var(--text-primary); font-size: 15px; font-weight: 700; }
+  .zx-q-c .s { font-size: 11px; color: var(--text-muted); }
+  .zx-send { background: transparent; border: 1px solid var(--text-primary); color: var(--text-primary); border-radius: 8px; padding: 9px 0; font: 700 13px 'Inter', sans-serif; cursor: pointer; }
+  .zx-send:hover { background: var(--text-primary); color: var(--bg-card); }
+  .zx-q.best .zx-send, .zx-q.best .zx-send:hover { background: var(--best); border-color: var(--best); color: var(--on-best); }
+  .zx-empty { padding: 28px; text-align: center; color: var(--text-muted); border: 1px dashed var(--border); border-radius: 12px; font-size: 13px; }
+  .zx-foot { font-size: 11.5px; color: var(--text-muted); line-height: 1.6; margin-top: 12px; }
+  .zx-foot a { color: var(--accent-gold); }
+  .zx-seg { display: inline-flex; background: var(--bg-primary); border: 1px solid var(--border); border-radius: 999px; padding: 3px; gap: 2px; flex-wrap: wrap; }
+  .zx-seg button { background: transparent; border: 0; color: var(--text-secondary); font: 600 12px 'Inter', sans-serif; padding: 6px 12px; border-radius: 999px; cursor: pointer; }
+  .zx-seg button.on { background: var(--accent-gold); color: var(--on-accent); }
+  .zx-more { margin-top: 30px; border-top: 1px solid var(--border); padding-top: 14px; }
+  .zx-more > summary { cursor: pointer; font-size: 13px; color: var(--text-secondary); font-weight: 600; margin-bottom: 14px; }
+
+  /* Modal */
+  .zx-modal { position: fixed; inset: 0; background: rgba(3,6,12,.72); display: none; align-items: flex-start; justify-content: center; z-index: 2000; padding: 48px 16px; overflow-y: auto; }
+  .zx-modal.open { display: flex; }
+  .zx-sheet { background: var(--bg-secondary); border: 1px solid var(--border); border-radius: 14px; width: 100%; max-width: 520px; padding: 24px; position: relative; }
+  .zx-sheet h3 { font-size: 18px; margin-bottom: 12px; padding-right: 28px; }
+  .zx-x { position: absolute; top: 14px; right: 14px; background: transparent; border: 0; color: var(--text-muted); font-size: 22px; cursor: pointer; line-height: 1; }
+  .zx-sub { font-size: 11px; text-transform: uppercase; letter-spacing: .6px; color: var(--text-muted); font-weight: 700; margin: 14px 0 8px; }
+  .zx-rlist { display: flex; flex-direction: column; gap: 6px; }
+  .zx-ritem { text-align: left; background: var(--bg-card); border: 1px solid var(--border); border-radius: 10px; padding: 10px 14px; color: var(--text-primary); cursor: pointer; font-family: 'Inter', sans-serif; }
+  .zx-ritem:hover { border-color: var(--accent-gold); }
+  .zx-ritem b { display: block; font-size: 13.5px; }
+  .zx-ritem span { font-size: 12px; color: var(--text-muted); }
+  .zx-l { display: block; font-size: 12px; color: var(--text-secondary); font-weight: 600; margin: 12px 0 5px; }
+  .zx-l .opt { color: var(--text-muted); font-weight: 400; }
+  .zx-in { width: 100%; background: var(--bg-primary); border: 1px solid var(--border); border-radius: 8px; color: var(--text-primary); font: 14px 'Inter', sans-serif; padding: 10px 12px; outline: none; }
+  .zx-in:focus { border-color: var(--accent-gold); }
+  .zx-err { color: var(--accent-red); font-size: 12.5px; min-height: 18px; margin-top: 10px; }
+  .zx-note { font-size: 12px; color: var(--accent-orange); background: rgba(245,158,11,.08); border: 1px solid rgba(245,158,11,.25); border-radius: 8px; padding: 8px 10px; margin-top: 10px; }
+  .zx-actions { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 16px; }
+  .zx-btn { background: var(--accent-gold); color: var(--on-accent); border: 1px solid var(--accent-gold); border-radius: 8px; padding: 10px 18px; font: 700 13.5px 'Inter', sans-serif; cursor: pointer; }
+  .zx-btn:hover { filter: brightness(1.08); }
+  .zx-btn.ghost { background: transparent; color: var(--text-primary); border-color: var(--border); }
+  .zx-btn.ghost:hover { border-color: var(--accent-gold); }
+  .zx-btn.sm { padding: 6px 12px; font-size: 12px; }
+  .zx-link { background: transparent; border: 0; color: var(--accent-gold); font: 600 12.5px 'Inter', sans-serif; cursor: pointer; }
+  .zx-p { font-size: 13.5px; color: var(--text-secondary); line-height: 1.6; margin-top: 8px; }
+  .zx-p.sm { font-size: 12px; color: var(--text-muted); }
+  .zx-p a { color: var(--accent-gold); }
+  .zx-lines { border: 1px solid var(--border); border-radius: 10px; margin-top: 12px; }
+  .zx-lines > div { display: flex; justify-content: space-between; gap: 14px; padding: 9px 14px; font-size: 13px; border-top: 1px solid var(--border); }
+  .zx-lines > div:first-child { border-top: 0; }
+  .zx-lines span { color: var(--text-secondary); }
+  .zx-lines b { font-family: 'JetBrains Mono', monospace; font-weight: 600; text-align: right; }
+  .zx-lines .tot b { color: var(--text-primary); }
+  .zx-lines .gain b { color: var(--text-primary); }
+  .zx-lines .big { background: var(--best-soft); }
+  .zx-lines .big b { color: var(--text-primary); font-size: 15px; }
+  .zx-done { width: 48px; height: 48px; border-radius: 50%; background: var(--accent-green); color: #04120c; font-size: 24px; font-weight: 800; display: flex; align-items: center; justify-content: center; margin-bottom: 12px; }
+
+  /* Account: articles and KYC */
+  .zx-acct-hero { text-align: center; padding: 26px 10px 30px; }
+  .zx-acct-hero h2 { font-size: 30px; font-weight: 700; letter-spacing: -.5px; }
+  .zx-acct-hero .zx-p { max-width: 620px; margin: 10px auto 0; font-size: 15px; }
+  .zx-acct-hero .zx-actions { justify-content: center; }
+  .zx-articles { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 16px; margin-bottom: 16px; }
+  .zx-article { background: var(--bg-card); border: 1px solid var(--border); border-radius: 14px; padding: 22px; display: flex; flex-direction: column; }
+  .zx-article h3 { font-size: 20px; margin: 8px 0 6px; }
+  .zx-article ul { margin: 12px 0 4px 18px; font-size: 13.5px; color: var(--text-secondary); line-height: 1.75; }
+  .zx-article > .zx-btn { margin-top: auto; align-self: flex-start; }
+  .zx-article > .zx-p.sm { margin: 10px 0 16px; }
+  .zx-tag { font-size: 10.5px; text-transform: uppercase; letter-spacing: .8px; color: var(--accent-gold); font-weight: 700; }
+  .zx-kyc-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 18px; margin-top: 16px; }
+  .zx-kyc-grid h4 { font-size: 14px; margin-bottom: 8px; }
+  .zx-kyc { width: 100%; border-collapse: collapse; font-size: 12.5px; }
+  .zx-kyc td { padding: 9px 8px 9px 0; border-top: 1px solid var(--border); vertical-align: top; color: var(--text-secondary); line-height: 1.5; }
+  .zx-kyc td:first-child { color: var(--text-primary); font-weight: 600; width: 32%; }
+  .zx-kyc td:last-child { width: 1%; white-space: nowrap; font-size: 11px; font-weight: 600; padding-right: 0; }
+  .zx-kyc .req { color: var(--accent-green); }
+  .zx-kyc .opt { color: var(--text-muted); }
+  .zx-tiers { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 10px; margin-top: 18px; }
+  .zx-tiers > div { background: var(--bg-secondary); border: 1px solid var(--border); border-radius: 10px; padding: 12px 14px; font-size: 12.5px; color: var(--text-secondary); line-height: 1.5; }
+  .zx-tiers b { display: block; color: var(--text-primary); margin-bottom: 3px; }
+
+  /* Sign-up */
+  .zx-steps { display: flex; gap: 8px; margin: 4px 0 18px; flex-wrap: wrap; }
+  .zx-steps span { font-size: 12px; color: var(--text-muted); padding: 5px 12px; border: 1px solid var(--border); border-radius: 999px; }
+  .zx-steps span.on { color: var(--on-accent); background: var(--accent-gold); border-color: var(--accent-gold); font-weight: 700; }
+  .zx-steps span.done { color: var(--accent-green); border-color: rgba(16,185,129,.4); }
+  .zx-formgrid { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 0 16px; }
+  .zx-doc { display: flex; justify-content: space-between; align-items: center; gap: 12px; flex-wrap: wrap; padding: 12px 0; border-top: 1px solid var(--border); font-size: 13.5px; }
+  .zx-doc small { display: block; color: var(--text-muted); font-size: 11.5px; }
+  .zx-doc .ok { color: var(--accent-green); font-size: 12px; }
+  .zx-doc input[type=file] { font-size: 12px; color: var(--text-secondary); max-width: 240px; }
+  .zx-check { display: flex; gap: 10px; align-items: flex-start; font-size: 13px; color: var(--text-secondary); margin-top: 14px; line-height: 1.5; }
+
+  /* Wallet */
+  .zx-w-head { display: flex; justify-content: space-between; align-items: flex-end; flex-wrap: wrap; gap: 12px; margin: 6px 0 22px; }
+  .zx-w-head h2 { font-size: 24px; margin-top: 2px; }
+  .zx-w-head-r { display: flex; gap: 10px; align-items: center; }
+  .zx-badge { font-size: 11.5px; font-weight: 700; padding: 5px 10px; border-radius: 999px; }
+  .zx-badge.ok { color: var(--accent-green); background: rgba(16,185,129,.1); border: 1px solid rgba(16,185,129,.35); }
+  .zx-sec { display: flex; justify-content: space-between; align-items: center; margin: 22px 0 10px; }
+  .zx-bals { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 12px; }
+  .zx-bal { background: var(--bg-card); border: 1px solid var(--border); border-radius: 14px; padding: 16px; }
+  .zx-bal-c { font-size: 13px; font-weight: 700; color: var(--text-secondary); }
+  .zx-bal-v { font: 700 24px 'JetBrains Mono', monospace; margin: 8px 0 2px; }
+  .zx-bal-n { font-size: 11.5px; color: var(--text-muted); }
+  .zx-bal-a { display: flex; gap: 6px; margin-top: 14px; }
+  .zx-bal-a button { flex: 1; background: var(--bg-secondary); border: 1px solid var(--border); color: var(--text-primary); border-radius: 8px; padding: 7px 0; font: 600 12px 'Inter', sans-serif; cursor: pointer; }
+  .zx-bal-a button:hover { border-color: var(--accent-gold); color: var(--accent-gold); }
+  .zx-cols { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; }
+  .zx-item { display: flex; justify-content: space-between; align-items: center; gap: 12px; background: var(--bg-card); border: 1px solid var(--border); border-radius: 10px; padding: 11px 14px; margin-bottom: 6px; font-size: 13px; }
+  .zx-item small { display: block; color: var(--text-muted); font-size: 11.5px; margin-top: 2px; }
+  .zx-item .amt { font-family: 'JetBrains Mono', monospace; font-weight: 600; white-space: nowrap; }
+  .zx-item .amt.in { color: var(--accent-green); }
+  .zx-top-acct { background: transparent; border: 1px solid var(--accent-gold); color: var(--accent-gold); border-radius: 6px; padding: 4px 12px; font: 700 11.5px 'Inter', sans-serif; cursor: pointer; }
+  .zx-top-acct:hover { background: var(--accent-gold); color: var(--on-accent); }
+
+  @media (max-width: 860px) {
+    .zx-cols { grid-template-columns: 1fr; }
+  }
+  @media (max-width: 760px) {
+    .zx-ticket { padding: 14px; }
+    .zx-ticket-row { grid-template-columns: 1fr; }
+    .zx-swap { transform: rotate(90deg); margin: 0 auto; }
+    .zx-list-head { display: none; }
+    .zx-q { grid-template-columns: 1fr 1fr; gap: 12px; }
+    .zx-q-prov, .zx-send { grid-column: 1 / -1; }
+    .zx-q-c .k { display: block; }
+    .zx-acct-hero h2 { font-size: 24px; }
+    .zx-modal { padding: 16px 10px; }
+    .zx-sheet { padding: 18px; }
+  }
+  /* ===== TREASURY (tr-) ===== */
+  #tr-root { max-width: 1200px; }
+  .tr-head { display: flex; justify-content: space-between; align-items: flex-end; flex-wrap: wrap; gap: 14px; margin: 6px 0 18px; }
+  .tr-head h2 { font-size: 24px; margin-top: 4px; }
+  .tr-head-r { display: flex; gap: 16px; align-items: center; flex-wrap: wrap; }
+  .tr-inline { display: flex; align-items: center; gap: 8px; font-size: 12.5px; color: var(--text-secondary); }
+  .zx-in.tr-sm { width: auto; padding: 6px 10px; font-size: 13px; }
+  .tr-banner { display: flex; gap: 10px; align-items: center; flex-wrap: wrap; background: var(--best-soft); border: 1px solid var(--best); border-radius: 10px; padding: 10px 14px; font-size: 13px; margin-bottom: 16px; }
+  .tr-kpis { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 12px; margin-bottom: 20px; }
+  .tr-kpi { background: var(--bg-card); border: 1px solid var(--border); border-radius: 12px; padding: 14px 16px; }
+  .tr-kpi span { display: block; font-size: 11px; text-transform: uppercase; letter-spacing: .6px; color: var(--text-muted); font-weight: 700; }
+  .tr-kpi b { display: block; font: 700 19px 'JetBrains Mono', monospace; margin-top: 6px; color: var(--text-primary); }
+  .tr-tabs { margin-bottom: 16px; }
+  .tr-sec { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 10px; margin-bottom: 12px; font-size: 12.5px; }
+  .tr-scroll { overflow-x: auto; border: 1px solid var(--border); border-radius: 12px; background: var(--bg-card); }
+  .tr-table { width: 100%; border-collapse: collapse; font-size: 13px; min-width: 760px; }
+  .tr-table.tight { min-width: 0; font-size: 12.5px; }
+  .tr-table th { font-size: 10.5px; text-transform: uppercase; letter-spacing: .5px; color: var(--text-muted); font-weight: 700; text-align: right; padding: 11px 12px; border-bottom: 1px solid var(--border); white-space: nowrap; }
+  .tr-table td { text-align: right; padding: 11px 12px; border-bottom: 1px solid var(--border); vertical-align: middle; font-family: 'JetBrains Mono', monospace; color: var(--text-primary); }
+  .tr-table tr:last-child td { border-bottom: 0; }
+  .tr-table .l { text-align: left; font-family: 'Inter', sans-serif; }
+  .tr-table small { display: block; font: 11px 'Inter', sans-serif; color: var(--text-muted); margin-top: 2px; }
+  .tr-table tr.chosen td { background: var(--best-soft); }
+  .tr-best { display: inline-block; font-weight: 700; background: var(--best-soft); border: 1px solid var(--best); border-radius: 6px; padding: 2px 8px; }
+  .tr-act { white-space: nowrap; }
+  .tr-act .zx-link { margin-left: 6px; }
+  .zx-send.tr-pay { padding: 6px 14px; font-size: 12px; }
+  .tr-reason { max-width: 220px; }
+  .tr-hit { color: var(--text-primary); font-weight: 700; background: var(--best-soft); border-radius: 6px; padding: 2px 8px; font-family: 'Inter', sans-serif; font-size: 12px; }
+  .tr-bar { height: 6px; background: var(--bg-secondary); border-radius: 3px; margin-bottom: 5px; min-width: 120px; }
+  .tr-bar i { display: block; height: 100%; background: var(--text-primary); border-radius: 3px; }
+  .tr-mid { font-size: 12px; color: var(--text-secondary); margin-bottom: 8px; font-family: 'JetBrains Mono', monospace; }
+  .tr-route { display: grid; grid-template-columns: 20px 1.6fr 1fr 1fr 1.2fr; gap: 10px; align-items: center; border: 1px solid var(--border); border-radius: 10px; padding: 9px 12px; margin-bottom: 6px; cursor: pointer; font: 600 13px 'JetBrains Mono', monospace; }
+  .tr-route small { display: block; font: 11px 'Inter', sans-serif; color: var(--text-muted); }
+  .tr-route-n b { font-family: 'Inter', sans-serif; }
+  .tr-route.best { border-color: var(--best); }
+  .tr-route.on { background: var(--best-soft); }
+  .tr-sum { background: var(--bg-card); border: 1px solid var(--border); border-radius: 14px; padding: 20px 22px; margin-bottom: 22px; }
+  .tr-sum-scope { font-size: 13px; font-weight: 600; color: var(--text-secondary); margin-bottom: 14px; }
+  .tr-sum-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 14px; margin-bottom: 8px; }
+  .tr-sum-grid > div { border: 1px solid var(--border); border-radius: 12px; padding: 14px 16px; }
+  .tr-sum-grid span { display: block; font-size: 11px; text-transform: uppercase; letter-spacing: .6px; color: var(--text-muted); font-weight: 700; }
+  .tr-sum-grid b { display: block; font: 700 24px 'JetBrains Mono', monospace; margin: 6px 0 10px; color: var(--text-primary); }
+  .tr-sum-grid small { font-size: 12px; color: var(--text-secondary); }
+  .tr-sum-grid .gold { border-color: var(--best); background: var(--best-soft); }
+  .tr-click { cursor: pointer; }
+  .tr-click:hover td { background: var(--bg-card-hover); }
+  .zx-sheet.wide { max-width: 760px; }
+  @media (max-width: 760px) {
+    .tr-route { grid-template-columns: 20px 1fr 1fr; }
+    .tr-route > span:nth-child(3), .tr-route > span:nth-child(4) { display: none; }
+  }
 </style>
 </head>
 <body>
 
 <!-- TOP BAR -->
 <div class="topbar">
-  <div class="logo">
-    <div class="logo-icon">Z</div>
-    <div>
-      <div class="logo-text">ZENA <span style="font-size:9px;padding:2px 6px;background:rgba(212,175,55,0.2);border:1px solid rgba(212,175,55,0.4);border-radius:4px;color:var(--accent-gold);vertical-align:middle;letter-spacing:1px;margin-left:4px">BETA</span></div>
-      <div class="logo-subtitle">African Markets Intelligence</div>
-    </div>
-  </div>
-  <!-- SEARCH BAR -->
-  <div class="search-container">
-    <span class="search-icon">&#128269;</span>
-    <input type="text" class="search-input" id="search-input" placeholder="Search instruments... USD/NGN, JSE, Kenya 10Y, Cocoa..." autocomplete="off">
-    <span class="search-shortcut">/</span>
-    <div class="search-dropdown" id="search-dropdown"></div>
-  </div>
-
-  <button class="fwd-topbar-btn" onclick="openFwdPricer()" title="Forward & Swap Pricer (Ctrl+F)">SWP</button>
+  <!-- Brand lives on the Home page itself; the bar stays out of the way -->
+  <div class="clock" id="clock">--:--:--</div>
 
   <div class="topbar-right">
+    <button class="theme-btn" id="theme-btn" onclick="toggleTheme()" title="Switch light / dark">&#9790;</button>
+    <button class="zx-top-acct" id="zx-top-acct" onclick="switchLayer(7)">Open account</button>
+    <button class="fwd-topbar-btn" onclick="openFwdPricer()" title="Forward &amp; Swap Pricer (Ctrl+F)">SWP</button>
     <span id="data-status-badge" class="card-badge badge-delayed" style="font-size:9px;padding:2px 8px">LOADING</span>
     <div style="display:flex;align-items:center;gap:6px"><div class="live-dot"></div> LIVE</div>
-    <div class="clock" id="clock">--:--:--</div>
   </div>
+</div>
+
+<!-- Instrument search. Lives here so its event handlers bind once, then gets
+     relocated into Markets / Cross-Currency tabs by mountSearch(). -->
+<div class="search-container" id="search-host" style="display:none">
+  <span class="search-icon">&#128269;</span>
+  <input type="text" class="search-input" id="search-input" placeholder="Search instruments... USD/NGN, JSE, Kenya 10Y, Cocoa..." autocomplete="off">
+  <span class="search-shortcut">/</span>
+  <div class="search-dropdown" id="search-dropdown"></div>
 </div>
 
 <!-- Forward/Swap Pricer Panel -->
@@ -1754,24 +2442,28 @@
   <div class="modal-panel" id="modal-panel"></div>
 </div>
 
-<!-- TICKER STRIP -->
-<div class="ticker-strip" id="ticker-strip"></div>
+<!-- TICKER STRIP — Markets tab only (hidden on load, since Home opens first) -->
+<div class="ticker-strip" id="ticker-strip" style="display:none"></div>
 
 <!-- NAVIGATION -->
 <div class="nav-tabs">
-  <div class="nav-tab active" onclick="switchLayer(0)">Markets & News</div>
-  <div class="nav-tab" onclick="switchLayer(1)">Transfer Compare</div>
-  <div class="nav-tab" onclick="switchLayer(2)">Cross-Currency FX Africa</div>
+  <div class="nav-tab active" onclick="switchLayer(6)">Home</div>
+  <div class="nav-tab" onclick="switchLayer(8)">Treasury</div>
+  <div class="nav-tab" onclick="switchLayer(5)">News &amp; Intelligence</div>
+  <div class="nav-tab" onclick="switchLayer(0)">Markets</div>
+  <div class="nav-tab" onclick="switchLayer(1)">Send Money &mdash; Fiat</div>
+  <div class="nav-tab" onclick="switchLayer(4)">Send Money &mdash; Stablecoin</div>
+  <div class="nav-tab" onclick="switchLayer(2)">Cross-Currency Africa</div>
   <div class="nav-tab" onclick="switchLayer(3)">Cross-Currency FX</div>
-  <div class="nav-tab" onclick="switchLayer(4)">Stablecoin Bridge</div>
-  <div class="nav-tab" onclick="switchLayer(5)">News & Intelligence</div>
+  <div class="nav-tab" onclick="switchLayer(7)">Account</div>
 </div>
 
 <!-- MAIN CONTENT -->
 <div class="main-content">
 
 <!-- ========== LAYER 1: MARKETS & NEWS ========== -->
-<div class="layer-panel active" id="layer-0">
+<div class="layer-panel" id="layer-0">
+  <div class="tab-search-mount"></div>
 
   <!-- EQUITY INDICES -->
   <div class="section-label"><div class="section-icon"></div> African Equity Indices</div>
@@ -1818,45 +2510,51 @@
   </div>
 </div>
 
-<!-- ========== LAYER 2: TRANSFER COMPARE ========== -->
+<!-- ========== LAYER 2: TRANSFER COMPARE (FXall-style RFQ) ========== -->
 <div class="layer-panel" id="layer-1">
-  <div class="section-label"><div class="section-icon"></div> Remittance Cost Comparison</div>
-
-  <div class="corridor-selector" id="corridor-selector"></div>
-
-  <div class="grid-3" style="margin-bottom:16px">
-    <div class="savings-box">
-      <div class="savings-amount" id="savings-amount">$47.20</div>
-      <div class="savings-label">Potential savings on $1,000 using best provider vs worst</div>
+ <div class="zx-wrap">
+  <div class="zx-ticket">
+    <div class="zx-ticket-row">
+      <div class="zx-field">
+        <label for="send-amount">You send</label>
+        <div class="zx-box">
+          <input type="number" id="send-amount" value="1000" min="1" inputmode="decimal" oninput="updateTransferQuotes()">
+          <select id="send-from" onchange="updateTransferQuotes()" aria-label="Currency you send"></select>
+        </div>
+      </div>
+      <button class="zx-swap" onclick="swapCorridorCurrencies()" title="Swap currencies" aria-label="Swap currencies">&#8644;</button>
+      <div class="zx-field">
+        <label for="send-to">Recipient receives</label>
+        <div class="zx-box">
+          <select id="send-to" class="zx-full" onchange="updateTransferQuotes()"></select>
+        </div>
+      </div>
     </div>
-    <div class="savings-box" style="border-color:rgba(245,158,11,0.3);background:linear-gradient(135deg,rgba(245,158,11,0.1),rgba(212,160,23,0.1))">
-      <div class="savings-amount" style="color:var(--accent-orange)" id="mid-rate">1 GBP = 2,108.45 NGN</div>
-      <div class="savings-label" style="color:var(--accent-orange)">Mid-market rate (interbank)</div>
+    <div class="zx-mid">
+      <span class="zx-mid-k">Mid-market rate</span><b id="rfq-mid">&mdash;</b>
+      <span class="zx-mid-s">The real exchange rate, the same for everyone. Each provider's rate below is measured against it.</span>
     </div>
-    <div class="savings-box" style="border-color:rgba(139,92,246,0.3);background:linear-gradient(135deg,rgba(139,92,246,0.1),rgba(99,102,241,0.1))">
-      <div class="savings-amount" style="color:var(--accent-purple)" id="avg-spread">3.2%</div>
-      <div class="savings-label" style="color:var(--accent-purple)">Average spread across providers</div>
+    <div class="zx-ticket-foot">
+      <div id="fx-recip"></div>
     </div>
   </div>
 
-  <div class="card">
-    <div class="provider-row" style="border-bottom:2px solid var(--border)">
-      <span class="provider-header">Provider</span>
-      <span class="provider-header">Spread vs Mid-Market</span>
-      <span class="provider-header">Fee</span>
-      <span class="provider-header">You Receive</span>
-      <span class="provider-header">Speed</span>
-    </div>
-    <div id="providers-list"></div>
+  <div class="zx-list-top">
+    <span class="zx-h">Providers</span>
+    <span class="zx-muted">Cheapest first &middot; rates as of <span id="rfq-updated">&mdash;</span></span>
   </div>
-
-  <div style="margin-top:16px;font-size:11px;color:var(--text-muted);text-align:center">
-    Data methodology inspired by <span style="color:var(--accent-gold)">Borderless.xyz Benchmark</span> &mdash; aggregating rates from multiple providers for transparency. Updated every 15 minutes.
-  </div>
+  <div class="zx-list-head"><span>Provider</span><span>Their rate</span><span>Cost of sending</span><span>Recipient gets</span><span></span></div>
+  <div id="providers-list"></div>
+  <p class="zx-foot">
+    <b>Cost of sending = fee + spread fee.</b> The spread fee is charged through the exchange rate: the gap between the
+    provider's rate and the mid-market rate. Some providers charge only a spread fee; others add a fee on top. Quotes are indicative.
+  </p>
+ </div>
 </div>
 
 <!-- ========== LAYER 3: CROSS-CURRENCY FX AFRICA ========== -->
 <div class="layer-panel" id="layer-2">
+  <div class="tab-search-mount"></div>
   <div class="section-label"><div class="section-icon"></div> Cross-Currency FX Africa</div>
   <p style="font-size:13px;color:var(--text-secondary);margin-bottom:16px">
     Trade directly between African currencies without converting through USD. Powered by PAPSS and local FX aggregation.
@@ -1909,6 +2607,7 @@
 
 <!-- ========== LAYER 4: CROSS-CURRENCY FX (GLOBAL/DIASPORA) ========== -->
 <div class="layer-panel" id="layer-3">
+  <div class="tab-search-mount"></div>
   <div class="section-label"><div class="section-icon"></div> Cross-Currency FX</div>
   <p style="font-size:13px;color:var(--text-secondary);margin-bottom:16px">
     Foreign currency rates against African currencies. Key corridors for diaspora remittances and international trade.
@@ -2037,10 +2736,83 @@
 
 <!-- ========== LAYER 5: STABLECOIN BRIDGE ========== -->
 <div class="layer-panel" id="layer-4">
-  <div class="section-label"><div class="section-icon"></div> Stablecoin Bridge</div>
-  <p style="font-size:13px;color:var(--text-secondary);margin-bottom:16px">
-    Compare on/off-ramp providers. Send money across Africa using USDT or USDC with lower spreads than traditional corridors.
+ <div class="zx-wrap">
+  <div class="zx-ticket">
+    <div class="zx-ticket-row">
+      <div class="zx-field">
+        <label for="sc-send-amount">You send</label>
+        <div class="zx-box">
+          <input type="number" id="sc-send-amount" value="1000" min="1" inputmode="decimal" oninput="updateStableQuotes()">
+          <select id="sc-send-from" onchange="updateStableQuotes()" aria-label="Currency you send"></select>
+        </div>
+      </div>
+      <button class="zx-swap" onclick="swapStableCorridor()" title="Swap currencies" aria-label="Swap currencies">&#8644;</button>
+      <div class="zx-field">
+        <label for="sc-send-to">Recipient receives</label>
+        <div class="zx-box">
+          <select id="sc-send-to" class="zx-full" onchange="updateStableQuotes()"></select>
+          <span class="zx-to-crypto" id="sc-to-crypto" hidden></span>
+        </div>
+      </div>
+    </div>
+    <div class="zx-mid">
+      <span class="zx-mid-k">Mid-market rate</span><b id="sc-mid">&mdash;</b>
+      <span class="zx-mid-s">The real exchange rate, the same for everyone. Each provider's rate below is measured against it.</span>
+    </div>
+    <div class="zx-ticket-foot">
+      <div id="sc-recip"></div>
+      <div style="display:flex;align-items:center;gap:8px">Via <span class="zx-seg" id="sc-bridge-toggle"></span></div>
+    </div>
+  </div>
+
+  <div class="zx-list-top">
+    <span class="zx-h">Stablecoin routes</span>
+    <span class="zx-muted" id="sc-compare"></span>
+  </div>
+  <div class="zx-list-head"><span>Route</span><span>Their rate</span><span>Cost of sending</span><span>Recipient gets</span><span></span></div>
+  <div id="sc-routes-list"></div>
+  <p class="zx-foot">
+    Every route has up to three costs: buying the stablecoin (on-ramp), moving it on-chain (network fee) and converting it to
+    local currency (off-ramp). If the recipient takes crypto directly, there is no off-ramp. Where the local street rate is
+    above the official rate, that premium can outweigh the fees.
   </p>
+ </div>
+
+ <details class="zx-more">
+  <summary>Stablecoin rates &amp; reference data</summary>
+
+  <p style="font-size:13px;color:var(--text-secondary);margin-bottom:16px">
+    Underlying rates, premiums and provider coverage behind the routes above.
+  </p>
+
+  <!-- STABLECOIN EXCHANGE BOARD -->
+  <div class="card" style="margin-bottom:16px;padding:0">
+    <div style="display:flex;align-items:center;justify-content:space-between;padding:14px 16px 10px;border-bottom:1px solid var(--border);flex-wrap:wrap;gap:8px">
+      <div>
+        <span style="font-size:14px;font-weight:700">Stablecoin Exchange Rates</span>
+        <span style="font-size:11px;color:var(--text-muted);margin-left:8px">local currency per 1 unit of stablecoin</span>
+      </div>
+      <div class="sc-toggle" id="sc-toggle"></div>
+    </div>
+    <div style="overflow-x:auto">
+      <table class="sc-table">
+        <thead>
+          <tr>
+            <th class="l">Currency</th>
+            <th>Official rate</th>
+            <th>Stablecoin rate</th>
+            <th>Premium / discount</th>
+            <th>Spread vs mid</th>
+            <th class="c">Best venue</th>
+          </tr>
+        </thead>
+        <tbody id="sc-fx-body"></tbody>
+      </table>
+    </div>
+    <div style="padding:9px 16px;font-size:10.5px;color:var(--text-muted);border-top:1px solid var(--border)">
+      A <span style="color:var(--accent-orange)">premium</span> means the stablecoin buys more local currency than the official rate &mdash; usually a sign of dollar scarcity or capital controls. This is where the arbitrage lives, and where Zena's routing advantage is largest.
+    </div>
+  </div>
 
   <div class="grid-4" style="margin-bottom:16px">
     <div class="stat-box card">
@@ -2122,6 +2894,7 @@
       Traditional remittance cost: ~<span class="down">6.8%</span> ($34) | Stablecoin cost: ~<span class="up">1.2%</span> ($6) | <span style="color:var(--accent-green);font-weight:600">You save $28</span>
     </div>
   </div>
+ </details>
 </div>
 
 <!-- ========== LAYER 6: NEWS & INTELLIGENCE ========== -->
@@ -2140,7 +2913,7 @@
 
     <!-- Search bar -->
     <div class="news-search-bar">
-      <input type="text" class="news-search-input" id="news-search-input" placeholder="Search news by company, country, topic... e.g. Safaricom, Nigeria, IPO, M&A">
+      <input type="text" class="news-search-input" id="news-search-input" oninput="filterNews()" placeholder="Search news by company, country, topic... e.g. Safaricom, Nigeria, IPO, M&A">
       <button class="btn-convert" style="padding:10px 20px" onclick="filterNews()">Search</button>
     </div>
 
@@ -2277,7 +3050,53 @@
   </div>
 </div>
 
+<!-- ========== LAYER 7: HOME ========== -->
+<div class="layer-panel active" id="layer-6">
+  <div class="home-wrap">
+
+    <!-- Wordmark -->
+    <div class="home-brand">
+      <h1 class="home-title">ZENA</h1>
+      <p class="home-tagline">African Intelligence <span class="amp">&amp;</span> Payment System</p>
+    </div>
+
+    <!-- Daily quote -->
+    <div class="home-quote" id="home-quote"></div>
+
+    <!-- Minimal entry points -->
+    <div class="home-nav">
+      <button class="home-card" onclick="switchLayer(8)">
+        <span class="hc-label">Treasury</span>
+        <span class="hc-desc">For companies &amp; NGOs paying into Africa</span>
+      </button>
+      <button class="home-card" onclick="switchLayer(1)">
+        <span class="hc-label">Send Money</span>
+        <span class="hc-desc">For individuals: every provider's true cost</span>
+      </button>
+      <button class="home-card" onclick="switchLayer(5)">
+        <span class="hc-label">News &amp; Intelligence</span>
+        <span class="hc-desc">What matters across Africa today</span>
+      </button>
+      <button class="home-card" onclick="switchLayer(0)">
+        <span class="hc-label">Markets</span>
+        <span class="hc-desc">Indices, bonds and commodities</span>
+      </button>
+    </div>
+
+  </div>
+</div>
+
+<!-- ========== ACCOUNT & WALLET ========== -->
+<div class="layer-panel" id="layer-7"><div class="zx-wrap" id="acct-root"></div></div>
+
+<!-- ========== TREASURY ========== -->
+<div class="layer-panel" id="layer-8"><div class="zx-wrap" id="tr-root"></div></div>
+
 </div><!-- end main-content -->
+
+<div class="zx-modal" id="zx-modal" onclick="if(event.target===this)closeZx()">
+  <div class="zx-sheet" role="dialog" aria-modal="true"><button class="zx-x" onclick="closeZx()" aria-label="Close">&times;</button><div id="zx-modal-body"></div></div>
+</div>
 
 <script>
 // ==================== DATA ====================
@@ -2512,47 +3331,160 @@ function renderBonds() {
   </tr>`).join('');
 }
 
-function renderCorridors() {
-  const sel = document.getElementById('corridor-selector');
-  sel.innerHTML = corridors.map((c, i) =>
-    `<button class="corridor-btn ${i === 0 ? 'active' : ''}" onclick="selectCorridor(${i})">${c.label}</button>`
-  ).join('');
+// ===== TRANSFER COMPARE: dropdown-based corridor picker =====
+
+// Map currency codes to central bank data
+const currencyToCB = {
+  NGN: 'NG', KES: 'KE', ZAR: 'ZA', GHS: 'GH', EGP: 'EG', TZS: 'TZ',
+  UGX: 'UG', MAD: 'MA', RWF: 'RW', ZMW: 'ZM', ETB: 'ET', XOF: 'XO'
+};
+
+// Provider availability per corridor type (to simulate realistic coverage)
+const providerCoverage = {
+  'LemFi':        { corridors: ['GBP-NGN','GBP-KES','GBP-GHS','GBP-UGX','USD-NGN','EUR-NGN','CAD-NGN'], spread: 0.8, fee: 0, speed: 'Instant' },
+  'Wise':         { corridors: '*', spread: 1.2, fee: 4.50, speed: '1-2 hours' },
+  'NALA':         { corridors: ['GBP-KES','GBP-UGX','GBP-NGN','USD-KES','USD-UGX','USD-NGN','KES-UGX','KES-NGN'], spread: 1.5, fee: 0, speed: 'Instant' },
+  'TapTap Send':  { corridors: ['GBP-NGN','GBP-KES','GBP-GHS','GBP-ETB','USD-NGN','USD-KES','USD-ETB','EUR-XOF','EUR-MAD'], spread: 1.8, fee: 0, speed: '< 30 min' },
+  'Africhange':   { corridors: ['GBP-NGN','CAD-NGN','USD-NGN','EUR-NGN'], spread: 2.1, fee: 0, speed: '1-4 hours' },
+  'WorldRemit':   { corridors: '*', spread: 2.8, fee: 3.99, speed: 'Minutes' },
+  'Chipper Cash':  { corridors: ['NGN-KES','NGN-GHS','NGN-UGX','KES-UGX','KES-TZS','GHS-NGN','ZAR-NGN','USD-NGN','USD-KES','USD-GHS'], spread: 1.9, fee: 0, speed: 'Instant' },
+  'Sendwave':     { corridors: ['USD-KES','USD-UGX','USD-TZS','USD-GHS','USD-NGN','USD-ETB','GBP-KES','GBP-NGN'], spread: 1.6, fee: 0, speed: '< 5 min' },
+  'Remitly':      { corridors: ['USD-NGN','USD-KES','USD-EGP','USD-ETB','GBP-NGN','GBP-KES','EUR-MAD','EUR-XOF','CAD-NGN'], spread: 2.4, fee: 2.99, speed: '< 1 hour' },
+  'Western Union':{ corridors: '*', spread: 4.5, fee: 8.99, speed: 'Minutes' },
+  'MoneyGram':    { corridors: '*', spread: 4.8, fee: 7.99, speed: '1-2 days' },
+  'Eversend':     { corridors: ['KES-UGX','KES-NGN','UGX-KES','NGN-KES','GBP-KES','GBP-UGX','GBP-NGN','EUR-KES'], spread: 2.0, fee: 0, speed: '< 10 min' },
+};
+
+const quickCorridorList = [
+  { from: 'GBP', to: 'NGN', label: '🇬🇧→🇳🇬 GBP/NGN' },
+  { from: 'USD', to: 'KES', label: '🇺🇸→🇰🇪 USD/KES' },
+  { from: 'EUR', to: 'XOF', label: '🇪🇺→🌍 EUR/XOF' },
+  { from: 'KES', to: 'NGN', label: '🇰🇪→🇳🇬 KES/NGN' },
+  { from: 'USD', to: 'EGP', label: '🇺🇸→🇪🇬 USD/EGP' },
+  { from: 'AED', to: 'KES', label: '🇦🇪→🇰🇪 AED/KES' },
+  { from: 'GBP', to: 'GHS', label: '🇬🇧→🇬🇭 GBP/GHS' },
+  { from: 'CHF', to: 'RWF', label: '🇨🇭→🇷🇼 CHF/RWF' },
+  { from: 'ZAR', to: 'NGN', label: '🇿🇦→🇳🇬 ZAR/NGN' },
+  { from: 'KES', to: 'UGX', label: '🇰🇪→🇺🇬 KES/UGX' },
+];
+
+// ===== SEND MONEY — FIAT: currencies on top, providers below =====
+
+let lastFiatQuotes = [];
+let quoteRefreshTimer = null;
+
+function fillCcySelect(sel, codes, selected) {
+  sel.innerHTML = codes.filter(c => currencyLibrary[c]).map(c =>
+    `<option value="${c}"${c === selected ? ' selected' : ''}>${currencyLibrary[c].flag} ${c}</option>`).join('');
 }
 
-function selectCorridor(idx) {
-  document.querySelectorAll('.corridor-btn').forEach((b, i) => b.classList.toggle('active', i === idx));
-  const c = corridors[idx];
-  document.getElementById('mid-rate').textContent = `1 ${c.from} = ${c.midRate.toLocaleString()} ${c.to}`;
-  renderProviders(c);
+function initTransferCompare() {
+  const fromSel = document.getElementById('send-from');
+  if (!fromSel) return;
+  if (!fromSel.options.length) {
+    fillCcySelect(fromSel, [...foreignCurrencies, ...africanCurrencies], 'GBP');
+    fillCcySelect(document.getElementById('send-to'), [...africanCurrencies, ...foreignCurrencies], 'NGN');
+  }
+  updateTransferQuotes();
+  startQuoteStream();
 }
 
-function renderProviders(corridor) {
+function swapCorridorCurrencies() {
+  const f = document.getElementById('send-from'), t = document.getElementById('send-to');
+  const tmp = f.value; f.value = t.value; t.value = tmp;
+  updateTransferQuotes();
+}
+
+// Cost model (no free lunch): every provider earns through a fee, a markup in the rate, or both.
+//   rate     = mid x (1 - spread)             what the provider quotes
+//   received = (amount - fee) x rate          what actually lands
+//   cost     = fee + markup                   reconciles exactly: mid x cost = mid x amount - received
+function fiatQuotes(from, to, amount, isTick) {
+  const mid = (usdRates[to] || 1) / (usdRates[from] || 1);
+  const key = `${from}-${to}`;
+  const seed = (from.charCodeAt(0) + from.charCodeAt(1) + to.charCodeAt(0) + to.charCodeAt(1)) * 13;
+  const quotes = [];
+  Object.entries(providerCoverage).forEach(([name, info], pi) => {
+    if (!(info.corridors === '*' || info.corridors.includes(key))) return;
+    const bias = (((seed + pi * 31) % 9) - 4) * 0.08;
+    const jitter = isTick ? (Math.random() - 0.5) * 0.06 : 0;
+    const spread = Math.max(0.25, info.spread + bias + jitter);
+    // Listed fees are USD-equivalent; charge them in the sender's currency
+    const fee = Math.min(amount, info.fee * (usdRates[from] || 1));
+    const rate = mid * (1 - spread / 100);
+    const received = (amount - fee) * rate;
+    const markup = (amount - fee) * spread / 100;
+    const cost = fee + markup;
+    quotes.push({ name, sub: info.speed, spread, fee, markup, cost, costPct: amount ? cost / amount * 100 : 0, rate, received });
+  });
+  return { mid, quotes: quotes.sort((a, b) => a.cost - b.cost) };
+}
+
+function updateTransferQuotes(isTick) {
+  const fromEl = document.getElementById('send-from'), toEl = document.getElementById('send-to');
+  if (!fromEl || !fromEl.value || !toEl.value) return;
+  const from = fromEl.value, to = toEl.value;
+  const amount = Math.max(0, parseFloat(document.getElementById('send-amount').value) || 0);
+
+  // A saved recipient belongs to one currency; changing currency drops the choice
+  const r = selectedRecipient('fiat');
+  if (r && r.ccy !== to) zxSel.fiat = null;
+  renderRecipientChip('fiat');
+
+  const { mid, quotes } = fiatQuotes(from, to, amount, isTick);
+  lastFiatQuotes = quotes;
+  document.getElementById('rfq-mid').textContent = `1 ${from} = ${fmtRate(mid)} ${to}`;
+  document.getElementById('rfq-updated').textContent = zxTime();
+
   const list = document.getElementById('providers-list');
-  const sorted = [...providers].sort((a, b) => a.spread - b.spread);
-  const maxSpread = Math.max(...sorted.map(p => p.spread));
-  const bestRate = corridor.midRate * (1 - sorted[0].spread / 100);
-  const worstRate = corridor.midRate * (1 - sorted[sorted.length-1].spread / 100);
-  const savings = ((worstRate - bestRate) / worstRate * 1000).toFixed(2);
-  document.getElementById('savings-amount').textContent = `$${savings}`;
-  document.getElementById('avg-spread').textContent = `${(sorted.reduce((s,p) => s+p.spread, 0) / sorted.length).toFixed(1)}%`;
+  const empty = msg => { list.innerHTML = `<div class="zx-empty">${msg}</div>`; lastFiatQuotes = []; };
+  if (from === to) return empty('Choose two different currencies.');
+  if (!amount) return empty('Enter an amount to see what each provider charges.');
+  if (!quotes.length) return empty(`No provider covers ${from} → ${to} yet.`);
 
-  list.innerHTML = sorted.map((p, i) => {
-    const receivedRate = corridor.midRate * (1 - p.spread / 100);
-    const barWidth = (p.spread / maxSpread * 100);
-    const barColor = p.spread < 2 ? 'var(--accent-green)' : p.spread < 3 ? 'var(--accent-orange)' : 'var(--accent-red)';
-    const stars = '&#9733;'.repeat(p.rating) + '&#9734;'.repeat(5 - p.rating);
-    return `<div class="provider-row" style="${i === 0 ? 'background:rgba(16,185,129,0.05)' : ''}">
-      <span class="provider-name">${i === 0 ? '&#9989; ' : ''}${p.name}</span>
-      <div class="spread-bar-container">
-        <div class="spread-bar" style="width:${barWidth}%;background:${barColor}"></div>
-        <span class="spread-label" style="color:${barColor}">${p.spread.toFixed(1)}%</span>
-      </div>
-      <span style="font-family:'JetBrains Mono',monospace;font-size:12px">${p.fee > 0 ? '$' + p.fee.toFixed(2) : '<span style="color:var(--accent-green)">FREE</span>'}</span>
-      <span style="font-family:'JetBrains Mono',monospace;font-size:12px">${receivedRate.toLocaleString(undefined, {maximumFractionDigits: 2})} ${corridor.to}</span>
-      <span style="font-size:12px;color:var(--text-secondary)">${p.speed}</span>
-    </div>`;
-  }).join('');
+  list.innerHTML = quotes.map((q, i) => zxQuoteRow({
+    i, q, from, recvCcy: to, mid,
+    breakdown: q.fee > 0
+      ? `Fee ${fmtAmt(q.fee)} + spread fee ${fmtAmt(q.markup)}`
+      : `Spread fee ${fmtAmt(q.markup)}`,
+    onSend: `beginSend('fiat',${i})`,
+  })).join('');
 }
+
+function zxQuoteRow(o) {
+  const q = o.q, gain = q.cost < 0;
+  const vsMid = (q.rate / o.mid - 1) * 100;
+  const vsMidTxt = Math.abs(vsMid) < 0.005 ? 'same as mid' : `${Math.abs(vsMid).toFixed(2)}% ${vsMid < 0 ? 'below' : 'above'} mid`;
+  const costTxt = gain ? `+${fmtAmt(-q.cost)} ${o.from}` : `${fmtAmt(q.cost)} ${o.from}`;
+  const pctTxt = gain ? `gain ${(-q.costPct).toFixed(2)}%` : `${q.costPct.toFixed(2)}%`;
+  return `<div class="zx-q${o.i === 0 ? ' best' : ''}">
+    <div class="zx-q-prov"><span class="zx-rank">${o.i + 1}</span>
+      <div><b>${esc(q.name)}</b><span>${esc(q.sub)}${o.i === 0 ? ' &middot; <em>Best offer</em>' : ''}</span></div></div>
+    <div class="zx-q-c"><span class="k">Their rate</span><span class="v">${fmtRate(q.rate)}</span><span class="s${vsMid > 0.005 ? ' up' : ''}">${vsMidTxt}</span></div>
+    <div class="zx-q-c"><span class="k">Cost of sending</span><span class="v${gain ? ' g' : ''}">${costTxt}<i>${pctTxt}</i></span><span class="s">${o.breakdown}</span></div>
+    <div class="zx-q-c"><span class="k">Recipient gets</span><span class="v recv">${fmtAmt(q.received)} ${o.recvCcy}</span></div>
+    <button class="zx-send" onclick="${o.onSend}">Send</button>
+  </div>`;
+}
+
+// Quiet refresh: rates move, but not while someone is reading a review screen
+function startQuoteStream() {
+  if (quoteRefreshTimer) return;
+  quoteRefreshTimer = setInterval(() => {
+    if (document.getElementById('zx-modal')?.classList.contains('open')) return;
+    if (document.getElementById('layer-1')?.classList.contains('active')) updateTransferQuotes(true);
+    if (document.getElementById('layer-4')?.classList.contains('active')) updateStableQuotes(true);
+    if (trCheckAlerts(true) && document.getElementById('layer-8')?.classList.contains('active')) renderTreasury();
+  }, 20000);
+}
+
+function renderCBSidebar() { /* central bank panel removed from this view */ }
+
+
+// Legacy wrappers
+function renderCorridors() { initTransferCompare(); }
+function selectCorridor(idx) { }
+function renderProviders(corridor) { }
 
 function renderCrossMatrix() {
   const table = document.getElementById('cross-matrix');
@@ -2809,9 +3741,33 @@ function renderStableProviders() {
 // ==================== INTERACTIONS ====================
 
 function switchLayer(idx) {
-  document.querySelectorAll('.nav-tab').forEach((t, i) => t.classList.toggle('active', i === idx));
+  // Highlight the clicked tab (match by onclick attribute value)
+  document.querySelectorAll('.nav-tab').forEach(t => {
+    const onclick = t.getAttribute('onclick') || '';
+    t.classList.toggle('active', onclick.includes(`switchLayer(${idx})`));
+  });
+  // Show/hide layer panels by their index
   document.querySelectorAll('.layer-panel').forEach((p, i) => p.classList.toggle('active', i === idx));
+
+  // The FX ticker (USD/NGN, JSE, commodities) belongs to Markets only.
+  // Everywhere else it is noise, and on Home it defeats the point of a quiet page.
+  const strip = document.getElementById('ticker-strip');
+  if (strip) strip.style.display = (idx === 0) ? '' : 'none';
+
+  // World clocks are orientation, not analysis — Home only
+  const clockEl = document.getElementById('clock');
+  // '' restores the stylesheet's display:flex, keeping the responsive rules intact
+  if (clockEl) clockEl.style.display = (idx === 6) ? '' : 'none';
+
+  // Instrument search belongs to Markets and the two Cross-Currency tabs.
+  // One live instance, relocated into whichever of those tabs is open.
+  mountSearch(idx);
+
+  if (idx === 1) initTransferCompare();
   if (idx === 3) initDiasporaIfNeeded();
+  if (idx === 4) { initStableSend(); renderStableFx(); }
+  if (idx === 7) renderAccount();
+  if (idx === 8) renderTreasury();
 }
 
 function swapCurrencies() {
@@ -2833,24 +3789,337 @@ function convertCurrency() {
   document.getElementById('conv-detail').textContent = `Rate: 1 ${from} = ${rate.toFixed(6)} ${to} | Via PAPSS direct settlement | No USD intermediary`;
 }
 
+// Ordered west to east by UTC offset, the way a dealing room reads a clock wall.
+// African cities in green, Zurich (home base) in gold, everything else muted.
+const CLOCK_CITIES = [
+  { code: 'NYC', tz: 'America/New_York',    color: 'var(--text-secondary)' },
+  { code: 'LDN', tz: 'Europe/London',       color: 'var(--text-secondary)' },
+  { code: 'LOS', tz: 'Africa/Lagos',        color: '#10B981' },
+  { code: 'ZRH', tz: 'Europe/Zurich',       color: 'var(--accent-gold)' },
+  { code: 'JNB', tz: 'Africa/Johannesburg', color: '#10B981' },
+  { code: 'NBO', tz: 'Africa/Nairobi',      color: '#10B981' },
+  { code: 'DXB', tz: 'Asia/Dubai',          color: 'var(--text-secondary)' },
+  { code: 'MUM', tz: 'Asia/Kolkata',        color: 'var(--text-secondary)' },
+  { code: 'SHA', tz: 'Asia/Shanghai',       color: 'var(--text-secondary)' },
+  { code: 'SEL', tz: 'Asia/Seoul',          color: 'var(--text-secondary)' },
+  { code: 'TYO', tz: 'Asia/Tokyo',          color: 'var(--text-secondary)' },
+];
+
+// Tabs that get the instrument search: Markets(0), Cross-Ccy Africa(2), Cross-Ccy FX(3).
+// The node itself is never recreated, so its listeners survive relocation.
+const SEARCH_TABS = [0, 2, 3];
+
+function mountSearch(idx) {
+  const node = document.getElementById('search-host');
+  if (!node) return;
+  if (!SEARCH_TABS.includes(idx)) { node.style.display = 'none'; return; }
+  const mount = document.querySelector('#layer-' + idx + ' .tab-search-mount');
+  if (mount) {
+    if (node.parentNode !== mount) mount.appendChild(node);
+    node.style.display = '';
+  }
+}
+
 function updateClock() {
+  const el = document.getElementById('clock');
+  if (!el) return;
   const now = new Date();
-  const fmt = { hour: '2-digit', minute: '2-digit', second: '2-digit', hour12: false };
-  const zurich = now.toLocaleTimeString('en-GB', { ...fmt, timeZone: 'Europe/Zurich' });
-  const nairobi = now.toLocaleTimeString('en-GB', { ...fmt, timeZone: 'Africa/Nairobi' });
-  const lagos = now.toLocaleTimeString('en-GB', { ...fmt, timeZone: 'Africa/Lagos' });
-  const london = now.toLocaleTimeString('en-GB', { ...fmt, timeZone: 'Europe/London' });
-  const ny = now.toLocaleTimeString('en-GB', { ...fmt, timeZone: 'America/New_York' });
-  document.getElementById('clock').innerHTML =
-    `<span style="color:var(--accent-gold)">ZRH ${zurich}</span> ` +
-    `<span style="color:var(--text-muted);margin:0 3px">|</span> ` +
-    `<span style="color:#10B981">NBO ${nairobi}</span> ` +
-    `<span style="color:var(--text-muted);margin:0 3px">|</span> ` +
-    `<span style="color:var(--text-secondary)">LOS ${lagos}</span> ` +
-    `<span style="color:var(--text-muted);margin:0 3px">|</span> ` +
-    `<span style="color:var(--text-secondary)">LDN ${london}</span> ` +
-    `<span style="color:var(--text-muted);margin:0 3px">|</span> ` +
-    `<span style="color:var(--text-secondary)">NYC ${ny}</span>`;
+  // Minutes only — with eleven cities, seconds add width without adding meaning
+  const fmt = { hour: '2-digit', minute: '2-digit', hour12: false };
+  el.innerHTML = CLOCK_CITIES.map(c => {
+    const t = now.toLocaleTimeString('en-GB', { ...fmt, timeZone: c.tz });
+    return `<span style="color:${c.color};white-space:nowrap">${c.code}&nbsp;${t}</span>`;
+  }).join('<span class="clock-sep">·</span>');
+}
+
+// ===== STABLECOIN EXCHANGE BOARD =====
+// Stablecoins are pegged to a fiat unit, so the local rate is derived from the
+// peg currency, then adjusted by the parallel-market premium observed on-chain.
+const stablecoins = {
+  USDC: { peg: 'USD', label: 'USDC', issuer: 'Circle' },
+  USDT: { peg: 'USD', label: 'USDT', issuer: 'Tether' },
+  EURC: { peg: 'EUR', label: 'EURC', issuer: 'Circle' },
+};
+
+// Premium = how much MORE local currency a stablecoin buys vs the official rate.
+// Positive premium indicates dollar scarcity / capital controls.
+const scMarkets = [
+  { ccy: 'NGN', country: 'Nigeria',      premium:  6.8, spreadBps: 185, venue: 'Yellow Card' },
+  { ccy: 'KES', country: 'Kenya',        premium:  1.4, spreadBps: 165, venue: 'Kotani Pay' },
+  { ccy: 'GHS', country: 'Ghana',        premium:  4.2, spreadBps: 210, venue: 'Yellow Card' },
+  { ccy: 'ZAR', country: 'South Africa', premium:  0.5, spreadBps: 120, venue: 'VALR' },
+  { ccy: 'EGP', country: 'Egypt',        premium:  9.1, spreadBps: 265, venue: 'Binance P2P' },
+  { ccy: 'UGX', country: 'Uganda',       premium:  2.1, spreadBps: 195, venue: 'Kotani Pay' },
+  { ccy: 'TZS', country: 'Tanzania',     premium:  2.6, spreadBps: 205, venue: 'Fonbnk' },
+  { ccy: 'ETB', country: 'Ethiopia',     premium: 14.5, spreadBps: 340, venue: 'P2P only' },
+  { ccy: 'ZMW', country: 'Zambia',       premium:  3.3, spreadBps: 240, venue: 'Yellow Card' },
+  { ccy: 'MAD', country: 'Morocco',      premium:  1.8, spreadBps: 230, venue: 'Binance P2P' },
+];
+
+let activeStable = 'USDC';
+
+function setStablecoin(code) {
+  activeStable = code;
+  renderStableFx();
+}
+
+function renderStableFx() {
+  const toggle = document.getElementById('sc-toggle');
+  const body = document.getElementById('sc-fx-body');
+  if (!body) return;
+
+  if (toggle) {
+    toggle.innerHTML = Object.keys(stablecoins).map(c =>
+      `<button class="sc-chip ${c === activeStable ? 'active' : ''}" onclick="setStablecoin('${c}')">${c}</button>`
+    ).join('');
+  }
+
+  const sc = stablecoins[activeStable];
+  // Value of 1 stablecoin in USD terms (EURC is worth more than a dollar)
+  const pegInUsd = sc.peg === 'USD' ? 1 : (1 / (usdRates[sc.peg] || 1));
+
+  body.innerHTML = scMarkets.map(m => {
+    const official = (usdRates[m.ccy] || 0) * pegInUsd;   // official rate per 1 stablecoin
+    const street = official * (1 + m.premium / 100);      // what you actually get on-chain
+    const fmt = v => v.toLocaleString(undefined, { maximumFractionDigits: v < 100 ? 2 : 0 });
+    const premCls = m.premium >= 1 ? 'up' : 'dn';
+    const spreadColor = m.spreadBps < 200 ? 'var(--accent-green)'
+                      : m.spreadBps < 280 ? 'var(--accent-orange)' : 'var(--accent-red)';
+    return `<tr>
+      <td class="l">
+        <span class="sc-ccy">${sc.label}/${m.ccy}</span><br>
+        <span class="sc-country">${m.country}</span>
+      </td>
+      <td>${fmt(official)}</td>
+      <td style="color:var(--text-primary);font-weight:700">${fmt(street)}</td>
+      <td><span class="sc-prem ${premCls}">${m.premium >= 0 ? '+' : ''}${m.premium.toFixed(1)}%</span></td>
+      <td style="color:${spreadColor};font-weight:600">${m.spreadBps} bps</td>
+      <td class="c"><span class="sc-venue">${m.venue}</span></td>
+    </tr>`;
+  }).join('');
+}
+
+// ===== SEND MONEY — STABLECOIN ROUTING =====
+// A stablecoin transfer is three legs, and each one costs something:
+//   1. on-ramp  : sender's fiat -> stablecoin   (venue spread + card/bank fee)
+//   2. network  : chain transfer               (flat gas cost)
+//   3. off-ramp : stablecoin -> local currency (venue spread, offset by any premium)
+
+const onRamps = [
+  { name: 'Coinbase',     spread: 0.55, flatFee: 0.99, chains: ['Base','Ethereum'], coins: ['USDC','EURC'] },
+  { name: 'Kraken',       spread: 0.45, flatFee: 0.00, chains: ['Solana','Ethereum'], coins: ['USDC','USDT'] },
+  { name: 'Revolut',      spread: 0.99, flatFee: 0.00, chains: ['Polygon'], coins: ['USDC'] },
+  { name: 'Binance',      spread: 0.35, flatFee: 0.00, chains: ['BSC','Tron','Solana'], coins: ['USDC','USDT'] },
+  { name: 'Bitstamp',     spread: 0.60, flatFee: 0.00, chains: ['Ethereum'], coins: ['USDC','EURC'] },
+  { name: 'Transak',      spread: 1.45, flatFee: 0.00, chains: ['Polygon','Base'], coins: ['USDC','USDT'] },
+];
+
+const chainFees = { 'Tron': 1.10, 'Solana': 0.02, 'Base': 0.04, 'Polygon': 0.03, 'BSC': 0.12, 'Ethereum': 2.80, 'Stellar': 0.01 };
+
+// Off-ramps reuse scMarkets for premium/spread, keyed by venue name
+const offRampChains = {
+  'Yellow Card': ['Tron','Stellar','Polygon'],
+  'Kotani Pay':  ['Celo','Stellar','Polygon'],
+  'Binance P2P': ['Tron','BSC'],
+  'Fonbnk':      ['Solana','Polygon'],
+  'VALR':        ['Ethereum','Solana'],
+  'P2P only':    ['Tron'],
+};
+
+const scQuickCorridors = [
+  { from: 'GBP', to: 'NGN', label: '🇬🇧→🇳🇬 GBP/NGN' },
+  { from: 'USD', to: 'KES', label: '🇺🇸→🇰🇪 USD/KES' },
+  { from: 'EUR', to: 'MAD', label: '🇪🇺→🇲🇦 EUR/MAD' },
+  { from: 'USD', to: 'EGP', label: '🇺🇸→🇪🇬 USD/EGP' },
+  { from: 'CHF', to: 'KES', label: '🇨🇭→🇰🇪 CHF/KES' },
+  { from: 'USD', to: 'ETB', label: '🇺🇸→🇪🇹 USD/ETB' },
+  { from: 'GBP', to: 'GHS', label: '🇬🇧→🇬🇭 GBP/GHS' },
+  { from: 'EUR', to: 'ZAR', label: '🇪🇺→🇿🇦 EUR/ZAR' },
+];
+
+let scBridge = 'USDC';
+let lastStableRoutes = [];
+
+function setScBridge(c) { scBridge = c; updateStableQuotes(); }
+
+function initStableSend() {
+  const f = document.getElementById('sc-send-from');
+  if (!f) return;
+  if (!f.options.length) {
+    fillCcySelect(f, [...foreignCurrencies, ...africanCurrencies], 'GBP');
+    fillCcySelect(document.getElementById('sc-send-to'), scMarkets.map(m => m.ccy), 'NGN');
+  }
+  updateStableQuotes();
+  startQuoteStream();
+}
+
+function swapStableCorridor() {
+  const f = document.getElementById('sc-send-from'), t = document.getElementById('sc-send-to');
+  if (![...t.options].some(o => o.value === f.value)) {
+    zxToast('Can’t swap', `${f.value} isn’t a stablecoin cash-out market yet.`);
+    return;
+  }
+  const tmp = f.value; f.value = t.value; t.value = tmp;
+  updateStableQuotes();
+}
+
+// A stablecoin transfer is up to three legs, and each one costs something:
+//   1. on-ramp  : sender's fiat -> stablecoin   (venue spread + flat fee)
+//   2. network  : chain transfer               (gas)
+//   3. off-ramp : stablecoin -> local currency (venue spread, offset by any street-rate premium)
+// If the recipient takes crypto, leg 3 disappears and they receive the stablecoin itself.
+function stableRoutes(from, to, amount, recip, isTick) {
+  const mkt = scMarkets.find(m => m.ccy === to);
+  const sc = stablecoins[scBridge];
+  const pegInUsd = sc.peg === 'USD' ? 1 : 1 / (usdRates[sc.peg] || 1);
+  const fromPerUsd = usdRates[from] || 1;
+  const coinInFrom = pegInUsd * fromPerUsd;               // price of 1 coin in sender currency
+  const toCrypto = !!(recip && recip.type === 'crypto');
+  const mid = toCrypto ? 1 / coinInFrom : (usdRates[to] || 1) / fromPerUsd;
+  const localPerCoin = mkt ? (usdRates[to] || 0) * pegInUsd * (1 + mkt.premium / 100) : 0;
+
+  const routes = [];
+  onRamps.forEach(r => {
+    if (!r.coins.includes(scBridge)) return;
+    let chain;
+    if (toCrypto) {
+      if (!r.chains.includes(recip.network)) return;       // must reach the recipient's network
+      chain = recip.network;
+    } else {
+      if (!mkt) return;
+      const offChains = offRampChains[mkt.venue] || ['Tron'];
+      chain = r.chains.find(c => offChains.includes(c)) || r.chains[0];
+    }
+    const jitter = isTick ? (Math.random() - 0.5) * 0.06 : 0;
+    const onSpread = Math.max(0.1, r.spread + jitter);
+    const onCost = onSpread / 100 * amount + r.flatFee * fromPerUsd;
+    const gasCost = (chainFees[chain] ?? 0.5) * fromPerUsd;
+    const coins = Math.max(0, (amount - onCost - gasCost) / coinInFrom);
+
+    let received, offCost = 0;
+    if (toCrypto) {
+      received = coins;
+    } else {
+      const offSpread = mkt.spreadBps / 100;
+      received = coins * localPerCoin * (1 - offSpread / 100);
+      offCost = coins * coinInFrom * offSpread / 100;
+    }
+    const cost = amount - received / mid;                  // vs mid, in sender currency; negative = beats mid
+    const premium = onCost + gasCost + offCost - cost;     // what the street-rate premium gave back
+    const speed = chain === 'Ethereum' ? '3–8 min' : chain === 'Tron' ? 'under 2 min' : 'under 1 min';
+    routes.push({
+      name: toCrypto ? r.name : `${r.name} → ${mkt.venue}`,
+      sub: `${scBridge} on ${chain} · ${speed}`,
+      onRamp: r.name, offRamp: toCrypto ? null : mkt.venue, chain,
+      onCost, gasCost, offCost, premium, cost,
+      costPct: amount ? cost / amount * 100 : 0,
+      rate: amount ? received / amount : 0, received,
+    });
+  });
+  routes.sort((a, b) => a.cost - b.cost);
+  return { mid, routes, recvCcy: toCrypto ? scBridge : to, toCrypto };
+}
+
+function updateStableQuotes(isTick) {
+  const fromEl = document.getElementById('sc-send-from'), toEl = document.getElementById('sc-send-to');
+  if (!fromEl || !fromEl.value || !toEl.value) return;
+  const from = fromEl.value, to = toEl.value;
+  const amount = Math.max(0, parseFloat(document.getElementById('sc-send-amount').value) || 0);
+
+  const r0 = selectedRecipient('stable');
+  if (r0 && r0.type !== 'crypto' && r0.ccy !== to) zxSel.stable = null;
+  const recip = selectedRecipient('stable');
+  renderRecipientChip('stable');
+  toEl.disabled = !!(recip && recip.type === 'crypto');   // crypto recipients get the coin, not local currency
+  const toCrypto = document.getElementById('sc-to-crypto');
+  toCrypto.hidden = !toEl.disabled;
+  toCrypto.textContent = `${scBridge}, to their crypto wallet`;
+
+  document.getElementById('sc-bridge-toggle').innerHTML = Object.keys(stablecoins).map(c =>
+    `<button class="${c === scBridge ? 'on' : ''}" onclick="setScBridge('${c}')">${c}</button>`).join('');
+
+  const res = stableRoutes(from, to, amount, recip, isTick);
+  lastStableRoutes = res.routes;
+  document.getElementById('sc-mid').textContent = `1 ${from} = ${fmtRate(res.mid)} ${res.recvCcy}`;
+
+  const list = document.getElementById('sc-routes-list');
+  const cmp = document.getElementById('sc-compare');
+  cmp.innerHTML = '';
+  const empty = msg => { list.innerHTML = `<div class="zx-empty">${msg}</div>`; lastStableRoutes = []; };
+  if (!amount) return empty('Enter an amount to see what each route costs.');
+  if (!res.routes.length) return empty(res.toCrypto
+    ? `No on-ramp sends ${scBridge} on ${esc(recip.network)}. Try another stablecoin, or change the recipient.`
+    : `No ${scBridge} routes for ${from} → ${to}. Try another stablecoin.`);
+
+  const best = res.routes[0];
+
+  // Against the best ordinary (fiat) provider on the same corridor
+  if (!res.toCrypto && from !== to) {
+    const fb = fiatQuotes(from, to, amount).quotes[0];
+    if (fb) {
+      const diff = best.received - fb.received;
+      cmp.innerHTML = `vs best bank transfer (${esc(fb.name)}): <b style="color:var(--text-primary)">${diff >= 0 ? '+' : '−'}${fmtAmt(Math.abs(diff))} ${to}</b>`;
+    }
+  }
+
+  list.innerHTML = res.routes.map((q, i) => {
+    let breakdown = `On-ramp ${fmtAmt(q.onCost)} + network ${fmtAmt(q.gasCost)}`;
+    if (q.offRamp) breakdown += ` + off-ramp ${fmtAmt(q.offCost)}`;
+    if (q.premium >= 0.005) breakdown += ` − street-rate premium ${fmtAmt(q.premium)}`;
+    else if (q.premium <= -0.005) breakdown += ` + street-rate discount ${fmtAmt(-q.premium)}`;
+    return zxQuoteRow({
+      i, q, from, recvCcy: res.recvCcy,
+      mid: res.mid,
+      breakdown,
+      onSend: `beginSend('stable',${i})`,
+    });
+  }).join('');
+}
+
+// ===== DAILY QUOTE — proverbs and African voices, rotating by day of year =====
+const dailyQuotes = [
+  { t: "If you want to go fast, go alone. If you want to go far, go together.", a: "Proverb", o: "Akan, Ghana" },
+  { t: "However far the stream flows, it never forgets its source.", a: "Proverb", o: "Yoruba, Nigeria" },
+  { t: "Knowledge is like a garden: if it is not cultivated, it cannot be harvested.", a: "Proverb", o: "Guinea" },
+  { t: "It always seems impossible until it is done.", a: "Nelson Mandela", o: "South Africa" },
+  { t: "A united family eats from the same plate.", a: "Proverb", o: "Baganda, Uganda" },
+  { t: "Where there are no dogs, the wild cats walk about.", a: "Proverb", o: "Wolof, Senegal" },
+  { t: "The best time to plant a tree was twenty years ago. The second best time is now.", a: "Proverb", o: "widely cited, Africa" },
+  { t: "You must be the change you wish to see, and Africa's story must be told by Africans.", a: "Chinua Achebe", o: "Nigeria" },
+  { t: "The wealth of a nation lies not in its resources but in the courage of its people.", a: "Proverb", o: "Ethiopia" },
+  { t: "Smooth seas do not make skilful sailors.", a: "Proverb", o: "Ghana" },
+  { t: "Rain does not fall on one roof alone.", a: "Proverb", o: "Cameroon" },
+  { t: "Until the lion learns to write, every story will glorify the hunter.", a: "Proverb", o: "widely cited, West Africa" },
+  { t: "We must use time wisely and forever realise that the time is always ripe to do right.", a: "Nelson Mandela", o: "South Africa" },
+  { t: "A river that forgets its source will dry up.", a: "Proverb", o: "Yoruba, Nigeria" },
+  { t: "If you think you are too small to make a difference, you have not spent a night with a mosquito.", a: "Proverb", o: "East Africa" },
+  { t: "Wisdom is like a baobab tree; no one individual can embrace it.", a: "Proverb", o: "Akan, Ghana" },
+  { t: "The person who has not travelled widely thinks their mother is the best cook.", a: "Proverb", o: "Uganda" },
+  { t: "A bird will always use another bird's feathers to build its nest.", a: "Proverb", o: "Sesotho, Lesotho" },
+  { t: "Sticks in a bundle are unbreakable.", a: "Proverb", o: "Bondei, Tanzania" },
+  { t: "Do not look where you fell, but where you slipped.", a: "Proverb", o: "Liberia" },
+  { t: "Money is sharper than a sword.", a: "Proverb", o: "Ashanti, Ghana" },
+  { t: "The one who asks questions does not lose their way.", a: "Proverb", o: "Akan, Ghana" },
+  { t: "Cross the river in a crowd and the crocodile will not eat you.", a: "Proverb", o: "Madagascar" },
+  { t: "He who does not know one thing knows another.", a: "Proverb", o: "Kenya" },
+  { t: "The future belongs to those who prepare for it today.", a: "Proverb", o: "widely cited, Africa" },
+  { t: "No one tests the depth of a river with both feet.", a: "Proverb", o: "Ashanti, Ghana" },
+  { t: "A single bracelet does not jingle.", a: "Proverb", o: "Congo" },
+  { t: "Patience is the mother of a beautiful child.", a: "Proverb", o: "Bantu" },
+  { t: "The axe forgets, but the tree remembers.", a: "Proverb", o: "Zimbabwe" },
+  { t: "Learning expands great souls.", a: "Proverb", o: "Namibia" },
+  { t: "When the music changes, so does the dance.", a: "Proverb", o: "Hausa, Nigeria" },
+];
+
+function renderDailyQuote() {
+  const el = document.getElementById('home-quote');
+  if (!el) return;
+  const now = new Date();
+  const start = new Date(now.getFullYear(), 0, 0);
+  const dayOfYear = Math.floor((now - start) / 86400000);
+  const q = dailyQuotes[dayOfYear % dailyQuotes.length];
+  el.innerHTML = `<div class="hq-text">&ldquo;${q.t}&rdquo;</div>
+    <div class="hq-attr">${q.a} <span class="hq-origin">&middot; ${q.o}</span></div>`;
 }
 
 // Simulate live price updates
@@ -4305,6 +5574,1340 @@ function exportCalendar() {
 }
 
 
+// ==================== ACCOUNT, RECIPIENTS, SEND FLOW & WALLET ====================
+// Demo: everything is kept in this browser's localStorage. Nothing is sent anywhere.
+
+const ZX_KEY = 'zena.demo.v1';
+const ZX_DEFAULTS = () => ({ account: null, signedIn: false, balances: { CHF: 0, USD: 0, EUR: 0 }, cards: [], recipients: [], activity: [] });
+function zxLoad() {
+  try { const s = JSON.parse(localStorage.getItem(ZX_KEY)); if (s && typeof s === 'object') return s; } catch (e) {}
+  return null;
+}
+const zxState = Object.assign(ZX_DEFAULTS(), zxLoad() || {});
+function zxSave() { try { localStorage.setItem(ZX_KEY, JSON.stringify(zxState)); } catch (e) {} }
+function zxSignedIn() { return !!(zxState.account && zxState.signedIn); }
+
+const zxSel = { fiat: null, stable: null };   // chosen recipient id, per send page
+function selectedRecipient(mode) { return zxState.recipients.find(r => r.id === zxSel[mode]) || null; }
+
+// ---------- small helpers ----------
+function esc(s) { return String(s ?? '').replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c])); }
+function fmtAmt(v, d = 2) { return Number(v || 0).toLocaleString(undefined, { minimumFractionDigits: d, maximumFractionDigits: d }); }
+function fmtRate(r) { return r < 1 ? r.toFixed(6) : r < 10 ? r.toFixed(4) : r.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 }); }
+function zxTime(t) { return new Date(t || Date.now()).toLocaleTimeString('en-GB', { hour: '2-digit', minute: '2-digit' }); }
+function zxVal(id) { return (document.getElementById(id)?.value || '').trim(); }
+function zxErr(id, msg) { const e = document.getElementById(id); if (e) e.textContent = msg; return false; }
+
+function openZx(html) {
+  document.querySelector('#zx-modal .zx-sheet').classList.remove('wide');
+  document.getElementById('zx-modal-body').innerHTML = html;
+  document.getElementById('zx-modal').classList.add('open');
+  document.body.style.overflow = 'hidden';
+}
+function closeZx() {
+  document.getElementById('zx-modal').classList.remove('open');
+  document.body.style.overflow = '';
+}
+document.addEventListener('keydown', e => {
+  if (e.key === 'Escape' && document.getElementById('zx-modal')?.classList.contains('open')) closeZx();
+});
+
+function zxToast(title, sub) {
+  document.querySelector('.deal-toast')?.remove();
+  const t = document.createElement('div');
+  t.className = 'deal-toast';
+  t.innerHTML = `<div class="dt-t">${esc(title)}</div><div class="dt-s">${esc(sub || '')}</div>`;
+  document.body.appendChild(t);
+  requestAnimationFrame(() => t.classList.add('show'));
+  setTimeout(() => { t.classList.remove('show'); setTimeout(() => t.remove(), 320); }, 3600);
+}
+
+// ---------- recipients ----------
+const MOBILE_MONEY = {
+  KES: ['M-Pesa', 'Airtel Money'], UGX: ['MTN MoMo', 'Airtel Money'], TZS: ['M-Pesa (Vodacom)', 'Mixx by Yas', 'Airtel Money'],
+  GHS: ['MTN MoMo', 'Telecel Cash', 'AT Money'], NGN: ['OPay', 'PalmPay', 'MoMo PSB'], XOF: ['Orange Money', 'Wave', 'MTN MoMo', 'Moov Money'],
+  RWF: ['MTN MoMo', 'Airtel Money'], ZMW: ['MTN MoMo', 'Airtel Money'], ETB: ['telebirr', 'M-Pesa Ethiopia'],
+  EGP: ['Vodafone Cash', 'InstaPay'], MAD: ['Orange Money'],
+};
+const CRYPTO_NETWORKS = ['Tron', 'Solana', 'Base', 'Polygon', 'Ethereum', 'BSC', 'Stellar'];
+const RECIP_TYPES = { bank: 'Bank account', mobile: 'Mobile money', crypto: 'Crypto wallet' };
+
+function recipLabel(r) {
+  if (r.type === 'bank') return `${esc(r.bank)} ····${esc(r.account.slice(-4))}`;
+  if (r.type === 'mobile') return `${esc(r.provider)} ····${esc(r.phone.replace(/\D/g, '').slice(-4))}`;
+  return `${esc(r.network)} wallet ${esc(r.address.slice(0, 6))}…${esc(r.address.slice(-4))}`;
+}
+function recipAllowed(mode, r) {
+  if (mode === 'fiat') return r.type !== 'crypto';
+  return r.type === 'crypto' || scMarkets.some(m => m.ccy === r.ccy);
+}
+
+function renderRecipientChip(mode) {
+  const el = document.getElementById(mode === 'fiat' ? 'fx-recip' : 'sc-recip');
+  if (!el) return;
+  const r = selectedRecipient(mode);
+  el.innerHTML = r
+    ? `<span class="zx-chip"><span class="zx-chip-k">To</span><b>${esc(r.name)}</b><span>${recipLabel(r)}</span>
+         <button onclick="openRecipientPicker('${mode}')">Change</button>
+         <button onclick="clearRecipient('${mode}')" aria-label="Remove recipient">&times;</button></span>`
+    : '';
+}
+
+let zxPickMode = 'fiat', zxAfterPick = null, zxRecipType = 'bank';
+
+function openRecipientPicker(mode, after) {
+  zxPickMode = mode;
+  zxAfterPick = after || null;
+  const saved = zxState.recipients.filter(r => recipAllowed(mode, r));
+  const types = mode === 'stable' ? ['crypto', 'bank', 'mobile'] : ['bank', 'mobile'];
+  openZx(`<h3>Who are you sending to?</h3>
+    ${saved.length ? `<div class="zx-sub">Saved recipients</div>
+      <div class="zx-rlist">${saved.map(r => `<button class="zx-ritem" onclick="pickRecipient('${r.id}')">
+        <b>${esc(r.name)}</b><span>${recipLabel(r)} &middot; ${r.type === 'crypto' ? 'receives crypto' : esc(r.ccy)}</span></button>`).join('')}</div>
+      <div class="zx-sub">Or add someone new</div>` : `<div class="zx-sub">How should they receive it?</div>`}
+    <div class="zx-seg" id="zx-rtype">${types.map(t => `<button data-t="${t}" onclick="setRecipType('${t}')">${RECIP_TYPES[t]}</button>`).join('')}</div>
+    <div id="zx-rform"></div>`);
+  setRecipType(types[0]);
+}
+
+function setRecipType(t) {
+  zxRecipType = t;
+  document.querySelectorAll('#zx-rtype button').forEach(b => b.classList.toggle('on', b.dataset.t === t));
+  const mode = zxPickMode;
+  const toNow = zxVal(mode === 'fiat' ? 'send-to' : 'sc-send-to');
+  const ccys = mode === 'stable' ? scMarkets.map(m => m.ccy) : [...africanCurrencies, ...foreignCurrencies];
+  const ccySelect = `<label class="zx-l" for="zr-ccy">Country / currency they receive</label>
+    <select class="zx-in" id="zr-ccy" onchange="refreshMobileProviders()">${ccys.filter(c => currencyLibrary[c]).map(c =>
+      `<option value="${c}"${c === toNow ? ' selected' : ''}>${currencyLibrary[c].flag} ${currencyLibrary[c].country} — ${c}</option>`).join('')}</select>`;
+  let fields = '';
+  if (t === 'bank') fields = `${ccySelect}
+    <label class="zx-l" for="zr-bank">Bank name</label><input class="zx-in" id="zr-bank" autocomplete="off">
+    <label class="zx-l" for="zr-account">Account number or IBAN</label><input class="zx-in" id="zr-account" autocomplete="off">
+    <label class="zx-l" for="zr-swift">SWIFT / BIC <span class="opt">(optional)</span></label><input class="zx-in" id="zr-swift" autocomplete="off">`;
+  else if (t === 'mobile') fields = `${ccySelect}
+    <label class="zx-l" for="zr-provider">Mobile money provider</label><select class="zx-in" id="zr-provider"></select>
+    <label class="zx-l" for="zr-phone">Mobile number, with country code</label><input class="zx-in" id="zr-phone" type="tel" placeholder="+254 712 345 678" autocomplete="off">`;
+  else fields = `
+    <label class="zx-l" for="zr-network">Network</label>
+    <select class="zx-in" id="zr-network">${CRYPTO_NETWORKS.map(n => `<option>${n}</option>`).join('')}</select>
+    <label class="zx-l" for="zr-address">Wallet address</label><input class="zx-in" id="zr-address" autocomplete="off" spellcheck="false">
+    <div class="zx-note">Check the network carefully. Coins sent on the wrong network can be lost for good.</div>`;
+  document.getElementById('zx-rform').innerHTML = `
+    <label class="zx-l" for="zr-name">${t === 'crypto' ? 'Recipient name' : 'Full name, as on their account'}</label><input class="zx-in" id="zr-name" autocomplete="off">
+    ${fields}
+    <div class="zx-err" id="zr-err"></div>
+    <div class="zx-actions"><button class="zx-btn" onclick="saveRecipient()">Save recipient</button><button class="zx-btn ghost" onclick="closeZx()">Cancel</button></div>`;
+  if (t === 'mobile') refreshMobileProviders();
+}
+
+function refreshMobileProviders() {
+  const sel = document.getElementById('zr-provider');
+  if (!sel) return;
+  const list = MOBILE_MONEY[zxVal('zr-ccy')] || [];
+  sel.innerHTML = list.length ? list.map(p => `<option>${p}</option>`).join('') : `<option value="">Not available, use a bank account</option>`;
+}
+
+function saveRecipient() {
+  const t = zxRecipType, name = zxVal('zr-name');
+  if (name.length < 2) return zxErr('zr-err', 'Enter the recipient’s full name.');
+  const r = { id: 'r' + Date.now().toString(36), type: t, name };
+  if (t === 'crypto') {
+    r.network = zxVal('zr-network');
+    r.address = zxVal('zr-address');
+    if (r.address.length < 20) return zxErr('zr-err', 'That wallet address looks too short.');
+  } else {
+    r.ccy = zxVal('zr-ccy');
+    if (t === 'bank') {
+      r.bank = zxVal('zr-bank');
+      r.account = zxVal('zr-account').replace(/\s+/g, '');
+      r.swift = zxVal('zr-swift');
+      if (!r.bank) return zxErr('zr-err', 'Enter the bank name.');
+      if (r.account.length < 5) return zxErr('zr-err', 'Enter the account number or IBAN.');
+    } else {
+      r.provider = zxVal('zr-provider');
+      r.phone = zxVal('zr-phone');
+      if (!r.provider) return zxErr('zr-err', `Mobile money isn’t available for ${r.ccy}. Use a bank account instead.`);
+      if (r.phone.replace(/\D/g, '').length < 8) return zxErr('zr-err', 'Enter the mobile number, with country code.');
+    }
+  }
+  zxState.recipients.push(r);
+  zxSave();
+  pickRecipient(r.id);
+}
+
+function pickRecipient(id) {
+  const r = zxState.recipients.find(x => x.id === id);
+  if (!r) return;
+  const mode = zxPickMode;
+  zxSel[mode] = id;
+  if (r.type !== 'crypto') {
+    const sel = document.getElementById(mode === 'fiat' ? 'send-to' : 'sc-send-to');
+    if (sel && [...sel.options].some(o => o.value === r.ccy)) sel.value = r.ccy;
+  }
+  closeZx();
+  mode === 'fiat' ? updateTransferQuotes() : updateStableQuotes();
+  if (zxAfterPick) { const f = zxAfterPick; zxAfterPick = null; f(); }
+}
+
+function clearRecipient(mode) {
+  zxSel[mode] = null;
+  mode === 'fiat' ? updateTransferQuotes() : updateStableQuotes();
+}
+
+// ---------- send flow: provider -> recipient -> account -> review ----------
+let zxPending = null;   // { mode, name, snapshot }
+
+function beginSend(mode, idx) {
+  const q = (mode === 'fiat' ? lastFiatQuotes : lastStableRoutes)[idx];
+  if (!q) return;
+  zxPending = { mode, name: q.name };
+  if (!selectedRecipient(mode)) return openRecipientPicker(mode, continueSend);
+  continueSend();
+}
+
+// Re-price at the moment of review; the recipient may have changed the corridor
+function currentPendingQuote() {
+  const mode = zxPending.mode;
+  mode === 'fiat' ? updateTransferQuotes() : updateStableQuotes();
+  return (mode === 'fiat' ? lastFiatQuotes : lastStableRoutes).find(q => q.name === zxPending.name) || null;
+}
+
+function continueSend() {
+  if (!zxPending) return;
+  const q = currentPendingQuote();
+  if (!q) {
+    const n = zxPending.name;
+    zxPending = null;
+    closeZx();
+    zxToast(`${n} doesn’t cover this route`, 'Pick another provider from the list.');
+    return;
+  }
+  if (!zxSignedIn()) {
+    openZx(`<h3>Open a Zena account to send</h3>
+      <p class="zx-p">You verify once, with Zena. We pass your verified profile to ${esc(q.name)}, so you don’t upload your
+      documents again for every provider you use.</p>
+      <div class="zx-actions">
+        <button class="zx-btn" onclick="closeZx();startSignup('personal')">Open personal account</button>
+        <button class="zx-btn ghost" onclick="closeZx();startSignup('org')">Open organisation account</button>
+      </div>
+      ${zxState.account ? `<p class="zx-p sm">Already have one? <a href="#" onclick="event.preventDefault();openSignIn()">Sign in</a></p>` : ''}`);
+    return;
+  }
+  showReview(q);
+}
+
+function resumePendingSend() {
+  if (!zxPending) return false;
+  switchLayer(zxPending.mode === 'fiat' ? 1 : 4);
+  continueSend();
+  return true;
+}
+
+function showReview(q) {
+  const mode = zxPending.mode, r = selectedRecipient(mode);
+  const from = zxVal(mode === 'fiat' ? 'send-from' : 'sc-send-from');
+  const amount = parseFloat(zxVal(mode === 'fiat' ? 'send-amount' : 'sc-send-amount')) || 0;
+  const recvCcy = mode === 'fiat' ? zxVal('send-to') : (r.type === 'crypto' ? scBridge : zxVal('sc-send-to'));
+  const line = (k, v, cls) => `<div${cls ? ` class="${cls}"` : ''}><span>${k}</span><b>${v}</b></div>`;
+  const costLines = mode === 'fiat'
+    ? (q.fee > 0 ? line('Fee', `${fmtAmt(q.fee)} ${from}`) : '')
+      + line('Spread fee (in the exchange rate)', `${fmtAmt(q.markup)} ${from}`)
+    : line(`On-ramp: ${esc(q.onRamp)} buys ${scBridge}`, `${fmtAmt(q.onCost)} ${from}`)
+      + line(`Network fee (${esc(q.chain)})`, `${fmtAmt(q.gasCost)} ${from}`)
+      + (q.offRamp ? line(`Off-ramp: ${esc(q.offRamp)} pays out ${recvCcy}`, `${fmtAmt(q.offCost)} ${from}`) : '')
+      + (q.premium >= 0.005 ? line('Street-rate premium (in your favour)', `−${fmtAmt(q.premium)} ${from}`, 'gain') : '');
+  const gain = q.cost < 0;
+
+  const bal = zxState.balances[from];
+  const payOpts = [];
+  if (bal !== undefined) payOpts.push(`<option value="wallet"${bal < amount ? ' disabled' : ''}>Zena wallet: ${fmtAmt(bal)} ${from}${bal < amount ? ' (not enough)' : ''}</option>`);
+  zxState.cards.forEach(c => payOpts.push(`<option value="card:${c.id}">${esc(c.brand)} ····${esc(c.last4)}</option>`));
+  payOpts.push(`<option value="bank">Bank transfer (details shown after you confirm)</option>`);
+
+  zxPending.snapshot = { from, amount, recvCcy, received: q.received, cost: q.cost, provider: q.name, recipient: r.name };
+  openZx(`<h3>Review your transfer</h3>
+    <div class="zx-lines">
+      ${line('You send', `${fmtAmt(amount)} ${from}`)}
+      ${costLines}
+      ${line('Cost of sending', gain ? `+${fmtAmt(-q.cost)} ${from} gain` : `${fmtAmt(q.cost)} ${from} (${q.costPct.toFixed(2)}%)`, gain ? 'gain' : 'tot')}
+      ${line('Exchange rate', `1 ${from} = ${fmtRate(q.rate)} ${recvCcy}`)}
+      ${line(`${esc(r.name)} gets`, `${fmtAmt(q.received)} ${recvCcy}`, 'big')}
+    </div>
+    <div class="zx-lines">
+      ${line('To', `${esc(r.name)} · ${recipLabel(r)}`)}
+      ${line('Sent by', `${esc(q.name)} · ${esc(q.sub)}`)}
+    </div>
+    <label class="zx-l" for="zx-payby">Pay with</label>
+    <select class="zx-in" id="zx-payby">${payOpts.join('')}</select>
+    <div class="zx-err" id="zx-rev-err"></div>
+    <div class="zx-actions"><button class="zx-btn" onclick="confirmSend()">Confirm and send</button><button class="zx-btn ghost" onclick="closeZx()">Cancel</button></div>
+    <p class="zx-p sm">Demo only: no money moves. In production, ${esc(q.name)} carries out the transfer under its own licence,
+    and Zena passes on your verified profile.</p>`);
+}
+
+function confirmSend() {
+  const s = zxPending && zxPending.snapshot;
+  if (!s) return;
+  const pay = zxVal('zx-payby');
+  let payLabel = 'bank transfer';
+  if (pay === 'wallet') {
+    if ((zxState.balances[s.from] || 0) < s.amount) return zxErr('zx-rev-err', 'Not enough in your wallet. Add money or choose another way to pay.');
+    zxState.balances[s.from] -= s.amount;
+    payLabel = `${s.from} wallet`;
+  } else if (pay.startsWith('card:')) {
+    const c = zxState.cards.find(x => 'card:' + x.id === pay);
+    payLabel = c ? `${c.brand} ····${c.last4}` : 'card';
+  }
+  zxState.activity.unshift({
+    t: Date.now(), title: `Sent to ${s.recipient} via ${s.provider}`,
+    sub: `They get ${fmtAmt(s.received)} ${s.recvCcy} · paid by ${payLabel}`,
+    ...(pay === 'wallet' ? { amt: -s.amount, ccy: s.from } : {}),
+  });
+  trLogFromSend(zxPending.mode, s);
+  zxSave();
+  zxPending = null;
+  openZx(`<div class="zx-done">&#10003;</div><h3>Transfer submitted</h3>
+    <p class="zx-p">${esc(s.recipient)} will get <b>${fmtAmt(s.received)} ${esc(s.recvCcy)}</b> through ${esc(s.provider)}.
+    ${pay === 'bank' ? 'In production, you would now see the bank details to pay into.' : ''}</p>
+    <div class="zx-actions"><button class="zx-btn" onclick="closeZx();switchLayer(7)">Go to wallet</button><button class="zx-btn ghost" onclick="closeZx()">Done</button></div>`);
+}
+
+// ---------- account: sign-up ----------
+const ZX_COUNTRIES = ['Switzerland', 'United Kingdom', 'Germany', 'France', 'Italy', 'Netherlands', 'Belgium', 'Ireland', 'Spain', 'Sweden',
+  'United States', 'Canada', 'United Arab Emirates', 'Saudi Arabia', 'Kenya', 'Nigeria', 'Ghana', 'South Africa', 'Uganda', 'Tanzania',
+  'Rwanda', 'Ethiopia', 'Egypt', 'Morocco', 'Senegal', 'Côte d’Ivoire', 'Zambia', 'Other'];
+
+// [key, label, type, required]
+const SIGNUP_FIELDS = {
+  personal: [
+    ['first', 'First name', 'text', 1], ['last', 'Last name', 'text', 1],
+    ['email', 'Email', 'email', 1], ['phone', 'Mobile number', 'tel', 1],
+    ['dob', 'Date of birth', 'date', 1], ['nationality', 'Nationality', 'country', 1],
+    ['country', 'Country of residence', 'country', 1], ['address', 'Street and number', 'text', 1],
+    ['postcode', 'Postcode', 'text', 1], ['city', 'City', 'text', 1],
+    ['purpose', 'Main reason for sending', 'select:Family support|Bills or school fees|Savings or investment at home|Business|Other', 1],
+  ],
+  org: [
+    ['orgName', 'Organisation name', 'text', 1],
+    ['orgType', 'Type of organisation', 'select:Company (GmbH, AG, Ltd…)|NGO, association or foundation|Sole trader', 1],
+    ['regNo', 'Registration number (e.g. CHE-123.456.789)', 'text', 1], ['country', 'Country of registration', 'country', 1],
+    ['address', 'Registered address', 'text', 1], ['city', 'Postcode and city', 'text', 1],
+    ['website', 'Website', 'text', 0], ['first', 'Contact person: first name', 'text', 1],
+    ['last', 'Contact person: last name', 'text', 1], ['role', 'Their role', 'text', 1],
+    ['email', 'Work email', 'email', 1], ['phone', 'Phone', 'tel', 1],
+    ['volume', 'Expected monthly volume', 'select:Under CHF 10,000|CHF 10,000–50,000|CHF 50,000–250,000|Over CHF 250,000', 1],
+    ['corridors', 'Main countries you pay into', 'text', 1],
+  ],
+};
+// [key, label, hint, required]
+const SIGNUP_DOCS = {
+  personal: [
+    ['id', 'Photo ID', 'Passport, national ID card or residence permit', 1],
+    ['selfie', 'Selfie', 'A clear photo of your face, matched to your ID', 1],
+    ['poa', 'Proof of address', 'Utility bill, bank statement or official letter from the last 3 months', 1],
+    ['sof', 'Source of funds', 'Payslip or 3 months of bank statements. Only needed for higher limits', 0],
+  ],
+  org: [
+    ['reg', 'Registration document', 'Commercial register extract (under 12 months old) or certificate of incorporation', 1],
+    ['aoa', 'Articles of association', 'Statutes or constitution', 1],
+    ['ubo', 'Beneficial owners', 'Form K / Form A, or equivalent: everyone owning or controlling 25% or more', 1],
+    ['ids', 'IDs of directors and signatories', 'Photo ID for each, plus proof they may act for the organisation', 1],
+    ['poa', 'Proof of business address', 'Dated within the last 3 months', 1],
+    ['sof', 'Source of funds', 'Latest financial statements or, for NGOs, donor or grant agreements', 0],
+  ],
+};
+
+let zxSignup = null;   // { type, step, data, docs }
+
+function startSignup(type) {
+  zxSignup = { type, step: 1, data: {}, docs: {} };
+  if (document.getElementById('layer-7').classList.contains('active')) renderAccount(); else switchLayer(7);
+  window.scrollTo(0, 0);
+}
+
+function signupFieldHtml([key, label, type, req]) {
+  const v = esc(zxSignup.data[key] || '');
+  const id = `su-${key}`;
+  const lab = `<label class="zx-l" for="${id}">${label}${req ? '' : ' <span class="opt">(optional)</span>'}</label>`;
+  if (type === 'country' || type.startsWith('select:')) {
+    const opts = type === 'country' ? ZX_COUNTRIES : type.slice(7).split('|');
+    return `<div>${lab}<select class="zx-in" id="${id}"><option value="">Choose…</option>${opts.map(o =>
+      `<option${o === zxSignup.data[key] ? ' selected' : ''}>${esc(o)}</option>`).join('')}</select></div>`;
+  }
+  return `<div>${lab}<input class="zx-in" id="${id}" type="${type}" value="${v}" autocomplete="off"></div>`;
+}
+
+function renderSignup(root) {
+  const s = zxSignup, org = s.type === 'org';
+  const steps = [org ? 'Organisation details' : 'Your details', 'Documents', 'Review'];
+  const stepBar = `<div class="zx-steps">${steps.map((t, i) =>
+    `<span class="${i + 1 === s.step ? 'on' : i + 1 < s.step ? 'done' : ''}">${i + 1}. ${t}</span>`).join('')}</div>`;
+  let body = '';
+  if (s.step === 1) {
+    body = `<div class="zx-formgrid">${SIGNUP_FIELDS[s.type].map(signupFieldHtml).join('')}</div>
+      <div class="zx-err" id="su-err"></div>
+      <div class="zx-actions"><button class="zx-btn" onclick="signupNext()">Continue</button><button class="zx-btn ghost" onclick="cancelSignup()">Cancel</button></div>`;
+  } else if (s.step === 2) {
+    body = `<p class="zx-p sm">Photos or PDFs. In this demo your files stay on your device; only the file names are noted.
+      <a href="#" onclick="event.preventDefault();cancelSignup(true)">Why do we ask for these?</a></p>
+      ${SIGNUP_DOCS[s.type].map(([k, label, hint, req]) => `<div class="zx-doc">
+        <div>${label}${req ? '' : ' <span class="zx-muted">(optional)</span>'}<small>${hint}</small>
+          ${s.docs[k] ? `<span class="ok">&#10003; ${esc(s.docs[k])}</span>` : ''}</div>
+        <input type="file" accept="image/*,.pdf" ${k === 'selfie' ? 'capture="user"' : ''} onchange="signupDoc('${k}', this)" aria-label="${label}">
+      </div>`).join('')}
+      <div class="zx-err" id="su-err"></div>
+      <div class="zx-actions"><button class="zx-btn" onclick="signupNext()">Continue</button><button class="zx-btn ghost" onclick="signupBack()">Back</button></div>`;
+  } else {
+    const d = s.data;
+    const name = org ? d.orgName : `${d.first} ${d.last}`;
+    body = `<div class="zx-lines">
+        <div><span>Account type</span><b>${org ? 'Organisation' : 'Personal'}</b></div>
+        <div><span>${org ? 'Organisation' : 'Name'}</span><b>${esc(name)}</b></div>
+        ${org ? `<div><span>Contact</span><b>${esc(d.first)} ${esc(d.last)}, ${esc(d.role)}</b></div>` : ''}
+        <div><span>Email</span><b>${esc(d.email)}</b></div>
+        <div><span>Country</span><b>${esc(d.country)}</b></div>
+        <div><span>Documents</span><b>${Object.keys(s.docs).length} uploaded</b></div>
+      </div>
+      <label class="zx-check"><input type="checkbox" id="su-consent"> I confirm this information is correct, and I agree that Zena may share
+        my verified profile with the providers I choose to send through, and only those.</label>
+      <div class="zx-err" id="su-err"></div>
+      <div class="zx-actions"><button class="zx-btn" onclick="createAccount()">Open account</button><button class="zx-btn ghost" onclick="signupBack()">Back</button></div>`;
+  }
+  root.innerHTML = `<div class="zx-article" style="max-width:760px;margin:10px auto">
+    <span class="zx-tag">${org ? 'Organisation account' : 'Personal account'}</span>
+    <h3>${org ? 'Open an organisation account' : 'Open your personal account'}</h3>
+    ${stepBar}${body}</div>`;
+}
+
+function signupNext() {
+  const s = zxSignup;
+  if (s.step === 1) {
+    for (const [key, label, , req] of SIGNUP_FIELDS[s.type]) {
+      s.data[key] = zxVal(`su-${key}`);
+      if (req && !s.data[key]) return zxErr('su-err', `Please fill in: ${label}.`);
+    }
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(s.data.email)) return zxErr('su-err', 'That email address doesn’t look right.');
+  } else if (s.step === 2) {
+    const missing = SIGNUP_DOCS[s.type].find(([k, , , req]) => req && !s.docs[k]);
+    if (missing) return zxErr('su-err', `Please add: ${missing[1]}.`);
+  }
+  s.step++;
+  renderAccount();
+  window.scrollTo(0, 0);
+}
+function signupBack() { zxSignup.step--; renderAccount(); }
+function signupDoc(key, input) {
+  const f = input.files && input.files[0];
+  if (f) zxSignup.docs[key] = f.name; else delete zxSignup.docs[key];
+  renderAccount();
+}
+function cancelSignup(toKyc) {
+  zxSignup = null;
+  renderAccount();
+  if (toKyc) document.getElementById('kyc-article')?.scrollIntoView({ behavior: 'smooth' });
+}
+
+function createAccount() {
+  if (!document.getElementById('su-consent')?.checked) return zxErr('su-err', 'Please tick the box to confirm.');
+  const s = zxSignup, d = s.data;
+  // Keep only what the demo needs; the rest of the form is never stored
+  zxState.account = {
+    type: s.type, name: s.type === 'org' ? d.orgName : `${d.first} ${d.last}`,
+    email: d.email, country: d.country, created: Date.now(), kyc: 'verified',
+  };
+  zxState.signedIn = true;
+  zxState.activity.unshift({ t: Date.now(), title: 'Account opened', sub: `${Object.keys(s.docs).length} documents verified (demo)` });
+  zxSave();
+  zxSignup = null;
+  refreshTopAcct();
+  zxToast('Account opened', 'You’re verified. You can now send through any provider on Zena.');
+  if (!resumePendingSend()) renderAccount();
+}
+
+function openSignIn() {
+  openZx(`<h3>Sign in</h3>
+    <p class="zx-p sm">Demo sign-in: enter the email you opened your account with on this device.</p>
+    <label class="zx-l" for="si-email">Email</label><input class="zx-in" id="si-email" type="email" autocomplete="off">
+    <div class="zx-err" id="si-err"></div>
+    <div class="zx-actions"><button class="zx-btn" onclick="doSignIn()">Sign in</button><button class="zx-btn ghost" onclick="closeZx()">Cancel</button></div>`);
+}
+function doSignIn() {
+  const e = zxVal('si-email').toLowerCase();
+  if (!zxState.account || zxState.account.email.toLowerCase() !== e) return zxErr('si-err', 'No demo account with that email on this device.');
+  zxState.signedIn = true;
+  zxSave();
+  refreshTopAcct();
+  closeZx();
+  if (!resumePendingSend()) renderAccount();
+}
+function signOut() { zxState.signedIn = false; zxSave(); renderAccount(); }
+function resetDemo() {
+  if (!confirm('Delete the demo account, wallet, cards, recipients and activity from this browser?')) return;
+  try { localStorage.removeItem(ZX_KEY); } catch (e) {}
+  delete zxState.treasury;
+  Object.assign(zxState, ZX_DEFAULTS());
+  zxSel.fiat = zxSel.stable = null;
+  renderAccount();
+}
+
+function refreshTopAcct() {
+  const b = document.getElementById('zx-top-acct');
+  if (b) b.textContent = zxSignedIn() ? 'Wallet' : 'Open account';
+}
+
+// ---------- account page ----------
+function renderAccount() {
+  const root = document.getElementById('acct-root');
+  if (!root) return;
+  refreshTopAcct();
+  if (zxSignup) return renderSignup(root);
+  if (zxSignedIn()) return renderWallet(root);
+  root.innerHTML = accountIntroHtml();
+}
+
+function accountIntroHtml() {
+  return `
+  <div class="zx-acct-hero">
+    <span class="zx-tag">Zena account</span>
+    <h2>Verify once. Send with any provider.</h2>
+    <p class="zx-p">Finding the cheapest provider is only half the problem. Every one of them asks for your ID, a selfie and
+      proof of address before you can send. With Zena you do that once, and can then use whichever provider is best that day.</p>
+    <div class="zx-actions">
+      <button class="zx-btn" onclick="startSignup('personal')">Open personal account</button>
+      <button class="zx-btn ghost" onclick="startSignup('org')">Open organisation account</button>
+      ${zxState.account ? `<button class="zx-btn ghost" onclick="openSignIn()">Sign in</button>` : ''}
+    </div>
+  </div>
+
+  <div class="zx-articles">
+    <article class="zx-article">
+      <span class="zx-tag">For individuals</span>
+      <h3>Personal account</h3>
+      <p class="zx-p">For anyone sending money to family, friends or themselves: the diaspora in Europe, the UK, North America and
+        the Gulf, and people moving money between African countries.</p>
+      <ul>
+        <li>Every provider compared on the true, all-in cost</li>
+        <li>Pay out to a bank account, mobile money or a crypto wallet</li>
+        <li>A wallet holding CHF, USD and EUR, with your card linked</li>
+        <li>Saved recipients, so repeat transfers take seconds</li>
+      </ul>
+      <p class="zx-p sm">Verification usually takes minutes. You’ll need a photo ID, a selfie and proof of address.</p>
+      <button class="zx-btn" onclick="startSignup('personal')">Open personal account</button>
+    </article>
+    <article class="zx-article">
+      <span class="zx-tag">For companies &amp; NGOs</span>
+      <h3>Organisation account</h3>
+      <p class="zx-p">For businesses paying suppliers and staff in Africa, and for NGOs and foundations moving programme funds, where
+        every point lost to FX is money that never reaches the field.</p>
+      <ul>
+        <li>Live best-route comparison on every corridor you pay into</li>
+        <li>Rate alerts when a corridor reaches your target</li>
+        <li>A dated audit trail of which route was chosen and why. For NGOs, that is donor evidence</li>
+        <li>An FX exposure view of your upcoming payables</li>
+        <li>One verification that covers every provider on Zena</li>
+      </ul>
+      <button class="zx-btn ghost sm" style="align-self:flex-start;margin-bottom:12px" onclick="switchLayer(8)">See the treasury demo</button>
+      <p class="zx-p sm">Verification takes 1–3 business days, because we check the organisation and the people who own and run it.</p>
+      <button class="zx-btn" onclick="startSignup('org')">Open organisation account</button>
+    </article>
+  </div>
+
+  <article class="zx-article" id="kyc-article">
+    <span class="zx-tag">Know your customer (KYC)</span>
+    <h3>Which documents we ask for, and why</h3>
+    <p class="zx-p">Every licensed money-transfer provider must confirm who its customers are and where their money comes from.
+      Anti-money-laundering law requires it; in Switzerland that is the Anti-Money Laundering Act (AMLA). Normally you repeat these
+      checks with every provider. With Zena you do them once.</p>
+    <div class="zx-kyc-grid">
+      <div>
+        <h4>Personal account</h4>
+        <table class="zx-kyc">
+          <tr><td>Photo ID</td><td>Passport, national ID card or residence permit (in Switzerland, permit B or C). Valid, with all four corners visible.</td><td class="req">Required</td></tr>
+          <tr><td>Selfie</td><td>A live photo, matched to your ID so nobody can open an account in your name.</td><td class="req">Required</td></tr>
+          <tr><td>Proof of address</td><td>Utility bill, bank statement or official letter from the last 3 months, showing your name and address.</td><td class="req">Required</td></tr>
+          <tr><td>Source of funds</td><td>A recent payslip or 3 months of bank statements.</td><td class="opt">Higher limits</td></tr>
+        </table>
+      </div>
+      <div>
+        <h4>Organisation account</h4>
+        <table class="zx-kyc">
+          <tr><td>Registration</td><td>Commercial register extract under 12 months old, or certificate of incorporation. NGOs: registration as a charity, association or foundation.</td><td class="req">Required</td></tr>
+          <tr><td>Articles of association</td><td>Statutes or constitution.</td><td class="req">Required</td></tr>
+          <tr><td>Beneficial owners</td><td>Everyone who owns or controls 25% or more (Form K or Form A in Switzerland). For foundations and NGOs, the board.</td><td class="req">Required</td></tr>
+          <tr><td>Directors &amp; signatories</td><td>Photo ID for each, and proof they can act for the organisation, such as a board resolution.</td><td class="req">Required</td></tr>
+          <tr><td>Business address</td><td>Proof of registered or operating address from the last 3 months.</td><td class="req">Required</td></tr>
+          <tr><td>Activity &amp; funds</td><td>What you do, expected volumes, the countries you pay into. For higher limits, financial statements or donor agreements.</td><td class="opt">Higher limits</td></tr>
+        </table>
+      </div>
+    </div>
+    <div class="zx-tiers">
+      <div><b>Level 1: email &amp; phone</b>Compare providers and save recipients.</div>
+      <div><b>Level 2: ID, selfie, address</b>Send money and use the wallet, within standard limits.</div>
+      <div><b>Level 3: source of funds</b>Higher limits for large or frequent transfers.</div>
+    </div>
+    <p class="zx-p sm" style="margin-top:14px">Your documents are only shared with a provider you choose to send through, and only with your consent,
+      under the Swiss Federal Act on Data Protection (FADP) and, where it applies, the GDPR. <b>In this demo nothing leaves your browser.</b></p>
+  </article>`;
+}
+
+// ---------- wallet ----------
+const ZX_CONVERT_FEE = 0.4;   // %, always shown before the customer converts
+
+function renderWallet(root) {
+  const a = zxState.account;
+  const ccys = Object.keys(zxState.balances);
+  const cards = zxState.cards.length
+    ? zxState.cards.map(c => `<div class="zx-item"><div><b>${esc(c.brand)} ····${esc(c.last4)}</b><small>${esc(c.name)} · expires ${esc(c.exp)}</small></div>
+        <button class="zx-link" onclick="removeCard('${c.id}')">Remove</button></div>`).join('')
+    : `<div class="zx-empty">No card linked yet. Link one to add money to your wallet or pay for transfers.</div>`;
+  const recips = zxState.recipients.length
+    ? zxState.recipients.map(r => `<div class="zx-item"><div><b>${esc(r.name)}</b><small>${RECIP_TYPES[r.type]} · ${recipLabel(r)}${r.ccy ? ' · ' + esc(r.ccy) : ''}</small></div>
+        <button class="zx-link" onclick="removeRecipient('${r.id}')">Remove</button></div>`).join('')
+    : `<div class="zx-empty">Recipients you add when sending appear here.</div>`;
+  const acts = zxState.activity.length
+    ? zxState.activity.slice(0, 20).map(x => `<div class="zx-item"><div><b>${esc(x.title)}</b><small>${esc(x.sub || '')} · ${new Date(x.t).toLocaleDateString('en-GB')} ${zxTime(x.t)}</small></div>
+        ${x.amt ? `<span class="amt${x.amt > 0 ? ' in' : ''}">${x.amt > 0 ? '+' : '−'}${fmtAmt(Math.abs(x.amt))} ${esc(x.ccy)}</span>` : ''}</div>`).join('')
+    : `<div class="zx-empty">No activity yet.</div>`;
+
+  root.innerHTML = `
+    <div class="zx-w-head">
+      <div><div class="zx-muted" style="font-size:12px">${a.type === 'org' ? 'Organisation' : 'Personal'} account</div><h2>${esc(a.name)}</h2></div>
+      <div class="zx-w-head-r">${a.type === 'org' ? `<button class="zx-btn sm" onclick="switchLayer(8)">Open Treasury</button>` : ''}<span class="zx-badge ok">&#10003; Verified (demo)</span><button class="zx-btn ghost sm" onclick="signOut()">Sign out</button></div>
+    </div>
+    <div class="zx-sec"><span class="zx-h">Wallet</span><button class="zx-link" onclick="openAddCurrency()">+ Add currency</button></div>
+    <div class="zx-bals">${ccys.map(c => `<div class="zx-bal">
+        <div class="zx-bal-c">${currencyLibrary[c]?.flag || ''} ${c}</div>
+        <div class="zx-bal-v">${fmtAmt(zxState.balances[c])}</div>
+        <div class="zx-bal-n">${esc(currencyLibrary[c]?.name || c)}</div>
+        <div class="zx-bal-a"><button onclick="openTopUp('${c}')">Add</button><button onclick="openConvert('${c}')">Convert</button><button onclick="sendFromWallet('${c}')">Send</button></div>
+      </div>`).join('')}</div>
+    <div class="zx-cols">
+      <div>
+        <div class="zx-sec"><span class="zx-h">Cards</span><button class="zx-link" onclick="openLinkCard()">+ Link a card</button></div>
+        ${cards}
+        <div class="zx-sec"><span class="zx-h">Recipients</span></div>
+        ${recips}
+      </div>
+      <div>
+        <div class="zx-sec"><span class="zx-h">Activity</span></div>
+        ${acts}
+      </div>
+    </div>
+    <p class="zx-foot">Demo wallet: balances are simulated and kept only in this browser. In production, balances would be held by a
+      licensed partner institution in segregated accounts. <a href="#" onclick="event.preventDefault();resetDemo()">Reset demo data</a></p>`;
+}
+
+function removeCard(id) { zxState.cards = zxState.cards.filter(c => c.id !== id); zxSave(); renderAccount(); }
+function removeRecipient(id) {
+  zxState.recipients = zxState.recipients.filter(r => r.id !== id);
+  if (zxSel.fiat === id) zxSel.fiat = null;
+  if (zxSel.stable === id) zxSel.stable = null;
+  zxSave();
+  renderAccount();
+}
+
+function openAddCurrency() {
+  const avail = [...foreignCurrencies, ...africanCurrencies].filter(c => currencyLibrary[c] && !(c in zxState.balances));
+  openZx(`<h3>Add a currency</h3>
+    <label class="zx-l" for="ac-ccy">Currency</label>
+    <select class="zx-in" id="ac-ccy">${avail.map(c => `<option value="${c}">${currencyLibrary[c].flag} ${c} — ${currencyLibrary[c].name}</option>`).join('')}</select>
+    <div class="zx-actions"><button class="zx-btn" onclick="addCurrency()">Add</button><button class="zx-btn ghost" onclick="closeZx()">Cancel</button></div>`);
+}
+function addCurrency() {
+  const c = zxVal('ac-ccy');
+  if (c) { zxState.balances[c] = 0; zxSave(); }
+  closeZx();
+  renderAccount();
+}
+
+function luhnOk(n) {
+  let sum = 0, alt = false;
+  for (let i = n.length - 1; i >= 0; i--) { let d = +n[i]; if (alt) { d *= 2; if (d > 9) d -= 9; } sum += d; alt = !alt; }
+  return sum % 10 === 0;
+}
+function cardBrand(n) {
+  if (/^4/.test(n)) return 'Visa';
+  if (/^(5[1-5]|2[2-7])/.test(n)) return 'Mastercard';
+  if (/^3[47]/.test(n)) return 'Amex';
+  return 'Card';
+}
+
+function openLinkCard() {
+  openZx(`<h3>Link a card</h3>
+    <div class="zx-note">Demo: please don’t enter a real card. Use the test number 4242 4242 4242 4242. Only the brand and last four digits are kept, in this browser.</div>
+    <label class="zx-l" for="lc-name">Name on card</label><input class="zx-in" id="lc-name" autocomplete="off">
+    <label class="zx-l" for="lc-num">Card number</label><input class="zx-in" id="lc-num" inputmode="numeric" autocomplete="off" placeholder="4242 4242 4242 4242">
+    <label class="zx-l" for="lc-exp">Expiry (MM/YY)</label><input class="zx-in" id="lc-exp" autocomplete="off" placeholder="12/28">
+    <div class="zx-err" id="lc-err"></div>
+    <div class="zx-actions"><button class="zx-btn" onclick="saveCard()">Link card</button><button class="zx-btn ghost" onclick="closeZx()">Cancel</button></div>`);
+}
+function saveCard() {
+  const name = zxVal('lc-name'), num = zxVal('lc-num').replace(/\D/g, ''), exp = zxVal('lc-exp');
+  if (name.length < 2) return zxErr('lc-err', 'Enter the name on the card.');
+  if (num.length < 13 || num.length > 19 || !luhnOk(num)) return zxErr('lc-err', 'That card number isn’t valid.');
+  const m = exp.match(/^(0[1-9]|1[0-2])\/(\d{2})$/);
+  if (!m) return zxErr('lc-err', 'Enter the expiry as MM/YY.');
+  const now = new Date(), yy = 2000 + +m[2], mm = +m[1];
+  if (yy < now.getFullYear() || (yy === now.getFullYear() && mm < now.getMonth() + 1)) return zxErr('lc-err', 'That card has expired.');
+  zxState.cards.push({ id: 'c' + Date.now().toString(36), brand: cardBrand(num), last4: num.slice(-4), exp, name });
+  document.getElementById('lc-num').value = '';
+  zxSave();
+  closeZx();
+  zxToast('Card linked', `${cardBrand(num)} ····${num.slice(-4)}`);
+  renderAccount();
+}
+
+function openTopUp(c) {
+  if (!zxState.cards.length) {
+    openZx(`<h3>Link a card first</h3><p class="zx-p">To add money to your wallet, link a debit or credit card.</p>
+      <div class="zx-actions"><button class="zx-btn" onclick="openLinkCard()">Link a card</button><button class="zx-btn ghost" onclick="closeZx()">Cancel</button></div>`);
+    return;
+  }
+  openZx(`<h3>Add ${c}</h3>
+    <label class="zx-l" for="tu-amt">Amount</label><input class="zx-in" id="tu-amt" type="number" min="1" value="500">
+    <label class="zx-l" for="tu-card">From</label>
+    <select class="zx-in" id="tu-card">${zxState.cards.map(k => `<option value="${k.id}">${esc(k.brand)} ····${esc(k.last4)}</option>`).join('')}</select>
+    <div class="zx-lines"><div><span>Card top-up fee</span><b>0.00 ${c}</b></div></div>
+    <div class="zx-err" id="tu-err"></div>
+    <div class="zx-actions"><button class="zx-btn" onclick="doTopUp('${c}')">Add money</button><button class="zx-btn ghost" onclick="closeZx()">Cancel</button></div>`);
+}
+function doTopUp(c) {
+  const amt = parseFloat(zxVal('tu-amt'));
+  if (!(amt > 0)) return zxErr('tu-err', 'Enter an amount.');
+  const card = zxState.cards.find(k => k.id === zxVal('tu-card'));
+  zxState.balances[c] = (zxState.balances[c] || 0) + amt;
+  zxState.activity.unshift({ t: Date.now(), title: `Added ${c}`, sub: `From ${card ? card.brand + ' ····' + card.last4 : 'card'}`, amt, ccy: c });
+  zxSave();
+  closeZx();
+  renderAccount();
+}
+
+function openConvert(c) {
+  const ccys = Object.keys(zxState.balances);
+  const other = ccys.find(x => x !== c) || c;
+  const opts = sel => ccys.map(x => `<option value="${x}"${x === sel ? ' selected' : ''}>${currencyLibrary[x]?.flag || ''} ${x}</option>`).join('');
+  openZx(`<h3>Convert</h3>
+    <label class="zx-l" for="cv-amt">Amount</label><input class="zx-in" id="cv-amt" type="number" min="0" value="100" oninput="convPreview()">
+    <div class="zx-formgrid">
+      <div><label class="zx-l" for="cv-from">From</label><select class="zx-in" id="cv-from" onchange="convPreview()">${opts(c)}</select></div>
+      <div><label class="zx-l" for="cv-to">To</label><select class="zx-in" id="cv-to" onchange="convPreview()">${opts(other)}</select></div>
+    </div>
+    <div id="cv-prev"></div>
+    <div class="zx-err" id="cv-err"></div>
+    <div class="zx-actions"><button class="zx-btn" onclick="doConvert()">Convert</button><button class="zx-btn ghost" onclick="closeZx()">Cancel</button></div>`);
+  convPreview();
+}
+function convQuote() {
+  const from = zxVal('cv-from'), to = zxVal('cv-to'), amt = parseFloat(zxVal('cv-amt')) || 0;
+  const mid = (usdRates[to] || 1) / (usdRates[from] || 1);
+  const fee = amt * ZX_CONVERT_FEE / 100;
+  return { from, to, amt, mid, fee, got: (amt - fee) * mid };
+}
+function convPreview() {
+  const q = convQuote(), el = document.getElementById('cv-prev');
+  if (!el) return;
+  el.innerHTML = `<div class="zx-lines">
+    <div><span>Available</span><b>${fmtAmt(zxState.balances[q.from])} ${q.from}</b></div>
+    <div><span>Mid-market rate</span><b>1 ${q.from} = ${fmtRate(q.mid)} ${q.to}</b></div>
+    <div class="tot"><span>Zena fee (${ZX_CONVERT_FEE}%, no markup on the rate)</span><b>${fmtAmt(q.fee)} ${q.from}</b></div>
+    <div class="big"><span>You get</span><b>${fmtAmt(q.got)} ${q.to}</b></div></div>`;
+}
+function doConvert() {
+  const q = convQuote();
+  if (q.from === q.to) return zxErr('cv-err', 'Choose two different currencies.');
+  if (!(q.amt > 0)) return zxErr('cv-err', 'Enter an amount.');
+  if (q.amt > (zxState.balances[q.from] || 0)) return zxErr('cv-err', `You only have ${fmtAmt(zxState.balances[q.from])} ${q.from}.`);
+  zxState.balances[q.from] -= q.amt;
+  zxState.balances[q.to] += q.got;
+  zxState.activity.unshift({ t: Date.now(), title: `Converted ${q.from} → ${q.to}`, sub: `${fmtAmt(q.amt)} ${q.from} → ${fmtAmt(q.got)} ${q.to} · fee ${fmtAmt(q.fee)} ${q.from}` });
+  zxSave();
+  closeZx();
+  renderAccount();
+}
+
+function sendFromWallet(c) {
+  switchLayer(1);
+  const sel = document.getElementById('send-from');
+  if ([...sel.options].some(o => o.value === c)) sel.value = c;
+  const bal = Math.floor(zxState.balances[c] || 0);
+  if (bal > 0) document.getElementById('send-amount').value = bal;
+  updateTransferQuotes();
+  window.scrollTo(0, 0);
+}
+
+// ==================== TREASURY — for companies and NGOs paying into Africa ====================
+// Best-route comparison per corridor, rate alerts, a dated audit trail of every route
+// chosen (and why), and the FX exposure of upcoming payables. Demo data lives in zxState.
+
+const TR_BASES = ['CHF', 'EUR', 'USD', 'GBP'];
+const TR_REASONS = [
+  'Faster delivery was needed',
+  'Beneficiary can only receive via this route',
+  'Existing contract with this provider',
+  'Cheapest route was not available for this amount',
+  'Other',
+];
+let trTab = 'savings';
+let trPayDraft = null;
+const trFilter = { from: 'all', to: 'all' };
+const TR_VERSION = 2;
+
+// What most companies use before Zena: their own bank, over SWIFT (USD-equivalent fee, spread in the rate)
+const TR_BANK = { name: 'Your bank (SWIFT)', fee: 35, spread: 3.2, speed: '2–4 days' };
+
+function trSeed() {
+  const day = 864e5, now = Date.now();
+  const t = {
+    v: TR_VERSION, base: 'CHF', stable: false, sample: true, seq: 100,
+    corridors: [
+      { from: 'CHF', to: 'KES', ticket: 20000 },
+      { from: 'EUR', to: 'MAD', ticket: 15000 },
+      { from: 'EUR', to: 'XOF', ticket: 10000 },
+      { from: 'USD', to: 'NGN', ticket: 25000 },
+      { from: 'CHF', to: 'UGX', ticket: 8000 },
+    ],
+    payables: [
+      { id: 'p1', due: now + 6 * day,  from: 'CHF', to: 'KES', amount: 2500000,  desc: 'Packaging supplier, Nairobi · INV-2231' },
+      { id: 'p2', due: now + 14 * day, from: 'EUR', to: 'MAD', amount: 180000,   desc: 'Argan oil cooperative, Agadir · INV-0457' },
+      { id: 'p3', due: now + 21 * day, from: 'EUR', to: 'XOF', amount: 9500000,  desc: 'Field programme, Dakar · Grant G-12' },
+      { id: 'p4', due: now + 35 * day, from: 'USD', to: 'NGN', amount: 30000000, desc: 'Logistics partner, Lagos · INV-889' },
+      { id: 'p5', due: now + 50 * day, from: 'CHF', to: 'UGX', amount: 40000000, desc: 'Coffee growers’ co-op, Mbale · PO-311' },
+    ],
+    alerts: [], audit: [],
+  };
+  zxState.treasury = t;
+  // Last quarter's payments, as they were actually made (mostly through the company's bank)
+  const history = [
+    [88, 'CHF', 'KES', 18000, 'Packaging supplier, Nairobi', 'INV-2104', TR_BANK.name],
+    [81, 'EUR', 'MAD', 16500, 'Argan oil cooperative, Agadir', 'INV-0398', TR_BANK.name],
+    [74, 'USD', 'NGN', 22000, 'Logistics partner, Lagos', 'INV-812', 'Western Union'],
+    [67, 'EUR', 'XOF', 9000,  'Field programme, Dakar', 'Grant G-12', TR_BANK.name],
+    [60, 'CHF', 'UGX', 7500,  'Coffee growers’ co-op, Mbale', 'PO-288', TR_BANK.name],
+    [53, 'CHF', 'KES', 21000, 'Packaging supplier, Nairobi', 'INV-2147', TR_BANK.name],
+    [46, 'EUR', 'MAD', 15000, 'Argan oil cooperative, Agadir', 'INV-0416', 'WorldRemit'],
+    [39, 'USD', 'NGN', 25000, 'Logistics partner, Lagos', 'INV-840', TR_BANK.name],
+    [32, 'EUR', 'XOF', 11000, 'Field programme, Dakar', 'Grant G-12', TR_BANK.name],
+    [25, 'CHF', 'KES', 15000, 'Packaging supplier, Nairobi', 'INV-2188', TR_BANK.name],
+    [18, 'CHF', 'UGX', 8200,  'Coffee growers’ co-op, Mbale', 'PO-301', 'MoneyGram'],
+    [11, 'EUR', 'MAD', 12000, 'Argan oil cooperative, Agadir', 'INV-0431', TR_BANK.name],
+    [4,  'USD', 'NGN', 20000, 'Logistics partner, Lagos', 'INV-861', 'LemFi'],
+  ];
+  history.forEach(([d, from, to, amount, beneficiary, reference, route]) =>
+    trRecord({ from, to, amount, beneficiary, reference, route, t: now - d * day, via: 'Imported history', reason: 'Paid before using Zena' }));
+  const kes = trQuotes('CHF', 'KES', 20000, false);
+  if (kes.all[0]) t.alerts.push({ id: 'a1', from: 'CHF', to: 'KES', amount: 20000, target: +(kes.all[0].rate * 1.004).toFixed(4), created: now - 3 * day, triggered: null, seen: false });
+}
+function tr() {
+  const T = zxState.treasury;
+  if (!T || (T.sample && T.v !== TR_VERSION)) { trSeed(); zxSave(); }
+  return zxState.treasury;
+}
+
+function trToBase(amount, ccy) { const b = tr().base; return amount * (usdRates[b] || 1) / (usdRates[ccy] || 1); }
+function trMid(from, to) { return (usdRates[to] || 1) / (usdRates[from] || 1); }
+
+// Every available route for one payment (providers, the company's own bank, optionally stablecoin), cheapest first
+function trQuotes(from, to, amount, isTick, withStable) {
+  const mid = trMid(from, to);
+  const fiat = fiatQuotes(from, to, amount, isTick).quotes.map(q => ({
+    route: q.name, kind: 'Transfer provider', speed: q.sub,
+    rate: amount ? q.received / amount : 0, received: q.received, cost: q.cost, costPct: q.costPct,
+  }));
+  if (amount && from !== to) {
+    const fee = Math.min(amount, TR_BANK.fee * (usdRates[from] || 1));
+    const received = (amount - fee) * mid * (1 - TR_BANK.spread / 100);
+    const cost = amount - received / mid;
+    fiat.push({ route: TR_BANK.name, kind: 'Bank', speed: TR_BANK.speed, rate: received / amount, received, cost, costPct: cost / amount * 100 });
+  }
+  let stable = [];
+  if (withStable && scMarkets.some(m => m.ccy === to)) {
+    stable = stableRoutes(from, to, amount, null, isTick).routes.map(q => ({
+      route: `${q.name} (${scBridge})`, kind: 'Stablecoin', speed: q.sub,
+      rate: q.rate, received: q.received, cost: q.cost, costPct: q.costPct,
+    }));
+  }
+  const all = [...fiat, ...stable].sort((a, b) => a.cost - b.cost);
+  const avgPct = fiat.length ? fiat.reduce((s, q) => s + q.costPct, 0) / fiat.length : null;
+  return { mid, all, avgPct };
+}
+
+// One audit-trail entry: the full quote board at that moment, the route chosen, and why
+function trRecord({ from, to, amount, beneficiary, reference, pick = 0, route = null, reason = '', note = '', t = Date.now(), payableId = null, via = 'Treasury' }) {
+  const T = zxState.treasury;
+  const q = trQuotes(from, to, amount, false, T.stable);
+  const chosen = (route && q.all.find(x => x.route === route)) || q.all[Math.min(pick, q.all.length - 1)];
+  if (!chosen) return null;
+  const cheapest = q.all[0];
+  const rec = {
+    id: 'ZP-' + String(++T.seq).padStart(6, '0'), t, via,
+    user: zxState.account ? zxState.account.name : 'Demo user',
+    from, to, amount, mid: q.mid, beneficiary, reference,
+    chosen: { ...chosen }, cheapest: cheapest.route, cheapestCost: cheapest.cost,
+    reason: chosen.route === cheapest.route ? 'Cheapest available route' : reason, note,
+    vsCheapest: chosen.cost - cheapest.cost,
+    vsAverage: q.avgPct !== null ? amount * q.avgPct / 100 - chosen.cost : 0,
+    board: q.all.slice(0, 8).map(x => ({ route: x.route, kind: x.kind, rate: x.rate, received: x.received, cost: x.cost, costPct: x.costPct })),
+  };
+  if (!rec.board.some(b => b.route === chosen.route)) rec.board.push({ ...chosen });
+  T.audit.unshift(rec);
+  if (payableId) T.payables = T.payables.filter(p => p.id !== payableId);
+  return rec;
+}
+
+// ---------- page ----------
+function trFiltered() {
+  return tr().audit.filter(a => (trFilter.from === 'all' || a.from === trFilter.from) && (trFilter.to === 'all' || a.to === trFilter.to));
+}
+function trSetFilter(k, v) { trFilter[k] = v; renderTreasury(); }
+function trPickCorridor(from, to) { trFilter.from = from; trFilter.to = to; renderTreasury(); window.scrollTo({ top: 0, behavior: 'smooth' }); }
+
+function renderTreasury() {
+  const root = document.getElementById('tr-root');
+  if (!root) return;
+  const T = tr();
+  const org = zxState.account && zxState.account.type === 'org';
+  const fired = T.alerts.filter(a => a.triggered && !a.seen);
+  const froms = [...new Set(T.audit.map(a => a.from))];
+  const tos = [...new Set(T.audit.map(a => a.to))];
+  const opt = (list, sel, label) => `<option value="all">${label}</option>` + list.map(c =>
+    `<option value="${c}"${c === sel ? ' selected' : ''}>${currencyLibrary[c]?.flag || ''} ${currencyLibrary[c]?.country || c} (${c})</option>`).join('');
+
+  root.innerHTML = `
+    <div class="tr-head">
+      <div>
+        <span class="zx-tag">Treasury</span>
+        <h2>${org ? esc(zxState.account.name) : 'Demo workspace: Savanna Trade &amp; Aid'}</h2>
+        <p class="zx-p sm" style="margin-top:2px">${org ? 'Organisation account' : 'Sample data: last quarter’s payments. <a href="#" onclick="event.preventDefault();startSignup(\'org\')">Open an organisation account</a> to use your own.'}</p>
+      </div>
+      <div class="tr-head-r">
+        <label class="tr-inline">Paying from
+          <select class="zx-in tr-sm" onchange="trSetFilter('from', this.value)">${opt(froms, trFilter.from, 'All currencies')}</select></label>
+        <label class="tr-inline">Into
+          <select class="zx-in tr-sm" onchange="trSetFilter('to', this.value)">${opt(tos, trFilter.to, 'All countries')}</select></label>
+        ${trFilter.from === 'all' ? `<label class="tr-inline">Show in
+          <select class="zx-in tr-sm" onchange="tr().base=this.value;zxSave();renderTreasury()">${TR_BASES.map(b => `<option${b === T.base ? ' selected' : ''}>${b}</option>`).join('')}</select></label>` : ''}
+      </div>
+    </div>
+
+    ${fired.length ? `<div class="tr-banner">&#128276; ${fired.map(a => `<b>${a.from}→${a.to}</b> reached your target of ${fmtRate(a.target)} at ${zxTime(a.triggered)}`).join(' · ')}
+      <button class="zx-link" onclick="trTab='alerts';trAckAlerts()">View</button></div>` : ''}
+
+    <div class="zx-seg tr-tabs">${[['savings', 'Paid vs cheapest'], ['audit', 'Audit trail'], ['alerts', 'Rate alerts'], ['exposure', 'FX exposure']]
+      .map(([k, l]) => `<button class="${trTab === k ? 'on' : ''}" onclick="trTab='${k}';renderTreasury()">${l}</button>`).join('')}</div>
+    <div id="tr-body">${trTab === 'savings' ? trSavingsHtml() : trTab === 'audit' ? trAuditHtml() : trTab === 'alerts' ? trAlertsHtml() : trExposureHtml()}</div>`;
+}
+
+// The core view: what the fees actually cost vs the cheapest option available at the time
+function trSavingsHtml() {
+  const T = tr();
+  const list = trFiltered();
+  // One currency filter selected -> show in that currency; otherwise in the reporting currency
+  const ccy = trFilter.from !== 'all' ? trFilter.from : T.base;
+  const conv = (v, from) => ccy === from ? v : v * (usdRates[ccy] || 1) / (usdRates[from] || 1);
+  const paid = list.reduce((s, a) => s + conv(a.chosen.cost, a.from), 0);
+  const cheap = list.reduce((s, a) => s + conv(a.cheapestCost ?? (a.chosen.cost - a.vsCheapest), a.from), 0);
+  const sent = list.reduce((s, a) => s + conv(a.amount, a.from), 0);
+  const diff = paid - cheap;
+  const scope = trFilter.from === 'all' && trFilter.to === 'all' ? 'All corridors'
+    : `${trFilter.from === 'all' ? 'Any currency' : trFilter.from} → ${trFilter.to === 'all' ? 'all countries' : (currencyLibrary[trFilter.to]?.country || trFilter.to)}`;
+  if (!list.length) return `<div class="zx-empty">No payments for ${esc(scope)}. <a href="#" onclick="event.preventDefault();trPickCorridor('all','all')">Show all corridors</a></div>`;
+
+  // Per-corridor breakdown
+  const byC = {};
+  list.forEach(a => {
+    const k = a.from + '-' + a.to;
+    const x = byC[k] || (byC[k] = { from: a.from, to: a.to, n: 0, sent: 0, paid: 0, cheap: 0 });
+    x.n++; x.sent += a.amount; x.paid += a.chosen.cost; x.cheap += a.cheapestCost ?? (a.chosen.cost - a.vsCheapest);
+  });
+  const corr = Object.values(byC).sort((a, b) => conv(b.paid - b.cheap, b.from) - conv(a.paid - a.cheap, a.from)).map(c => `
+    <tr class="tr-click" onclick="trPickCorridor('${c.from}','${c.to}')">
+      <td class="l"><b>${currencyLibrary[c.from]?.flag || ''} ${c.from} → ${currencyLibrary[c.to]?.flag || ''} ${c.to}</b><small>${esc(currencyLibrary[c.to]?.country || '')} · ${c.n} payment${c.n > 1 ? 's' : ''}</small></td>
+      <td>${fmtAmt(c.sent, 0)} ${c.from}</td>
+      <td>${fmtAmt(c.paid)} ${c.from}<small>${(c.paid / c.sent * 100).toFixed(2)}%</small></td>
+      <td>${fmtAmt(c.cheap)} ${c.from}<small>${(c.cheap / c.sent * 100).toFixed(2)}%</small></td>
+      <td><b>${fmtAmt(c.paid - c.cheap)} ${c.from}</b></td>
+    </tr>`).join('');
+
+  const rows = list.map(a => {
+    const cheapCost = a.cheapestCost ?? (a.chosen.cost - a.vsCheapest);
+    return `<tr>
+      <td class="l">${new Date(a.t).toLocaleDateString('en-GB')}<small>${esc(a.beneficiary)}</small></td>
+      <td class="l">${a.from} → ${a.to}</td>
+      <td>${fmtAmt(a.amount, 0)} ${a.from}</td>
+      <td class="l">${esc(a.chosen.route)}<small>paid ${fmtAmt(a.chosen.cost)} ${a.from} (${a.chosen.costPct.toFixed(2)}%)</small></td>
+      <td class="l">${esc(a.cheapest)}<small>would have cost ${fmtAmt(cheapCost)} ${a.from}</small></td>
+      <td>${a.vsCheapest > 0.005 ? `<b>${fmtAmt(a.vsCheapest)} ${a.from}</b>` : '<span class="tr-hit">Cheapest</span>'}</td>
+    </tr>`;
+  }).join('');
+
+  const max = Math.max(paid, 1);
+  return `
+    <div class="tr-sum">
+      <div class="tr-sum-scope">${esc(scope)} · ${list.length} payment${list.length > 1 ? 's' : ''} · ${fmtAmt(sent, 0)} ${ccy} sent</div>
+      <div class="tr-sum-grid">
+        <div><span>You paid in fees</span><b>${fmtAmt(paid)} ${ccy}</b><div class="tr-bar"><i style="width:100%"></i></div></div>
+        <div><span>Cheapest option would have cost</span><b>${fmtAmt(cheap)} ${ccy}</b><div class="tr-bar"><i style="width:${(cheap / max * 100).toFixed(1)}%"></i></div></div>
+        <div class="gold"><span>You could have saved</span><b>${fmtAmt(diff)} ${ccy}</b><small>${paid ? (diff / paid * 100).toFixed(0) : 0}% of what you paid in fees</small></div>
+      </div>
+      <p class="zx-p sm">Fees = fee + spread fee, measured against the mid-market rate on the day of each payment.
+        “Cheapest option” is the lowest-cost route available for the same amount at that moment.</p>
+    </div>
+
+    ${Object.keys(byC).length > 1 ? `<div class="tr-sec"><span class="zx-h">By corridor</span><span class="zx-muted">Click a corridor to see just that market</span></div>
+    <div class="tr-scroll" style="margin-bottom:22px"><table class="tr-table">
+      <thead><tr><th class="l">Corridor</th><th>Sent</th><th>You paid</th><th>Cheapest option</th><th>Difference</th></tr></thead>
+      <tbody>${corr}</tbody></table></div>` : ''}
+
+    <div class="tr-sec"><span class="zx-h">Payments</span>
+      <span style="display:flex;gap:8px;flex-wrap:wrap">
+        ${trFilter.from !== 'all' || trFilter.to !== 'all' ? `<button class="zx-btn ghost sm" onclick="trPickCorridor('all','all')">Show all corridors</button>` : ''}
+        <button class="zx-btn sm" onclick="trOpenPay({from:${trFilter.from === 'all' ? 'undefined' : `'${trFilter.from}'`},to:${trFilter.to === 'all' ? 'undefined' : `'${trFilter.to}'`}})">+ New payment</button></span></div>
+    <div class="tr-scroll"><table class="tr-table">
+      <thead><tr><th class="l">Date</th><th class="l">Corridor</th><th>Amount</th><th class="l">What you used</th><th class="l">Cheapest option</th><th>Difference</th></tr></thead>
+      <tbody>${rows}</tbody></table></div>`;
+}
+
+function trAuditHtml() {
+  const T = tr();
+  const list = trFiltered();
+  const rows = list.map(a => `<tr>
+      <td class="l">${new Date(a.t).toLocaleDateString('en-GB')}<small>${zxTime(a.t)} · ${esc(a.id)}</small></td>
+      <td class="l"><b>${a.from} → ${a.to}</b><small>${esc(a.beneficiary)}${a.reference ? ' · ' + esc(a.reference) : ''}</small></td>
+      <td>${fmtAmt(a.amount)} ${a.from}</td>
+      <td class="l">${esc(a.chosen.route)}<small>${fmtAmt(a.chosen.received)} ${a.to} received</small></td>
+      <td>${fmtAmt(a.chosen.cost)} ${a.from}<small>${a.chosen.costPct.toFixed(2)}%</small></td>
+      <td>${a.vsCheapest > 0.005 ? '+' + fmtAmt(a.vsCheapest) + ' ' + a.from : 'Cheapest'}</td>
+      <td class="l tr-reason">${esc(a.reason)}${a.note ? `<small>${esc(a.note)}</small>` : ''}</td>
+      <td><button class="zx-link" onclick="trShowAudit('${a.id}')">Details</button></td>
+    </tr>`).join('');
+  return `<div class="tr-sec"><span class="zx-muted">Every payment is logged with the full quote board at that moment, the route chosen, and why. For NGOs, this is donor evidence.</span>
+      <span style="display:flex;gap:8px;flex-wrap:wrap">
+        <button class="zx-btn ghost sm" onclick="trExportCsv()">Export CSV</button>
+        <button class="zx-btn ghost sm" onclick="trPrintReport()">Print / PDF report</button>
+        <button class="zx-btn sm" onclick="trOpenPay({})">+ New payment</button></span></div>
+    ${list.length ? `<div class="tr-scroll"><table class="tr-table">
+      <thead><tr><th class="l">Date</th><th class="l">Corridor · beneficiary</th><th>Amount</th><th class="l">Route chosen</th><th>All-in cost</th><th>vs cheapest</th><th class="l">Reason</th><th></th></tr></thead>
+      <tbody>${rows}</tbody></table></div>` : `<div class="zx-empty">No payments yet.</div>`}`;
+}
+
+function trAlertsHtml() {
+  const T = tr();
+  trAckAlerts(true);
+  const rows = T.alerts.map(a => {
+    const now = trQuotes(a.from, a.to, a.amount, false, T.stable).all[0];
+    return `<tr>
+      <td class="l"><b>${a.from} → ${a.to}</b><small>on a ${fmtAmt(a.amount, 0)} ${a.from} payment</small></td>
+      <td>best all-in rate &ge; <b>${fmtRate(a.target)}</b></td>
+      <td>${now ? fmtRate(now.rate) : '—'}<small>${now ? esc(now.route) : ''}</small></td>
+      <td>${a.triggered ? `<span class="tr-hit">Hit ${new Date(a.triggered).toLocaleDateString('en-GB')} ${zxTime(a.triggered)}</span>` : '<span class="zx-muted">Watching</span>'}</td>
+      <td class="tr-act">${a.triggered ? `<button class="zx-send tr-pay" onclick="trOpenPay({from:'${a.from}',to:'${a.to}',amount:${a.amount}})">Pay</button>` : ''}
+        <button class="zx-link" onclick="trRemoveAlert('${a.id}')">Remove</button></td>
+    </tr>`;
+  }).join('');
+  return `<div class="tr-sec"><span class="zx-muted">Get told when a corridor’s best all-in rate reaches your target. In production, alerts arrive by email and push.</span>
+      <button class="zx-btn sm" onclick="trOpenAlert()">+ New alert</button></div>
+    ${T.alerts.length ? `<div class="tr-scroll"><table class="tr-table">
+      <thead><tr><th class="l">Corridor</th><th>Condition</th><th>Best rate now</th><th>Status</th><th></th></tr></thead>
+      <tbody>${rows}</tbody></table></div>` : `<div class="zx-empty">No alerts yet.</div>`}`;
+}
+
+function trExposureHtml() {
+  const T = tr();
+  const byCcy = {};
+  T.payables.forEach(p => {
+    const x = byCcy[p.to] || (byCcy[p.to] = { local: 0, base: 0 });
+    x.local += p.amount;
+    x.base += trToBase(p.amount / trMid(p.from, p.to), p.from);
+  });
+  const max = Math.max(1, ...Object.values(byCcy).map(x => x.base));
+  const summary = Object.entries(byCcy).sort((a, b) => b[1].base - a[1].base).map(([ccy, x]) => `<tr>
+      <td class="l"><b>${currencyLibrary[ccy]?.flag || ''} ${ccy}</b><small>${esc(currencyLibrary[ccy]?.name || '')}</small></td>
+      <td>${fmtAmt(x.local, 0)}</td>
+      <td class="l"><div class="tr-bar"><i style="width:${(x.base / max * 100).toFixed(1)}%"></i></div><b>${fmtAmt(x.base, 0)} ${T.base}</b></td>
+      <td>+${fmtAmt(x.base * 0.05, 0)} ${T.base}</td>
+      <td>${fmtAmt(x.base * 0.05, 0)} ${T.base}</td>
+      <td><button class="zx-link" onclick="trLockRate('${ccy}')">Price a forward</button></td>
+    </tr>`).join('');
+  const list = T.payables.slice().sort((a, b) => a.due - b.due).map(p => `<tr>
+      <td class="l">${new Date(p.due).toLocaleDateString('en-GB')}<small>in ${Math.max(0, Math.round((p.due - Date.now()) / 864e5))} days</small></td>
+      <td class="l">${esc(p.desc)}</td>
+      <td>${fmtAmt(p.amount, 0)} ${p.to}</td>
+      <td>${fmtAmt(trToBase(p.amount / trMid(p.from, p.to), p.from), 0)} ${T.base}<small>paid from ${p.from}</small></td>
+      <td class="tr-act"><button class="zx-send tr-pay" onclick="trOpenPay({from:'${p.from}',to:'${p.to}',amount:${Math.ceil(p.amount / trMid(p.from, p.to))},payableId:'${p.id}',beneficiary:${esc(JSON.stringify(p.desc.split(' · ')[0]))},reference:${esc(JSON.stringify(p.desc.split(' · ')[1] || ''))}})">Pay now</button>
+        <button class="zx-link" onclick="trRemovePayable('${p.id}')" aria-label="Remove">&times;</button></td>
+    </tr>`).join('');
+  return `<div class="tr-sec"><span class="zx-muted">What your upcoming payments in African currencies are worth in ${T.base} today, and what a 5% currency move would do to them.</span>
+      <button class="zx-btn sm" onclick="trOpenPayable()">+ Planned payment</button></div>
+    ${T.payables.length ? `<div class="tr-scroll"><table class="tr-table">
+      <thead><tr><th class="l">Currency</th><th>Amount owed</th><th class="l">Worth today</th><th>If it strengthens 5%, you pay</th><th>If it weakens 5%, you save</th><th></th></tr></thead>
+      <tbody>${summary}</tbody></table></div>
+    <div class="tr-sec" style="margin-top:22px"><span class="zx-h">Upcoming payments</span></div>
+    <div class="tr-scroll"><table class="tr-table">
+      <thead><tr><th class="l">Due</th><th class="l">Payee · reference</th><th>Amount</th><th>Worth today</th><th></th></tr></thead>
+      <tbody>${list}</tbody></table></div>` : `<div class="zx-empty">No planned payments. Add one to see your exposure.</div>`}`;
+}
+
+// ---------- corridors, alerts, payables ----------
+function trCcyOptions(list, sel) {
+  return list.filter(c => currencyLibrary[c]).map(c => `<option value="${c}"${c === sel ? ' selected' : ''}>${currencyLibrary[c].flag} ${c}</option>`).join('');
+}
+function trOpenCorridor() {
+  openZx(`<h3>Add a corridor</h3>
+    <div class="zx-formgrid">
+      <div><label class="zx-l" for="tc-from">You pay from</label><select class="zx-in" id="tc-from">${trCcyOptions(foreignCurrencies.concat(africanCurrencies), 'EUR')}</select></div>
+      <div><label class="zx-l" for="tc-to">Into</label><select class="zx-in" id="tc-to">${trCcyOptions(africanCurrencies.concat(foreignCurrencies), 'GHS')}</select></div>
+    </div>
+    <label class="zx-l" for="tc-amt">Typical payment size</label><input class="zx-in" id="tc-amt" type="number" value="10000">
+    <div class="zx-err" id="tc-err"></div>
+    <div class="zx-actions"><button class="zx-btn" onclick="trAddCorridor()">Add</button><button class="zx-btn ghost" onclick="closeZx()">Cancel</button></div>`);
+}
+function trAddCorridor() {
+  const from = zxVal('tc-from'), to = zxVal('tc-to'), ticket = parseFloat(zxVal('tc-amt'));
+  if (from === to) return zxErr('tc-err', 'Choose two different currencies.');
+  if (!(ticket > 0)) return zxErr('tc-err', 'Enter a payment size.');
+  tr().corridors.push({ from, to, ticket });
+  zxSave(); closeZx(); renderTreasury();
+}
+function trRemoveCorridor(i) { tr().corridors.splice(i, 1); zxSave(); renderTreasury(); }
+
+function trOpenAlert() {
+  const T = tr();
+  if (!T.corridors.length) return zxToast('Add a corridor first', 'Alerts watch the corridors you pay into.');
+  openZx(`<h3>New rate alert</h3>
+    <label class="zx-l" for="al-c">Corridor</label>
+    <select class="zx-in" id="al-c" onchange="trAlertHint()">${T.corridors.map((c, i) => `<option value="${i}">${c.from} → ${c.to} (${fmtAmt(c.ticket, 0)} ${c.from})</option>`).join('')}</select>
+    <label class="zx-l" for="al-t">Tell me when the best all-in rate is at or above</label>
+    <input class="zx-in" id="al-t" type="number" step="any">
+    <p class="zx-p sm" id="al-hint"></p>
+    <div class="zx-err" id="al-err"></div>
+    <div class="zx-actions"><button class="zx-btn" onclick="trAddAlert()">Create alert</button><button class="zx-btn ghost" onclick="closeZx()">Cancel</button></div>`);
+  trAlertHint(true);
+}
+function trAlertHint(prefill) {
+  const c = tr().corridors[+zxVal('al-c')];
+  const best = trQuotes(c.from, c.to, c.ticket, false, tr().stable).all[0];
+  if (!best) return;
+  if (prefill || !zxVal('al-t')) document.getElementById('al-t').value = +(best.rate * 1.005).toPrecision(6);
+  document.getElementById('al-hint').textContent = `Best all-in rate right now: ${fmtRate(best.rate)} ${c.to} per ${c.from} (${best.route}).`;
+}
+function trAddAlert() {
+  const c = tr().corridors[+zxVal('al-c')], target = parseFloat(zxVal('al-t'));
+  if (!(target > 0)) return zxErr('al-err', 'Enter a target rate.');
+  tr().alerts.push({ id: 'a' + Date.now().toString(36), from: c.from, to: c.to, amount: c.ticket, target, created: Date.now(), triggered: null, seen: false });
+  zxSave(); closeZx(); trCheckAlerts(); renderTreasury();
+}
+function trRemoveAlert(id) { const T = tr(); T.alerts = T.alerts.filter(a => a.id !== id); zxSave(); renderTreasury(); }
+function trAckAlerts(silent) {
+  tr().alerts.forEach(a => { if (a.triggered) a.seen = true; });
+  zxSave();
+  if (!silent) renderTreasury();
+}
+function trCheckAlerts(isTick) {
+  const T = zxState.treasury;
+  if (!T) return;
+  let fired = false;
+  T.alerts.forEach(a => {
+    if (a.triggered) return;
+    const best = trQuotes(a.from, a.to, a.amount, isTick, T.stable).all[0];
+    if (best && best.rate >= a.target) {
+      a.triggered = Date.now(); a.seen = false; fired = true;
+      zxToast(`Rate alert: ${a.from} → ${a.to}`, `Best all-in rate ${fmtRate(best.rate)} via ${best.route}`);
+    }
+  });
+  if (fired) zxSave();
+  return fired;
+}
+
+function trOpenPayable() {
+  const T = tr();
+  const d = new Date(Date.now() + 30 * 864e5).toISOString().slice(0, 10);
+  openZx(`<h3>Planned payment</h3>
+    <label class="zx-l" for="pp-desc">Payee and reference</label><input class="zx-in" id="pp-desc" placeholder="Supplier, city · INV-123">
+    <div class="zx-formgrid">
+      <div><label class="zx-l" for="pp-amt">Amount owed</label><input class="zx-in" id="pp-amt" type="number"></div>
+      <div><label class="zx-l" for="pp-to">In currency</label><select class="zx-in" id="pp-to">${trCcyOptions(africanCurrencies, 'KES')}</select></div>
+      <div><label class="zx-l" for="pp-from">Paid from</label><select class="zx-in" id="pp-from">${trCcyOptions(foreignCurrencies, T.base)}</select></div>
+      <div><label class="zx-l" for="pp-due">Due date</label><input class="zx-in" id="pp-due" type="date" value="${d}"></div>
+    </div>
+    <div class="zx-err" id="pp-err"></div>
+    <div class="zx-actions"><button class="zx-btn" onclick="trAddPayable()">Add</button><button class="zx-btn ghost" onclick="closeZx()">Cancel</button></div>`);
+}
+function trAddPayable() {
+  const amount = parseFloat(zxVal('pp-amt')), desc = zxVal('pp-desc'), due = Date.parse(zxVal('pp-due'));
+  if (!desc) return zxErr('pp-err', 'Enter who you are paying.');
+  if (!(amount > 0)) return zxErr('pp-err', 'Enter the amount owed.');
+  if (!due) return zxErr('pp-err', 'Enter a due date.');
+  tr().payables.push({ id: 'p' + Date.now().toString(36), due, from: zxVal('pp-from'), to: zxVal('pp-to'), amount, desc });
+  zxSave(); closeZx(); renderTreasury();
+}
+function trRemovePayable(id) { const T = tr(); T.payables = T.payables.filter(p => p.id !== id); zxSave(); renderTreasury(); }
+
+function trLockRate(ccy) {
+  if (typeof openFwdPricer !== 'function') return;
+  openFwdPricer();
+  const b = document.getElementById('fwd-base'), q = document.getElementById('fwd-quote');
+  if (b && [...b.options].some(o => o.value === tr().base)) b.value = tr().base;
+  if (q && [...q.options].some(o => o.value === ccy)) q.value = ccy;
+  if (typeof updateFwdPricer === 'function') updateFwdPricer();
+}
+
+// ---------- paying from Treasury ----------
+function trOpenPay(p) {
+  const T = tr();
+  trPayDraft = { from: p.from || T.base, to: p.to || 'KES', amount: p.amount || 10000, payableId: p.payableId || null,
+    beneficiary: p.beneficiary || '', reference: p.reference || '', pick: 0 };
+  openZx(`<h3>New payment</h3>
+    <div class="zx-formgrid">
+      <div><label class="zx-l" for="tp-from">Pay from</label><select class="zx-in" id="tp-from" onchange="trPayRefresh()">${trCcyOptions(foreignCurrencies.concat(africanCurrencies), trPayDraft.from)}</select></div>
+      <div><label class="zx-l" for="tp-to">Into</label><select class="zx-in" id="tp-to" onchange="trPayRefresh()">${trCcyOptions(africanCurrencies.concat(foreignCurrencies), trPayDraft.to)}</select></div>
+    </div>
+    <label class="zx-l" for="tp-amt">Amount to send</label><input class="zx-in" id="tp-amt" type="number" value="${trPayDraft.amount}" oninput="trPayRefresh()">
+    <div class="zx-formgrid">
+      <div><label class="zx-l" for="tp-ben">Beneficiary</label><input class="zx-in" id="tp-ben" value="${esc(trPayDraft.beneficiary)}"></div>
+      <div><label class="zx-l" for="tp-ref">Reference <span class="opt">(invoice, grant or project code)</span></label><input class="zx-in" id="tp-ref" value="${esc(trPayDraft.reference)}"></div>
+    </div>
+    <div class="zx-sub">Choose a route</div>
+    <div id="tp-routes"></div>
+    <div id="tp-reason"></div>
+    <div class="zx-err" id="tp-err"></div>
+    <div class="zx-actions"><button class="zx-btn" onclick="trConfirmPay()">Confirm payment</button><button class="zx-btn ghost" onclick="closeZx()">Cancel</button></div>
+    <p class="zx-p sm">Demo only: no money moves. The quote board below is saved with the payment as its audit record.</p>`);
+  document.querySelector('#zx-modal .zx-sheet').classList.add('wide');
+  trPayRefresh();
+}
+function trPayRefresh() {
+  const d = trPayDraft;
+  const from = zxVal('tp-from'), to = zxVal('tp-to'), amount = parseFloat(zxVal('tp-amt')) || 0;
+  if (from !== d.from || to !== d.to) d.pick = 0;
+  Object.assign(d, { from, to, amount });
+  const q = trQuotes(from, to, amount, false, tr().stable);
+  d.quotes = q;
+  const box = document.getElementById('tp-routes');
+  if (from === to || !amount || !q.all.length) {
+    box.innerHTML = `<div class="zx-empty">${from === to ? 'Choose two different currencies.' : !amount ? 'Enter an amount.' : 'No route covers this corridor yet.'}</div>`;
+    document.getElementById('tp-reason').innerHTML = '';
+    return;
+  }
+  box.innerHTML = `<div class="tr-mid">Mid-market: 1 ${from} = ${fmtRate(q.mid)} ${to}</div>` + q.all.slice(0, 8).map((r, i) => `
+    <label class="tr-route${i === 0 ? ' best' : ''}${i === d.pick ? ' on' : ''}">
+      <input type="radio" name="tp-r" ${i === d.pick ? 'checked' : ''} onchange="trPayDraft.pick=${i};trPayRefresh()">
+      <span class="tr-route-n"><b>${esc(r.route)}</b><small>${esc(r.kind)} · ${esc(r.speed)}${i === 0 ? ' · cheapest' : ''}</small></span>
+      <span>${fmtRate(r.rate)}<small>all-in rate</small></span>
+      <span>${r.cost < 0 ? '+' + fmtAmt(-r.cost) : fmtAmt(r.cost)} ${from}<small>${r.costPct.toFixed(2)}%</small></span>
+      <span><b>${fmtAmt(r.received)} ${to}</b><small>received</small></span>
+    </label>`).join('');
+  document.getElementById('tp-reason').innerHTML = d.pick > 0 ? `
+    <div class="zx-note">This isn’t the cheapest route: it costs ${fmtAmt(q.all[d.pick].cost - q.all[0].cost)} ${from} more. The reason is saved in the audit trail.</div>
+    <label class="zx-l" for="tp-why">Reason</label><select class="zx-in" id="tp-why">${TR_REASONS.map(r => `<option>${r}</option>`).join('')}</select>
+    <label class="zx-l" for="tp-note">Note <span class="opt">(optional)</span></label><input class="zx-in" id="tp-note">` : '';
+}
+function trConfirmPay() {
+  const d = trPayDraft;
+  if (!d.quotes || !d.quotes.all.length || !d.amount) return zxErr('tp-err', 'Choose a corridor and amount first.');
+  const beneficiary = zxVal('tp-ben');
+  if (!beneficiary) return zxErr('tp-err', 'Enter the beneficiary.');
+  if (d.pick > 0 && zxVal('tp-why') === 'Other' && !zxVal('tp-note')) return zxErr('tp-err', 'Add a note explaining the reason.');
+  const rec = trRecord({ from: d.from, to: d.to, amount: d.amount, beneficiary, reference: zxVal('tp-ref'),
+    pick: d.pick, reason: d.pick > 0 ? zxVal('tp-why') : '', note: d.pick > 0 ? zxVal('tp-note') : '', payableId: d.payableId });
+  zxSave();
+  trTab = 'savings';
+  openZx(`<div class="zx-done">&#10003;</div><h3>Payment recorded</h3>
+    <p class="zx-p">${esc(rec.id)}: ${fmtAmt(rec.amount)} ${rec.from} to ${esc(rec.beneficiary)} via ${esc(rec.chosen.route)}.
+    The quote board, rate and reason are saved in your audit trail.</p>
+    <div class="zx-actions"><button class="zx-btn" onclick="closeZx();trShowAudit('${rec.id}')">View audit record</button><button class="zx-btn ghost" onclick="closeZx()">Done</button></div>`);
+  renderTreasury();
+}
+
+// Send Money payments by an organisation also land in the audit trail
+function trLogFromSend(mode, s) {
+  if (!(zxState.account && zxState.account.type === 'org')) return;
+  const T = tr();
+  const list = mode === 'fiat' ? lastFiatQuotes : lastStableRoutes;
+  const board = list.slice(0, 8).map(x => ({ route: x.name, kind: mode === 'fiat' ? 'Transfer provider' : 'Stablecoin', rate: s.amount ? x.received / s.amount : 0, received: x.received, cost: x.cost, costPct: x.costPct }));
+  const chosen = board.find(b => b.route === s.provider) || board[0];
+  if (!chosen) return;
+  T.audit.unshift({
+    id: 'ZP-' + String(++T.seq).padStart(6, '0'), t: Date.now(), via: 'Send Money',
+    user: zxState.account.name, from: s.from, to: s.recvCcy, amount: s.amount, mid: trMid(s.from, s.recvCcy),
+    beneficiary: s.recipient, reference: '', chosen, cheapest: board[0].route,
+    reason: chosen.route === board[0].route ? 'Cheapest available route' : 'Chosen in Send Money', note: '',
+    vsCheapest: chosen.cost - board[0].cost, vsAverage: 0, board,
+  });
+}
+
+// ---------- audit detail, export, report ----------
+function trShowAudit(id) {
+  const a = tr().audit.find(x => x.id === id);
+  if (!a) return;
+  openZx(`<h3>Audit record ${esc(a.id)}</h3>
+    <div class="zx-lines">
+      <div><span>Date and time</span><b>${new Date(a.t).toLocaleString('en-GB')}</b></div>
+      <div><span>Made by</span><b>${esc(a.user)} · via ${esc(a.via)}</b></div>
+      <div><span>Beneficiary</span><b>${esc(a.beneficiary)}${a.reference ? ' · ' + esc(a.reference) : ''}</b></div>
+      <div><span>Amount</span><b>${fmtAmt(a.amount)} ${a.from}</b></div>
+      <div><span>Mid-market rate at the time</span><b>1 ${a.from} = ${fmtRate(a.mid)} ${a.to}</b></div>
+      <div class="big"><span>Route chosen</span><b>${esc(a.chosen.route)}</b></div>
+      <div><span>Received</span><b>${fmtAmt(a.chosen.received)} ${a.to}</b></div>
+      <div><span>All-in cost</span><b>${fmtAmt(a.chosen.cost)} ${a.from} (${a.chosen.costPct.toFixed(2)}%)</b></div>
+      <div><span>Reason</span><b>${esc(a.reason)}${a.note ? ': ' + esc(a.note) : ''}</b></div>
+    </div>
+    <div class="zx-sub">Quote board at the time</div>
+    <div class="tr-scroll"><table class="tr-table tight">
+      <thead><tr><th class="l">Route</th><th>All-in rate</th><th>Cost</th><th>Received</th></tr></thead>
+      <tbody>${a.board.map(b => `<tr class="${b.route === a.chosen.route ? 'chosen' : ''}"><td class="l">${esc(b.route)}${b.route === a.chosen.route ? ' <b>(chosen)</b>' : ''}</td>
+        <td>${fmtRate(b.rate)}</td><td>${fmtAmt(b.cost)} (${b.costPct.toFixed(2)}%)</td><td>${fmtAmt(b.received)} ${a.to}</td></tr>`).join('')}</tbody></table></div>
+    <div class="zx-actions"><button class="zx-btn ghost" onclick="closeZx()">Close</button></div>`);
+  document.querySelector('#zx-modal .zx-sheet').classList.add('wide');
+}
+
+function trCsvCell(v) { const s = String(v ?? ''); return /[",\n]/.test(s) ? '"' + s.replace(/"/g, '""') + '"' : s; }
+function trExportCsv() {
+  const head = ['Record', 'Date', 'Time', 'Made by', 'Via', 'Beneficiary', 'Reference', 'From', 'To', 'Amount', 'Mid-market rate',
+    'Route chosen', 'All-in rate', 'All-in cost', 'All-in cost %', 'Received', 'Cheapest route', 'Extra vs cheapest', 'Reason', 'Note', 'Routes compared'];
+  const rows = tr().audit.map(a => [a.id, new Date(a.t).toLocaleDateString('en-GB'), zxTime(a.t), a.user, a.via, a.beneficiary, a.reference, a.from, a.to,
+    a.amount.toFixed(2), a.mid.toFixed(6), a.chosen.route, a.chosen.rate.toFixed(6), a.chosen.cost.toFixed(2), a.chosen.costPct.toFixed(2),
+    a.chosen.received.toFixed(2), a.cheapest, a.vsCheapest.toFixed(2), a.reason, a.note, a.board.length]);
+  const csv = [head, ...rows].map(r => r.map(trCsvCell).join(',')).join('\n');
+  const url = URL.createObjectURL(new Blob([csv], { type: 'text/csv' }));
+  const link = Object.assign(document.createElement('a'), { href: url, download: `zena-audit-trail-${new Date().toISOString().slice(0, 10)}.csv` });
+  document.body.appendChild(link); link.click(); link.remove();
+  setTimeout(() => URL.revokeObjectURL(url), 1000);
+}
+
+function trPrintReport() {
+  const T = tr();
+  const org = zxState.account && zxState.account.type === 'org' ? zxState.account.name : 'Savanna Trade & Aid (demo)';
+  const w = window.open('', '_blank');
+  if (!w) return zxToast('Pop-up blocked', 'Allow pop-ups for this page to print the report.');
+  const rows = T.audit.map(a => `<tr><td>${esc(a.id)}<br><small>${new Date(a.t).toLocaleString('en-GB')}</small></td>
+    <td>${esc(a.beneficiary)}<br><small>${esc(a.reference || '')}</small></td><td>${fmtAmt(a.amount)} ${a.from} → ${a.to}<br><small>mid ${fmtRate(a.mid)}</small></td>
+    <td>${esc(a.chosen.route)}<br><small>${fmtAmt(a.chosen.received)} ${a.to} received</small></td>
+    <td>${fmtAmt(a.chosen.cost)} ${a.from}<br><small>${a.chosen.costPct.toFixed(2)}% · ${a.board.length} routes compared</small></td>
+    <td>${esc(a.reason)}${a.note ? '<br><small>' + esc(a.note) + '</small>' : ''}</td></tr>`).join('');
+  w.document.write(`<!doctype html><html><head><meta charset="utf-8"><title>Zena payment audit trail</title>
+    <style>body{font:13px/1.45 -apple-system,Segoe UI,Arial,sans-serif;color:#111;margin:32px}h1{font-size:20px;margin:0}p{color:#555}
+    table{width:100%;border-collapse:collapse;margin-top:18px}th,td{text-align:left;padding:8px;border-bottom:1px solid #ddd;vertical-align:top}
+    th{font-size:11px;text-transform:uppercase;color:#666}small{color:#666}</style></head><body>
+    <h1>Payment audit trail: ${esc(org)}</h1>
+    <p>Generated ${new Date().toLocaleString('en-GB')} by Zena. For each payment: the rate and all routes available at that moment, the route chosen, and the reason.</p>
+    <table><thead><tr><th>Record</th><th>Beneficiary</th><th>Payment</th><th>Route chosen</th><th>All-in cost</th><th>Reason</th></tr></thead><tbody>${rows}</tbody></table>
+    <script>window.onload=function(){window.print()}<\/script></body></html>`);
+  w.document.close();
+}
+
+function applyThemeIcon() {
+  const dark = document.documentElement.getAttribute('data-theme') === 'dark';
+  const b = document.getElementById('theme-btn');
+  if (b) b.innerHTML = dark ? '&#9728;' : '&#9790;';
+  document.querySelector('meta[name="theme-color"]')?.setAttribute('content', dark ? '#0a0e17' : '#FAF6F0');
+}
+function toggleTheme() {
+  const next = document.documentElement.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
+  document.documentElement.setAttribute('data-theme', next);
+  try { localStorage.setItem('zena-theme', next); } catch (e) {}
+  applyThemeIcon();
+}
+
 // ==================== INIT ====================
 renderTicker();
 renderIndices();
@@ -4313,12 +6916,20 @@ renderNews();
 renderCommodities();
 renderBonds();
 renderCorridors();
+refreshTopAcct();
+startQuoteStream();
+// Deep links from the landing page: index.html#treasury, #send, #stablecoin, #account
+const DEEP_LINKS = { treasury: 8, send: 1, stablecoin: 4, account: 7, markets: 0, news: 5 };
+if (DEEP_LINKS[location.hash.slice(1)] !== undefined) switchLayer(DEEP_LINKS[location.hash.slice(1)]);
+applyThemeIcon();
 renderProviders(corridors[0]);
 renderCrossMatrix();
 renderPopularPairs();
 renderStableProviders();
 convertCurrency();
 updateClock();
+renderDailyQuote();
+renderStableFx();
 
 // Update switchLayer to init lazy-loaded tabs
 const origSwitchLayer = switchLayer;
@@ -4586,7 +7197,7 @@ setInterval(() => {
 </script>
 
 <!-- FOOTER -->
-<footer style="background:linear-gradient(135deg,#0f1724,#162033);border-top:1px solid var(--border);padding:24px 30px;margin-top:20px">
+<footer style="background:var(--bar-bg);border-top:1px solid var(--border);padding:24px 30px;margin-top:20px">
   <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px;max-width:1400px;margin:0 auto">
     <div style="font-size:12px;color:var(--text-muted)">
       &copy; 2026 Zena Group. All rights reserved.
@@ -4610,7 +7221,7 @@ setInterval(() => {
     <a href="#" style="color:var(--accent-gold);text-decoration:none;margin-left:4px">Privacy Policy</a>
   </div>
   <div style="display:flex;gap:8px">
-    <button onclick="document.getElementById('cookie-banner').style.display='none';localStorage.setItem('zena-cookies','accepted')" style="background:var(--accent-gold);color:#000;border:none;border-radius:6px;padding:8px 18px;font-size:12px;font-weight:600;cursor:pointer">Accept</button>
+    <button onclick="document.getElementById('cookie-banner').style.display='none';localStorage.setItem('zena-cookies','accepted')" style="background:var(--accent-gold);color:var(--on-accent);border:none;border-radius:6px;padding:8px 18px;font-size:12px;font-weight:600;cursor:pointer">Accept</button>
     <button onclick="document.getElementById('cookie-banner').style.display='none';localStorage.setItem('zena-cookies','declined')" style="background:transparent;color:var(--text-secondary);border:1px solid var(--border);border-radius:6px;padding:8px 18px;font-size:12px;cursor:pointer">Decline</button>
   </div>
 </div>
