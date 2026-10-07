@@ -79,6 +79,7 @@
   :root[data-theme="light"] .ticker-strip { background: var(--bg-card); }
   :root[data-theme="light"] .matrix-diagonal { background: var(--bg-secondary); }
   .zx-top-acct { white-space: nowrap; }
+  .topbar-right { margin-left: auto; }
   .theme-btn { background: transparent; border: 1px solid var(--border); color: var(--text-secondary); border-radius: 6px; width: 30px; height: 26px; cursor: pointer; font-size: 13px; line-height: 1; }
   .theme-btn:hover { color: var(--accent-gold); border-color: var(--accent-gold); }
 
@@ -2351,12 +2352,10 @@
 <!-- TOP BAR -->
 <div class="topbar">
   <!-- Brand lives on the Home page itself; the bar stays out of the way -->
-  <div class="clock" id="clock">--:--:--</div>
 
   <div class="topbar-right">
     <button class="theme-btn" id="theme-btn" onclick="toggleTheme()" title="Switch light / dark">&#9790;</button>
     <button class="zx-top-acct" id="zx-top-acct" onclick="switchLayer(7)">Open account</button>
-    <button class="fwd-topbar-btn" onclick="openFwdPricer()" title="Forward &amp; Swap Pricer (Ctrl+F)">SWP</button>
     <span id="data-status-badge" class="card-badge badge-delayed" style="font-size:9px;padding:2px 8px">LOADING</span>
     <div style="display:flex;align-items:center;gap:6px"><div class="live-dot"></div> LIVE</div>
   </div>
@@ -2448,13 +2447,13 @@
 <!-- NAVIGATION -->
 <div class="nav-tabs">
   <div class="nav-tab active" onclick="switchLayer(6)">Home</div>
-  <div class="nav-tab" onclick="switchLayer(8)">Treasury</div>
-  <div class="nav-tab" onclick="switchLayer(5)">News &amp; Intelligence</div>
-  <div class="nav-tab" onclick="switchLayer(0)">Markets</div>
   <div class="nav-tab" onclick="switchLayer(1)">Send Money &mdash; Fiat</div>
   <div class="nav-tab" onclick="switchLayer(4)">Send Money &mdash; Stablecoin</div>
   <div class="nav-tab" onclick="switchLayer(2)">Cross-Currency Africa</div>
   <div class="nav-tab" onclick="switchLayer(3)">Cross-Currency FX</div>
+  <div class="nav-tab" onclick="switchLayer(8)">Treasury</div>
+  <div class="nav-tab" onclick="switchLayer(5)">News &amp; Intelligence</div>
+  <div class="nav-tab" onclick="switchLayer(0)">Markets</div>
   <div class="nav-tab" onclick="switchLayer(7)">Account</div>
 </div>
 
@@ -3069,13 +3068,13 @@
 
     <!-- Minimal entry points -->
     <div class="home-nav">
-      <button class="home-card" onclick="switchLayer(8)">
-        <span class="hc-label">Treasury</span>
-        <span class="hc-desc">For companies &amp; NGOs paying into Africa</span>
-      </button>
       <button class="home-card" onclick="switchLayer(1)">
         <span class="hc-label">Send Money</span>
         <span class="hc-desc">For individuals: every provider's true cost</span>
+      </button>
+      <button class="home-card" onclick="switchLayer(8)">
+        <span class="hc-label">Treasury</span>
+        <span class="hc-desc">For companies &amp; NGOs paying into Africa</span>
       </button>
       <button class="home-card" onclick="switchLayer(5)">
         <span class="hc-label">News &amp; Intelligence</span>
