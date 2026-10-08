@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Zena — African Intelligence &amp; Payment System</title>
+<title>Zena — Intelligence &amp; Payment System</title>
 <meta name="description" content="Real-time African capital markets data, FX rates, news intelligence, and remittance comparison. Africa's financial intelligence platform.">
 <meta property="og:title" content="Zena — African Markets Intelligence">
 <meta property="og:description" content="Real-time African capital markets data, cross-currency FX, central bank tracking, and money transfer comparison.">
@@ -2253,6 +2253,13 @@
   .zx-doc small { display: block; color: var(--text-muted); font-size: 11.5px; }
   .zx-doc .ok { color: var(--accent-green); font-size: 12px; }
   .zx-doc input[type=file] { font-size: 12px; color: var(--text-secondary); max-width: 240px; }
+  .zx-reasons { grid-column: 1 / -1; }
+  .zx-chips { display: flex; flex-wrap: wrap; gap: 6px; }
+  .zx-chipbox { display: inline-flex; align-items: center; gap: 6px; border: 1px solid var(--border); border-radius: 999px; padding: 6px 12px; font-size: 13px; cursor: pointer; background: var(--bg-card); color: var(--text-primary); }
+  .zx-chipbox:has(input:checked) { border-color: var(--text-primary); background: var(--best-soft); }
+  .zx-selfie { display: flex; align-items: center; gap: 10px; }
+  .zx-selfie img { width: 56px; height: 56px; object-fit: cover; border-radius: 50%; border: 2px solid var(--best); }
+  .zx-cam video { width: 100%; border-radius: 12px; background: #000; transform: scaleX(-1); display: block; }
   .zx-check { display: flex; gap: 10px; align-items: flex-start; font-size: 13px; color: var(--text-secondary); margin-top: 14px; line-height: 1.5; }
 
   /* Wallet */
@@ -2530,8 +2537,7 @@
       </div>
     </div>
     <div class="zx-mid">
-      <span class="zx-mid-k">Mid-market rate</span><b id="rfq-mid">&mdash;</b>
-      <span class="zx-mid-s">The real exchange rate, the same for everyone. Each provider's rate below is measured against it.</span>
+      <span class="zx-mid-k">Live mid-market rate</span><b id="rfq-mid">&mdash;</b>
     </div>
     <div class="zx-ticket-foot">
       <div id="fx-recip"></div>
@@ -2542,11 +2548,11 @@
     <span class="zx-h">Providers</span>
     <span class="zx-muted">Cheapest first &middot; rates as of <span id="rfq-updated">&mdash;</span></span>
   </div>
-  <div class="zx-list-head"><span>Provider</span><span>Their rate</span><span>Cost of sending</span><span>Recipient gets</span><span></span></div>
+  <div class="zx-list-head"><span>Provider</span><span>Exchange rate</span><span>Cost of sending</span><span>Recipient gets</span><span></span></div>
   <div id="providers-list"></div>
   <p class="zx-foot">
-    <b>Cost of sending = fee + spread fee.</b> The spread fee is charged through the exchange rate: the gap between the
-    provider's rate and the mid-market rate. Some providers charge only a spread fee; others add a fee on top.
+    <b>Cost of sending = exchange spread fee + cost of sending fee.</b> The exchange spread fee is the gap between the
+    provider's exchange rate and the live mid-market rate. Some providers also charge a cost of sending fee on top.
     <b>Prototype: provider prices are illustrative, not live quotes.</b>
   </p>
  </div>
@@ -2756,8 +2762,7 @@
       </div>
     </div>
     <div class="zx-mid">
-      <span class="zx-mid-k">Mid-market rate</span><b id="sc-mid">&mdash;</b>
-      <span class="zx-mid-s">The real exchange rate, the same for everyone. Each provider's rate below is measured against it.</span>
+      <span class="zx-mid-k">Live mid-market rate</span><b id="sc-mid">&mdash;</b>
     </div>
     <div class="zx-ticket-foot">
       <div id="sc-recip"></div>
@@ -2769,7 +2774,7 @@
     <span class="zx-h">Stablecoin routes</span>
     <span class="zx-muted" id="sc-compare"></span>
   </div>
-  <div class="zx-list-head"><span>Route</span><span>Their rate</span><span>Cost of sending</span><span>Recipient gets</span><span></span></div>
+  <div class="zx-list-head"><span>Route</span><span>Exchange rate</span><span>Cost of sending</span><span>Recipient gets</span><span></span></div>
   <div id="sc-routes-list"></div>
   <p class="zx-foot">
     Every route has up to three costs: buying the stablecoin (on-ramp), moving it on-chain (network fee) and converting it to
@@ -3058,7 +3063,7 @@
     <!-- Wordmark -->
     <div class="home-brand">
       <h1 class="home-title">ZENA</h1>
-      <p class="home-tagline">African Intelligence <span class="amp">&amp;</span> Payment System</p>
+      <p class="home-tagline">Intelligence <span class="amp">&amp;</span> Payment System</p>
     </div>
 
     <!-- Daily quote -->
@@ -3448,8 +3453,8 @@ function updateTransferQuotes(isTick) {
   list.innerHTML = quotes.map((q, i) => zxQuoteRow({
     i, q, from, recvCcy: to, mid,
     breakdown: q.fee > 0
-      ? `Fee ${fmtAmt(q.fee)} + spread fee ${fmtAmt(q.markup)}`
-      : `Spread fee ${fmtAmt(q.markup)}`,
+      ? `incl. ${fmtAmt(q.fee)} cost of sending fee`
+      : '',
     onSend: `beginSend('fiat',${i})`,
   })).join('');
 }
@@ -3457,14 +3462,14 @@ function updateTransferQuotes(isTick) {
 function zxQuoteRow(o) {
   const q = o.q, gain = q.cost < 0;
   const vsMid = (q.rate / o.mid - 1) * 100;
-  const vsMidTxt = Math.abs(vsMid) < 0.005 ? 'same as mid' : `${Math.abs(vsMid).toFixed(2)}% ${vsMid < 0 ? 'below' : 'above'} mid`;
+  const vsMidTxt = Math.abs(vsMid) < 0.005 ? 'No exchange rate fee' : vsMid < 0 ? `Exchange rate fee ${(-vsMid).toFixed(2)}%` : `Exchange rate gain ${vsMid.toFixed(2)}%`;
   const costTxt = gain ? `+${fmtAmt(-q.cost)} ${o.from}` : `${fmtAmt(q.cost)} ${o.from}`;
   const pctTxt = gain ? `gain ${(-q.costPct).toFixed(2)}%` : `${q.costPct.toFixed(2)}%`;
   return `<div class="zx-q${o.i === 0 ? ' best' : ''}">
     <div class="zx-q-prov"><span class="zx-rank">${o.i + 1}</span>
       <div><b>${esc(q.name)}</b><span>${esc(q.sub)}${o.i === 0 ? ' &middot; <em>Best offer</em>' : ''}</span></div></div>
-    <div class="zx-q-c"><span class="k">Their rate</span><span class="v">${fmtRate(q.rate)}</span><span class="s${vsMid > 0.005 ? ' up' : ''}">${vsMidTxt}</span></div>
-    <div class="zx-q-c"><span class="k">Cost of sending</span><span class="v${gain ? ' g' : ''}">${costTxt}<i>${pctTxt}</i></span><span class="s">${o.breakdown}</span></div>
+    <div class="zx-q-c"><span class="k">Exchange rate</span><span class="v">${fmtRate(q.rate)}</span><span class="s${vsMid > 0.005 ? ' up' : ''}">${vsMidTxt}</span></div>
+    <div class="zx-q-c"><span class="k">Cost of sending</span><span class="v${gain ? ' g' : ''}">${costTxt}<i>${pctTxt}</i></span>${o.breakdown ? `<span class="s">${o.breakdown}</span>` : ''}</div>
     <div class="zx-q-c"><span class="k">Recipient gets</span><span class="v recv">${fmtAmt(q.received)} ${o.recvCcy}</span></div>
     <button class="zx-send" onclick="${o.onSend}">Send</button>
   </div>`;
@@ -5610,6 +5615,7 @@ function openZx(html) {
 function closeZx() {
   document.getElementById('zx-modal').classList.remove('open');
   document.body.style.overflow = '';
+  stopCam();
 }
 document.addEventListener('keydown', e => {
   if (e.key === 'Escape' && document.getElementById('zx-modal')?.classList.contains('open')) closeZx();
@@ -5813,8 +5819,8 @@ function showReview(q) {
   const recvCcy = mode === 'fiat' ? zxVal('send-to') : (r.type === 'crypto' ? scBridge : zxVal('sc-send-to'));
   const line = (k, v, cls) => `<div${cls ? ` class="${cls}"` : ''}><span>${k}</span><b>${v}</b></div>`;
   const costLines = mode === 'fiat'
-    ? (q.fee > 0 ? line('Fee', `${fmtAmt(q.fee)} ${from}`) : '')
-      + line('Spread fee (in the exchange rate)', `${fmtAmt(q.markup)} ${from}`)
+    ? line('Exchange spread fee', `${fmtAmt(q.markup)} ${from}`)
+      + (q.fee > 0 ? line('Cost of sending fee', `${fmtAmt(q.fee)} ${from}`) : '')
     : line(`On-ramp: ${esc(q.onRamp)} buys ${scBridge}`, `${fmtAmt(q.onCost)} ${from}`)
       + line(`Network fee (${esc(q.chain)})`, `${fmtAmt(q.gasCost)} ${from}`)
       + (q.offRamp ? line(`Off-ramp: ${esc(q.offRamp)} pays out ${recvCcy}`, `${fmtAmt(q.offCost)} ${from}`) : '')
@@ -5876,9 +5882,20 @@ function confirmSend() {
 }
 
 // ---------- account: sign-up ----------
-const ZX_COUNTRIES = ['Switzerland', 'United Kingdom', 'Germany', 'France', 'Italy', 'Netherlands', 'Belgium', 'Ireland', 'Spain', 'Sweden',
-  'United States', 'Canada', 'United Arab Emirates', 'Saudi Arabia', 'Kenya', 'Nigeria', 'Ghana', 'South Africa', 'Uganda', 'Tanzania',
-  'Rwanda', 'Ethiopia', 'Egypt', 'Morocco', 'Senegal', 'Côte d’Ivoire', 'Zambia', 'Other'];
+// Every country (ISO 3166), named in English by the browser and sorted A–Z
+const ZX_REGION_CODES = ('AF AL DZ AD AO AG AR AM AU AT AZ BS BH BD BB BY BE BZ BJ BT BO BA BW BR BN BG BF BI CV KH CM CA ' +
+  'CF TD CL CN CO KM CG CD CR CI HR CU CY CZ DK DJ DM DO EC EG SV GQ ER EE SZ ET FJ FI FR GA GM GE DE GH GR GD GT GN GW GY ' +
+  'HT HN HK HU IS IN ID IR IQ IE IL IT JM JP JO KZ KE KI XK KW KG LA LV LB LS LR LY LI LT LU MO MG MW MY MV ML MT MH MR MU MX ' +
+  'FM MD MC MN ME MA MZ MM NA NR NP NL NZ NI NE NG KP MK NO OM PK PW PS PA PG PY PE PH PL PT PR QA RO RU RW KN LC VC WS SM ST ' +
+  'SA SN RS SC SL SG SK SI SB SO ZA KR SS ES LK SD SR SE CH SY TW TJ TZ TH TL TG TO TT TN TR TM TV UG UA AE GB US UY UZ VU VA ' +
+  'VE VN YE ZM ZW').split(' ');
+const ZX_COUNTRIES = (() => {
+  let names = null;
+  try { names = new Intl.DisplayNames(['en'], { type: 'region' }); } catch (e) {}
+  return ZX_REGION_CODES.map(c => (names && names.of(c)) || c).sort((a, b) => a.localeCompare(b, 'en'));
+})();
+const ZX_REASONS = ['Family support', 'School fees', 'Hospital or medical bills', 'Rent and household bills', 'Savings or investment',
+  'Building or property', 'Business or suppliers', 'Gifts and celebrations', 'Emergencies', 'Other'];
 
 // [key, label, type, required]
 const SIGNUP_FIELDS = {
@@ -5888,7 +5905,7 @@ const SIGNUP_FIELDS = {
     ['dob', 'Date of birth', 'date', 1], ['nationality', 'Nationality', 'country', 1],
     ['country', 'Country of residence', 'country', 1], ['address', 'Street and number', 'text', 1],
     ['postcode', 'Postcode', 'text', 1], ['city', 'City', 'text', 1],
-    ['purpose', 'Main reason for sending', 'select:Family support|Bills or school fees|Savings or investment at home|Business|Other', 1],
+    ['purpose', 'Main reason for sending', 'reasons', 1],
   ],
   org: [
     ['orgName', 'Organisation name', 'text', 1],
@@ -5906,9 +5923,9 @@ const SIGNUP_FIELDS = {
 const SIGNUP_DOCS = {
   personal: [
     ['id', 'Photo ID', 'Passport, national ID card or residence permit', 1],
-    ['selfie', 'Selfie', 'A clear photo of your face, matched to your ID', 1],
+    ['selfie', 'Live selfie', 'Taken now with your camera, and matched to your ID', 1],
     ['poa', 'Proof of address', 'Utility bill, bank statement or official letter from the last 3 months', 1],
-    ['sof', 'Source of funds', 'Payslip or 3 months of bank statements. Only needed for higher limits', 0],
+    ['sof', 'Proof of income', 'Recent payslip, employment contract or 3 months of bank statements', 1],
   ],
   org: [
     ['reg', 'Registration document', 'Commercial register extract (under 12 months old) or certificate of incorporation', 1],
@@ -5932,6 +5949,15 @@ function signupFieldHtml([key, label, type, req]) {
   const v = esc(zxSignup.data[key] || '');
   const id = `su-${key}`;
   const lab = `<label class="zx-l" for="${id}">${label}${req ? '' : ' <span class="opt">(optional)</span>'}</label>`;
+  if (type === 'reasons') {
+    const main = zxSignup.data.purpose || '', other = zxSignup.data.purpose2 || [];
+    return `<div class="zx-reasons">${lab}
+      <select class="zx-in" id="${id}"><option value="">Choose…</option>${ZX_REASONS.map(o =>
+        `<option${o === main ? ' selected' : ''}>${esc(o)}</option>`).join('')}</select>
+      <span class="zx-l">Other reasons <span class="opt">(optional, up to 4 more)</span></span>
+      <div class="zx-chips">${ZX_REASONS.map(o => `<label class="zx-chipbox"><input type="checkbox" name="su-purpose2" value="${esc(o)}"
+        ${other.includes(o) ? 'checked' : ''} onchange="limitReasons(this)"> ${esc(o)}</label>`).join('')}</div></div>`;
+  }
   if (type === 'country' || type.startsWith('select:')) {
     const opts = type === 'country' ? ZX_COUNTRIES : type.slice(7).split('|');
     return `<div>${lab}<select class="zx-in" id="${id}"><option value="">Choose…</option>${opts.map(o =>
@@ -5951,12 +5977,15 @@ function renderSignup(root) {
       <div class="zx-err" id="su-err"></div>
       <div class="zx-actions"><button class="zx-btn" onclick="signupNext()">Continue</button><button class="zx-btn ghost" onclick="cancelSignup()">Cancel</button></div>`;
   } else if (s.step === 2) {
-    body = `<p class="zx-p sm">Photos or PDFs. In this demo your files stay on your device; only the file names are noted.
+    body = `<p class="zx-p sm">Documents as photos or PDFs; the selfie is taken live with your camera. In this demo nothing leaves your device.
       <a href="#" onclick="event.preventDefault();cancelSignup(true)">Why do we ask for these?</a></p>
       ${SIGNUP_DOCS[s.type].map(([k, label, hint, req]) => `<div class="zx-doc">
         <div>${label}${req ? '' : ' <span class="zx-muted">(optional)</span>'}<small>${hint}</small>
           ${s.docs[k] ? `<span class="ok">&#10003; ${esc(s.docs[k])}</span>` : ''}</div>
-        <input type="file" accept="image/*,.pdf" ${k === 'selfie' ? 'capture="user"' : ''} onchange="signupDoc('${k}', this)" aria-label="${label}">
+        ${k === 'selfie'
+          ? `<span class="zx-selfie">${s.selfieImg ? `<img src="${s.selfieImg}" alt="Your selfie">` : ''}
+              <button class="zx-btn ${s.selfieImg ? 'ghost ' : ''}sm" onclick="openSelfie()">${s.selfieImg ? 'Retake' : 'Take live selfie'}</button></span>`
+          : `<input type="file" accept="image/*,.pdf" onchange="signupDoc('${k}', this)" aria-label="${label}">`}
       </div>`).join('')}
       <div class="zx-err" id="su-err"></div>
       <div class="zx-actions"><button class="zx-btn" onclick="signupNext()">Continue</button><button class="zx-btn ghost" onclick="signupBack()">Back</button></div>`;
@@ -5969,6 +5998,7 @@ function renderSignup(root) {
         ${org ? `<div><span>Contact</span><b>${esc(d.first)} ${esc(d.last)}, ${esc(d.role)}</b></div>` : ''}
         <div><span>Email</span><b>${esc(d.email)}</b></div>
         <div><span>Country</span><b>${esc(d.country)}</b></div>
+        ${org ? '' : `<div><span>Reasons for sending</span><b>${esc([d.purpose, ...(d.purpose2 || [])].join(', '))}</b></div>`}
         <div><span>Documents</span><b>${Object.keys(s.docs).length} uploaded</b></div>
       </div>
       <label class="zx-check"><input type="checkbox" id="su-consent"> I confirm this information is correct, and I agree that Zena may share
@@ -5990,6 +6020,9 @@ function signupNext() {
       if (req && !s.data[key]) return zxErr('su-err', `Please fill in: ${label}.`);
     }
     if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(s.data.email)) return zxErr('su-err', 'That email address doesn’t look right.');
+    if (s.type === 'personal') {
+      s.data.purpose2 = [...document.querySelectorAll('input[name="su-purpose2"]:checked')].map(x => x.value).filter(v => v !== s.data.purpose);
+    }
   } else if (s.step === 2) {
     const missing = SIGNUP_DOCS[s.type].find(([k, , , req]) => req && !s.docs[k]);
     if (missing) return zxErr('su-err', `Please add: ${missing[1]}.`);
@@ -5999,11 +6032,53 @@ function signupNext() {
   window.scrollTo(0, 0);
 }
 function signupBack() { zxSignup.step--; renderAccount(); }
+function limitReasons(el) {
+  if (document.querySelectorAll('input[name="su-purpose2"]:checked').length > 4) {
+    el.checked = false;
+    zxErr('su-err', 'You can choose up to 5 reasons in total: 1 main and 4 others.');
+  } else zxErr('su-err', '');
+}
 function signupDoc(key, input) {
   const f = input.files && input.files[0];
   if (f) zxSignup.docs[key] = f.name; else delete zxSignup.docs[key];
   renderAccount();
 }
+// Live selfie: the camera only, no photo uploads. The image stays in memory and is never saved or sent.
+let zxCamStream = null;
+async function openSelfie() {
+  openZx(`<h3>Live selfie</h3>
+    <p class="zx-p sm">Look straight at the camera, in good light, with nothing covering your face. In this demo the photo stays on your device.</p>
+    <div class="zx-cam"><video id="cam-v" autoplay playsinline muted></video></div>
+    <div class="zx-err" id="cam-err"></div>
+    <div class="zx-actions"><button class="zx-btn" id="cam-shot" onclick="takeSelfie()" disabled>Take photo</button>
+      <button class="zx-btn ghost" onclick="closeZx()">Cancel</button></div>`);
+  try {
+    zxCamStream = await navigator.mediaDevices.getUserMedia({ video: { facingMode: 'user' }, audio: false });
+    document.getElementById('cam-v').srcObject = zxCamStream;
+    document.getElementById('cam-shot').disabled = false;
+  } catch (e) {
+    zxErr('cam-err', e && e.name === 'NotAllowedError'
+      ? 'Camera access was blocked. Allow the camera for this site in your browser settings, then try again.'
+      : 'No camera found. Open Zena on a phone, or a computer with a camera, to take your selfie.');
+  }
+}
+function stopCam() {
+  if (zxCamStream) zxCamStream.getTracks().forEach(t => t.stop());
+  zxCamStream = null;
+}
+function takeSelfie() {
+  const v = document.getElementById('cam-v');
+  if (!v || !v.videoWidth) return;
+  const c = Object.assign(document.createElement('canvas'), { width: v.videoWidth, height: v.videoHeight });
+  const ctx = c.getContext('2d');
+  ctx.translate(c.width, 0); ctx.scale(-1, 1);   // match the mirrored preview
+  ctx.drawImage(v, 0, 0);
+  zxSignup.selfieImg = c.toDataURL('image/jpeg', 0.8);
+  zxSignup.docs.selfie = `Live selfie taken at ${zxTime()}`;
+  closeZx();
+  renderAccount();
+}
+
 function cancelSignup(toKyc) {
   zxSignup = null;
   renderAccount();
@@ -6073,7 +6148,7 @@ function accountIntroHtml() {
   <div class="zx-acct-hero">
     <span class="zx-tag">Zena account</span>
     <h2>Verify once. Send with any provider.</h2>
-    <p class="zx-p">Finding the cheapest provider is only half the problem. Every one of them asks for your ID, a selfie and
+    <p class="zx-p">Finding the cheapest provider is only half the problem. Every one of them asks for your ID, a live selfie and
       proof of address before you can send. With Zena you do that once, and can then use whichever provider is best that day.</p>
     <div class="zx-actions">
       <button class="zx-btn" onclick="startSignup('personal')">Open personal account</button>
@@ -6094,7 +6169,7 @@ function accountIntroHtml() {
         <li>A wallet holding CHF, USD and EUR, with your card linked</li>
         <li>Saved recipients, so repeat transfers take seconds</li>
       </ul>
-      <p class="zx-p sm">Verification usually takes minutes. You’ll need a photo ID, a selfie and proof of address.</p>
+      <p class="zx-p sm">Verification usually takes minutes. You’ll need a photo ID, a live selfie, proof of address and proof of income.</p>
       <button class="zx-btn" onclick="startSignup('personal')">Open personal account</button>
     </article>
     <article class="zx-article">
@@ -6126,9 +6201,9 @@ function accountIntroHtml() {
         <h4>Personal account</h4>
         <table class="zx-kyc">
           <tr><td>Photo ID</td><td>Passport, national ID card or residence permit (in Switzerland, permit B or C). Valid, with all four corners visible.</td><td class="req">Required</td></tr>
-          <tr><td>Selfie</td><td>A live photo, matched to your ID so nobody can open an account in your name.</td><td class="req">Required</td></tr>
+          <tr><td>Live selfie</td><td>Taken with your camera during sign-up and matched to your ID, so nobody can open an account in your name.</td><td class="req">Required</td></tr>
           <tr><td>Proof of address</td><td>Utility bill, bank statement or official letter from the last 3 months, showing your name and address.</td><td class="req">Required</td></tr>
-          <tr><td>Source of funds</td><td>A recent payslip or 3 months of bank statements.</td><td class="opt">Higher limits</td></tr>
+          <tr><td>Proof of income</td><td>A recent payslip, employment contract or 3 months of bank statements.</td><td class="req">Required</td></tr>
         </table>
       </div>
       <div>
@@ -6145,8 +6220,8 @@ function accountIntroHtml() {
     </div>
     <div class="zx-tiers">
       <div><b>Level 1: email &amp; phone</b>Compare providers and save recipients.</div>
-      <div><b>Level 2: ID, selfie, address</b>Send money and use the wallet, within standard limits.</div>
-      <div><b>Level 3: source of funds</b>Higher limits for large or frequent transfers.</div>
+      <div><b>Level 2: ID, live selfie, address, income</b>Send money and use the wallet, within standard limits.</div>
+      <div><b>Level 3: enhanced checks</b>Higher limits for large or frequent transfers.</div>
     </div>
     <p class="zx-p sm" style="margin-top:14px">Your documents are only shared with a provider you choose to send through, and only with your consent,
       under the Swiss Federal Act on Data Protection (FADP) and, where it applies, the GDPR. <b>In this demo nothing leaves your browser.</b></p>
@@ -6552,7 +6627,7 @@ function trSavingsHtml() {
         <div><span>Cheapest option would have cost</span><b>${fmtAmt(cheap)} ${ccy}</b><div class="tr-bar"><i style="width:${(cheap / max * 100).toFixed(1)}%"></i></div></div>
         <div class="gold"><span>You could have saved</span><b>${fmtAmt(diff)} ${ccy}</b><small>${paid ? (diff / paid * 100).toFixed(0) : 0}% of what you paid in fees</small></div>
       </div>
-      <p class="zx-p sm">Fees = fee + spread fee, measured against the mid-market rate on the day of each payment.
+      <p class="zx-p sm">Fees = exchange spread fee + cost of sending fee, measured against the mid-market rate on the day of each payment.
         “Cheapest option” is the lowest-cost route available for the same amount at that moment.</p>
     </div>
 
