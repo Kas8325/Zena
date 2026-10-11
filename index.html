@@ -212,16 +212,14 @@
   }
 
   .nav-tab {
-    padding: 12px 20px;
-    font-size: 12px;
-    font-weight: 500;
+    padding: 13px 18px;
+    font-size: 14px;
+    font-weight: 600;
     color: var(--text-muted);
     cursor: pointer;
     border-bottom: 2px solid transparent;
     white-space: nowrap;
     transition: all 0.2s;
-    text-transform: uppercase;
-    letter-spacing: 0.5px;
   }
 
   .nav-tab:hover { color: var(--text-secondary); }
@@ -2254,6 +2252,78 @@
   .zx-doc .ok { color: var(--accent-green); font-size: 12px; }
   .zx-doc input[type=file] { font-size: 12px; color: var(--text-secondary); max-width: 240px; }
   .zx-reasons { grid-column: 1 / -1; }
+  .zx-cd { margin: 14px 0 4px; font-size: 13px; color: var(--text-secondary); }
+  .zx-cd-bar { height: 6px; background: var(--bg-secondary); border-radius: 3px; overflow: hidden; margin-bottom: 6px; }
+  .zx-cd-bar i { display: block; height: 100%; width: 100%; background: var(--best); transition: width 1s linear; }
+  .zx-limited { font-size: 13px; background: var(--best-soft); border: 1px solid var(--best); border-radius: 12px; padding: 10px 14px; margin-bottom: 12px; }
+  .zx-method-grid { display: grid; gap: 10px; }
+  .zx-method { display: grid; grid-template-columns: 40px 1fr; grid-template-rows: auto auto; column-gap: 12px; align-items: center; text-align: left; background: var(--bg-card); border: 1px solid var(--border); border-radius: 14px; padding: 14px 16px; cursor: pointer; color: var(--text-primary); font-family: 'Inter', sans-serif; }
+  .zx-method:hover { border-color: var(--text-primary); }
+  .zx-method span { grid-row: 1 / 3; font-size: 24px; text-align: center; }
+  .zx-method b { font-size: 15px; }
+  .zx-method small { font-size: 12.5px; color: var(--text-muted); }
+  /* Send money: calm, rounded, big numbers */
+  .xr-tables { max-width: 1200px; margin: 6px auto 0; }
+  .xr-scope { max-width: 420px; margin: 0 auto 18px; }
+  .zx-send-page { max-width: 560px; margin: 0 auto; padding: 8px 0 30px; }
+  .zx-send-h { font-size: clamp(30px, 6vw, 42px); font-weight: 800; letter-spacing: -1px; text-align: center; margin-top: 6px; }
+  .zx-send-sub { text-align: center; color: var(--text-secondary); font-size: 15px; margin: 6px 0 22px; }
+  .zx-calc { background: var(--bg-card); border: 1px solid var(--border); border-radius: 24px; padding: 20px 22px 18px; box-shadow: 0 10px 30px rgba(17,17,17,.06); }
+  .zx-mode { display: grid; grid-template-columns: 1fr 1fr; background: var(--bg-secondary); border-radius: 999px; padding: 4px; margin-bottom: 14px; }
+  .zx-mode button { border: 0; background: transparent; border-radius: 999px; padding: 9px 10px; font: 700 14px 'Inter', sans-serif; color: var(--text-secondary); cursor: pointer; }
+  .zx-mode button.on { background: var(--bg-card); color: var(--text-primary); box-shadow: 0 1px 4px rgba(0,0,0,.12); }
+  .zx-calc-note { font-size: 12.5px; color: var(--text-secondary); line-height: 1.5; margin: -4px 0 12px; }
+  .zx-seg.sm button { padding: 4px 10px; font-size: 11.5px; }
+  .zx-rate-pill { display: inline-block; font-size: 12.5px; color: var(--text-secondary); background: var(--bg-secondary); border-radius: 999px; padding: 6px 12px; margin-bottom: 14px; }
+  .zx-rate-pill b { color: var(--text-primary); font-weight: 700; }
+  .zx-calc-l { display: block; font-size: 13px; color: var(--text-secondary); font-weight: 600; margin-bottom: 4px; }
+  .zx-calc-line { display: flex; align-items: center; gap: 12px; border-bottom: 1px solid var(--border); padding-bottom: 10px; }
+  .zx-ccy-pill { flex: none; width: 118px; max-width: 118px; border: 1px solid var(--border); background: var(--bg-secondary); color: var(--text-primary); border-radius: 999px; padding: 8px 12px; font: 700 15px 'Inter', sans-serif; cursor: pointer; }
+  .zx-big { flex: 1; min-width: 0; text-align: right; border: 0; background: transparent; color: var(--text-primary); font: 800 clamp(26px, 6vw, 36px) 'Inter', sans-serif; font-variant-numeric: tabular-nums; letter-spacing: -.5px; outline: none; -moz-appearance: textfield; padding: 2px 0; }
+  .zx-big::-webkit-inner-spin-button { -webkit-appearance: none; }
+  .zx-big-out { display: block; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+  .zx-calc-line .zx-to-crypto { flex: none; min-height: 0; padding: 8px 12px; border-radius: 999px; background: var(--bg-secondary); font-size: 14px; }
+  .zx-ccy-pill:disabled { display: none; }
+  .zx-calc-mid { display: flex; justify-content: flex-end; margin: 6px 0; }
+  .zx-calc-mid .zx-swap { margin: 0; width: 34px; height: 34px; font-size: 15px; }
+  .zx-facts { display: grid; gap: 12px; margin: 16px 0 18px; }
+  .zx-fact { display: flex; align-items: center; gap: 12px; }
+  .zx-fact-i { flex: none; width: 34px; height: 34px; border-radius: 50%; border: 1px solid var(--border); display: flex; align-items: center; justify-content: center; font-size: 14px; color: var(--text-secondary); }
+  .zx-fact small { display: block; font-size: 12px; color: var(--text-muted); }
+  .zx-fact b { font-size: 14.5px; font-weight: 700; }
+  .zx-cta { width: 100%; border: 0; border-radius: 999px; background: var(--best); color: var(--on-best); font: 800 16px 'Inter', sans-serif; padding: 15px; cursor: pointer; }
+  .zx-cta:hover { filter: brightness(1.05); }
+  .zx-cta:disabled { opacity: .5; cursor: not-allowed; }
+  .zx-compare { display: block; width: 100%; margin-top: 8px; background: transparent; border: 0; color: var(--text-primary); font: 600 13.5px 'Inter', sans-serif; padding: 8px; cursor: pointer; text-decoration: underline; }
+  .zx-list-h { font-size: 20px; font-weight: 800; margin: 34px 0 2px; }
+  .zx-list-sub { font-size: 13px; color: var(--text-muted); margin-bottom: 12px; }
+  .zx-send-page .zx-q { display: block; border-radius: 18px; padding: 16px 18px; margin-bottom: 10px; }
+  .zx-q-top { display: flex; align-items: center; gap: 12px; }
+  .zx-ava { flex: none; width: 38px; height: 38px; border-radius: 50%; background: var(--bg-secondary); display: flex; align-items: center; justify-content: center; font-weight: 800; font-size: 16px; }
+  .zx-q.best .zx-ava { background: var(--best); color: var(--on-best); }
+  .zx-q-name { flex: 1; min-width: 0; }
+  .zx-q-name b { display: block; font-size: 15px; }
+  .zx-q-name small { font-size: 12.5px; color: var(--text-muted); }
+  .zx-badge-best { flex: none; font-size: 11.5px; font-weight: 800; background: var(--best); color: var(--on-best); border-radius: 999px; padding: 4px 10px; }
+  .zx-q-mid { display: flex; align-items: flex-end; justify-content: space-between; gap: 12px; margin: 12px 0 8px; }
+  .zx-q-mid small { display: block; font-size: 12px; color: var(--text-muted); }
+  .zx-q-recv { font-size: 21px; font-weight: 800; font-variant-numeric: tabular-nums; letter-spacing: -.3px; }
+  .zx-send-page .zx-send { border-radius: 999px; padding: 10px 22px; font-size: 14px; }
+  .zx-q-meta { display: grid; gap: 2px; font-size: 12.5px; color: var(--text-muted); border-top: 1px solid var(--border); padding-top: 8px; }
+  .zx-q-meta b { color: var(--text-secondary); font-weight: 700; }
+  .zx-req { color: var(--accent-red); font-weight: 700; }
+  .zx-req-note { margin: 0 0 4px; }
+  .zx-chipbox.off { opacity: .4; cursor: not-allowed; }
+  .zx-phone { display: grid; grid-template-columns: minmax(120px, 42%) 1fr; gap: 6px; }
+  .zx-tabs { display: grid; grid-template-columns: 1fr 1fr; border: 1px solid var(--border); border-radius: 10px; overflow: hidden; margin: 4px 0 16px; }
+  .zx-tabs button { background: var(--bg-primary); border: 0; padding: 11px 8px; font: 600 13px 'Inter', sans-serif; color: var(--text-secondary); cursor: pointer; }
+  .zx-tabs button + button { border-left: 1px solid var(--border); }
+  .zx-tabs button.on { background: var(--text-primary); color: var(--bg-card); }
+  .zx-tabs button:disabled { opacity: .45; cursor: not-allowed; }
+  .zx-ritem { display: flex; justify-content: space-between; align-items: center; gap: 10px; }
+  .zx-ritem-main { min-width: 0; }
+  .zx-ritem-go { font-size: 12.5px; font-weight: 700; white-space: nowrap; color: var(--text-primary); }
+  .zx-change { font: 600 12px 'Inter', sans-serif; margin-left: 8px; color: var(--text-primary); text-decoration: underline; }
   .zx-chips { display: flex; flex-wrap: wrap; gap: 6px; }
   .zx-chipbox { display: inline-flex; align-items: center; gap: 6px; border: 1px solid var(--border); border-radius: 999px; padding: 6px 12px; font-size: 13px; cursor: pointer; background: var(--bg-card); color: var(--text-primary); }
   .zx-chipbox:has(input:checked) { border-color: var(--text-primary); background: var(--best-soft); }
@@ -2454,10 +2524,8 @@
 <!-- NAVIGATION -->
 <div class="nav-tabs">
   <div class="nav-tab active" onclick="switchLayer(6)">Home</div>
-  <div class="nav-tab" onclick="switchLayer(1)">Send Money &mdash; Fiat</div>
-  <div class="nav-tab" onclick="switchLayer(4)">Send Money &mdash; Stablecoin</div>
-  <div class="nav-tab" onclick="switchLayer(2)">Cross-Currency Africa</div>
-  <div class="nav-tab" onclick="switchLayer(3)">Cross-Currency FX</div>
+  <div class="nav-tab" onclick="switchLayer(1)">Send money</div>
+  <div class="nav-tab" onclick="switchLayer(2)">Exchange rates</div>
   <div class="nav-tab" onclick="switchLayer(8)">Treasury</div>
   <div class="nav-tab" onclick="switchLayer(5)">News &amp; Intelligence</div>
   <div class="nav-tab" onclick="switchLayer(0)">Markets</div>
@@ -2518,50 +2586,61 @@
 
 <!-- ========== LAYER 2: TRANSFER COMPARE (FXall-style RFQ) ========== -->
 <div class="layer-panel" id="layer-1">
- <div class="zx-wrap">
-  <div class="zx-ticket">
-    <div class="zx-ticket-row">
-      <div class="zx-field">
-        <label for="send-amount">You send</label>
-        <div class="zx-box">
-          <input type="number" id="send-amount" value="1000" min="1" inputmode="decimal" oninput="updateTransferQuotes()">
-          <select id="send-from" onchange="updateTransferQuotes()" aria-label="Currency you send"></select>
-        </div>
-      </div>
-      <button class="zx-swap" onclick="swapCorridorCurrencies()" title="Swap currencies" aria-label="Swap currencies">&#8644;</button>
-      <div class="zx-field">
-        <label for="send-to">Recipient receives</label>
-        <div class="zx-box">
-          <select id="send-to" class="zx-full" onchange="updateTransferQuotes()"></select>
-        </div>
-      </div>
+<div class="zx-send-page">
+  <h1 class="zx-send-h">Send money</h1>
+  <p class="zx-send-sub">Every provider compared on what your recipient actually gets.</p>
+
+  <div class="zx-calc">
+    <div class="zx-mode" role="tablist" aria-label="What you send from">
+      <button role="tab" data-mode="fiat" class="on" onclick="setSendMode('fiat')">Currency</button>
+      <button role="tab" data-mode="coin" onclick="setSendMode('coin')">Stablecoin</button>
     </div>
-    <div class="zx-mid">
-      <span class="zx-mid-k">Live mid-market rate</span><b id="rfq-mid">&mdash;</b>
+    <div class="zx-rate-pill">Live mid-market rate · <b id="rfq-mid">&mdash;</b></div>
+
+    <label class="zx-calc-l" for="send-amount">You send</label>
+    <div class="zx-calc-line">
+      <select id="send-from" class="zx-ccy-pill" onchange="updateTransferQuotes()" aria-label="Currency you send"></select>
+      <input type="number" id="send-amount" class="zx-big" value="1000" min="1" inputmode="decimal" oninput="updateTransferQuotes()">
     </div>
-    <div class="zx-ticket-foot">
-      <div id="fx-recip"></div>
+    <p class="zx-calc-note" id="calc-note" style="margin:8px 0 0"></p>
+
+    <div class="zx-calc-mid"><button class="zx-swap" onclick="swapCorridorCurrencies()" title="Swap currencies" aria-label="Swap currencies">&#8645;</button></div>
+
+    <label class="zx-calc-l" for="send-to">Recipient gets</label>
+    <div class="zx-calc-line">
+      <select id="send-to" class="zx-ccy-pill" onchange="updateTransferQuotes()" aria-label="Currency the recipient gets"></select>
+            <output id="receive-amount" class="zx-big zx-big-out">&mdash;</output>
     </div>
+
+    <div class="zx-facts" id="calc-facts"></div>
+    <button class="zx-cta" id="calc-cta" onclick="beginSend('fiat',0)">Send money</button>
+    <button class="zx-compare" onclick="document.getElementById('providers-list').scrollIntoView({behavior:'smooth', block:'start'})">Compare all options &darr;</button>
+    <div id="fx-recip" hidden></div>
   </div>
 
-  <div class="zx-list-top">
-    <span class="zx-h">Providers</span>
-    <span class="zx-muted">Cheapest first &middot; rates as of <span id="rfq-updated">&mdash;</span></span>
-  </div>
-  <div class="zx-list-head"><span>Provider</span><span>Exchange rate</span><span>Cost of sending</span><span>Recipient gets</span><span></span></div>
+  <h2 class="zx-list-h">All options</h2>
+  <p class="zx-list-sub">Cheapest first, as of <span id="rfq-updated">&mdash;</span>. Cost of sending = exchange spread fee + cost of sending fee.</p>
+  <p class="zx-limited" id="send-limited" hidden></p>
   <div id="providers-list"></div>
-  <p class="zx-foot">
-    <b>Cost of sending = exchange spread fee + cost of sending fee.</b> The exchange spread fee is the gap between the
-    provider's exchange rate and the live mid-market rate. Some providers also charge a cost of sending fee on top.
-    <b>Prototype: provider prices are illustrative, not live quotes.</b>
-  </p>
- </div>
+  <p class="zx-foot"><b>Prototype: prices are illustrative, not live quotes.</b></p>
+</div>
 </div>
 
 <!-- ========== LAYER 3: CROSS-CURRENCY FX AFRICA ========== -->
 <div class="layer-panel" id="layer-2">
-  <div class="tab-search-mount"></div>
-  <div class="section-label"><div class="section-icon"></div> Cross-Currency FX Africa</div>
+  <div class="zx-send-page">
+    <h1 class="zx-send-h">Exchange rates</h1>
+    <p class="zx-send-sub">Live mid-market rates for African and global currencies.</p>
+  </div>
+
+  <div class="xr-tables">
+    <div class="zx-mode xr-scope" role="tablist" aria-label="Which rates">
+      <button role="tab" data-scope="africa" onclick="xrSetScope('africa')">Within Africa</button>
+      <button role="tab" data-scope="world" onclick="xrSetScope('world')">Africa &amp; the world</button>
+    </div>
+    <div class="tab-search-mount"></div>
+    <div id="xr-africa">
+  <div class="section-label"><div class="section-icon"></div> Rates between African currencies</div>
   <p style="font-size:13px;color:var(--text-secondary);margin-bottom:16px">
     Trade directly between African currencies without converting through USD. Powered by PAPSS and local FX aggregation.
   </p>
@@ -2609,12 +2688,9 @@
       </div>
     </div>
   </div>
-</div>
-
-<!-- ========== LAYER 4: CROSS-CURRENCY FX (GLOBAL/DIASPORA) ========== -->
-<div class="layer-panel" id="layer-3">
-  <div class="tab-search-mount"></div>
-  <div class="section-label"><div class="section-icon"></div> Cross-Currency FX</div>
+    </div>
+    <div id="xr-world" hidden>
+  <div class="section-label"><div class="section-icon"></div> Global currencies against African currencies</div>
   <p style="font-size:13px;color:var(--text-secondary);margin-bottom:16px">
     Foreign currency rates against African currencies. Key corridors for diaspora remittances and international trade.
   </p>
@@ -2738,51 +2814,54 @@
       </div>
     </div>
   </div>
+    </div>
+  </div>
 </div>
+
+<div class="layer-panel" id="layer-3"><!-- merged into Exchange rates (layer-2) --></div>
 
 <!-- ========== LAYER 5: STABLECOIN BRIDGE ========== -->
 <div class="layer-panel" id="layer-4">
- <div class="zx-wrap">
-  <div class="zx-ticket">
-    <div class="zx-ticket-row">
-      <div class="zx-field">
-        <label for="sc-send-amount">You send</label>
-        <div class="zx-box">
-          <input type="number" id="sc-send-amount" value="1000" min="1" inputmode="decimal" oninput="updateStableQuotes()">
-          <select id="sc-send-from" onchange="updateStableQuotes()" aria-label="Currency you send"></select>
-        </div>
-      </div>
-      <button class="zx-swap" onclick="swapStableCorridor()" title="Swap currencies" aria-label="Swap currencies">&#8644;</button>
-      <div class="zx-field">
-        <label for="sc-send-to">Recipient receives</label>
-        <div class="zx-box">
-          <select id="sc-send-to" class="zx-full" onchange="updateStableQuotes()"></select>
-          <span class="zx-to-crypto" id="sc-to-crypto" hidden></span>
-        </div>
-      </div>
+<div class="zx-send-page">
+  <h1 class="zx-send-h">Send money</h1>
+  <p class="zx-send-sub">Every provider compared on what your recipient actually gets.</p>
+
+  <div class="zx-calc">
+    <div class="zx-mode" role="tablist" aria-label="How to send">
+      <button role="tab" class="" onclick="setSendMode('fiat')">Standard transfer</button>
+      <button role="tab" class="on" onclick="setSendMode('stable')">Stablecoin</button>
     </div>
-    <div class="zx-mid">
-      <span class="zx-mid-k">Live mid-market rate</span><b id="sc-mid">&mdash;</b>
+    
+    <div class="zx-calc-note">Your money travels as a digital dollar (stablecoin) and is paid out in local currency, or straight to a crypto wallet.
+      <span style="display:inline-flex;align-items:center;gap:6px;margin-left:4px">Coin: <span class="zx-seg sm" id="sc-bridge-toggle"></span></span></div>
+    <div class="zx-rate-pill">Live mid-market rate · <b id="sc-mid">&mdash;</b></div>
+
+    <label class="zx-calc-l" for="sc-send-amount">You send</label>
+    <div class="zx-calc-line">
+      <select id="sc-send-from" class="zx-ccy-pill" onchange="updateStableQuotes()" aria-label="Currency you send"></select>
+      <input type="number" id="sc-send-amount" class="zx-big" value="1000" min="1" inputmode="decimal" oninput="updateStableQuotes()">
     </div>
-    <div class="zx-ticket-foot">
-      <div id="sc-recip"></div>
-      <div style="display:flex;align-items:center;gap:8px">Via <span class="zx-seg" id="sc-bridge-toggle"></span></div>
+
+    <div class="zx-calc-mid"><button class="zx-swap" onclick="swapStableCorridor()" title="Swap currencies" aria-label="Swap currencies">&#8645;</button></div>
+
+    <label class="zx-calc-l" for="sc-send-to">Recipient gets</label>
+    <div class="zx-calc-line">
+      <select id="sc-send-to" class="zx-ccy-pill" onchange="updateStableQuotes()" aria-label="Currency the recipient gets"></select>
+      <span class="zx-to-crypto" id="sc-to-crypto" hidden></span>
+      <output id="sc-receive-amount" class="zx-big zx-big-out">&mdash;</output>
     </div>
+
+    <div class="zx-facts" id="sc-calc-facts"></div>
+    <button class="zx-cta" id="sc-calc-cta" onclick="beginSend('stable',0)">Send money</button>
+    <button class="zx-compare" onclick="document.getElementById('sc-routes-list').scrollIntoView({behavior:'smooth', block:'start'})">Compare all options &darr;</button>
+    <div id="sc-recip" hidden></div>
   </div>
 
-  <div class="zx-list-top">
-    <span class="zx-h">Stablecoin routes</span>
-    <span class="zx-muted" id="sc-compare"></span>
-  </div>
-  <div class="zx-list-head"><span>Route</span><span>Exchange rate</span><span>Cost of sending</span><span>Recipient gets</span><span></span></div>
+  <h2 class="zx-list-h">All stablecoin routes</h2>
+  <p class="zx-list-sub">Cheapest first. <span id="sc-compare"></span></p>
   <div id="sc-routes-list"></div>
-  <p class="zx-foot">
-    Every route has up to three costs: buying the stablecoin (on-ramp), moving it on-chain (network fee) and converting it to
-    local currency (off-ramp). If the recipient takes crypto directly, there is no off-ramp. Where the local street rate is
-    above the official rate, that premium can outweigh the fees.
-    <b>Prototype: route prices are illustrative, not live quotes.</b>
-  </p>
- </div>
+  <p class="zx-foot"><b>Prototype: prices are illustrative, not live quotes.</b></p>
+</div>
 
  <details class="zx-more">
   <summary>Stablecoin rates &amp; reference data</summary>
@@ -3386,18 +3465,122 @@ function fillCcySelect(sel, codes, selected) {
     `<option value="${c}"${c === selected ? ' selected' : ''}>${currencyLibrary[c].flag} ${c}</option>`).join('');
 }
 
+// Any ISO currency: name from the browser, flag from the country code it starts with (X.. = regional, e.g. XOF)
+let zxCcyNames = null;
+try { zxCcyNames = new Intl.DisplayNames(['en'], { type: 'currency' }); } catch (e) {}
+function ccyInfo(c) {
+  if (currencyLibrary[c]) return currencyLibrary[c];
+  const name = (zxCcyNames && zxCcyNames.of(c)) || c;
+  const flag = c === 'EUR' ? '🇪🇺' : c[0] === 'X' ? '🌐' : c.slice(0, 2).replace(/./g, ch => String.fromCodePoint(127397 + ch.charCodeAt(0)));
+  return { name, flag, country: name };
+}
+// Currencies we have a live rate for, beyond the main African and global ones
+function extraCurrencies() {
+  const main = new Set([...africanCurrencies, ...foreignCurrencies]);
+  return Object.keys(usdRates).filter(c => !main.has(c) && /^[A-Z]{3}$/.test(c) && !COINS.includes(c))
+    .sort((a, b) => ccyInfo(a).name.localeCompare(ccyInfo(b).name, 'en'));
+}
+function allSendCurrencies() { return [...africanCurrencies, ...foreignCurrencies, ...extraCurrencies()]; }
+// Main currencies first, then "All other currencies" A–Z by name
+function fillSendCcySelect(sel, mainCodes, selected) {
+  const opt = c => `<option value="${c}"${c === selected ? ' selected' : ''}>${ccyInfo(c).flag} ${c}</option>`;
+  const extra = extraCurrencies();
+  sel.innerHTML = mainCodes.map(opt).join('') +
+    (extra.length ? `<optgroup label="All other currencies">${extra.map(c =>
+      `<option value="${c}"${c === selected ? ' selected' : ''}>${ccyInfo(c).flag} ${c} · ${esc(ccyInfo(c).name)}</option>`).join('')}</optgroup>` : '');
+}
+
+// Digital dollars sit in the currency pickers like any other currency:
+//   "You send USDC"      = paying from your own crypto wallet (no on-ramp)
+//   "Recipient gets USDC" = paid into their crypto wallet (no off-ramp)
+const COINS = ['USDC', 'USDT', 'EURC'];
+const isCoin = c => COINS.includes(c);
+function coinUsd(c) { return stablecoins[c].peg === 'USD' ? 1 : 1 / (usdRates[stablecoins[c].peg] || 1); }
+function perUsd(c) { return isCoin(c) ? 1 / coinUsd(c) : (usdRates[c] || 1); }   // units of c per 1 USD
+function addCoinOptions(sel, label) {
+  const g = document.createElement('optgroup');
+  g.label = label;
+  COINS.forEach(c => g.appendChild(new Option(`🪙 ${c}`, c)));
+  sel.appendChild(g);
+}
+
+// Providers that turn a stablecoin into local currency (illustrative coverage and pricing)
+const offRampVenues = [
+  { name: 'Yellow Card', spread: 1.1, ccys: ['NGN', 'KES', 'GHS', 'UGX', 'TZS', 'ZMW', 'XOF', 'RWF', 'ZAR'], chains: ['Tron', 'Stellar', 'Polygon'], speed: 'Minutes' },
+  { name: 'Kotani Pay', spread: 1.3, ccys: ['KES', 'UGX', 'GHS', 'ZMW', 'RWF', 'TZS'], chains: ['Stellar', 'Polygon'], speed: 'Minutes' },
+  { name: 'Busha', spread: 0.9, ccys: ['NGN', 'KES'], chains: ['Tron', 'Solana'], speed: 'Minutes' },
+  { name: 'Quidax', spread: 1.0, ccys: ['NGN'], chains: ['Tron', 'BSC', 'Polygon'], speed: 'Minutes' },
+  { name: 'Binance P2P', spread: 1.6, ccys: ['NGN', 'KES', 'GHS', 'UGX', 'TZS', 'EGP', 'MAD', 'ZAR', 'XOF', 'ETB', 'ZMW'], chains: ['Tron', 'BSC'], speed: '10–30 min' },
+  { name: 'VALR', spread: 0.6, ccys: ['ZAR'], chains: ['Solana', 'Ethereum'], speed: 'Minutes' },
+];
+// Who can sell a stablecoin for this currency: African currencies go through African ramps (M-Pesa, bank),
+// other currencies through international exchanges
+function rampsFor(from) {
+  if (!africanCurrencies.includes(from)) return onRamps;
+  return offRampVenues.filter(v => v.ccys.includes(from))
+    .map(v => ({ name: v.name, spread: v.spread, flatFee: 0, chains: v.chains, coins: ['USDC', 'USDT'] }));
+}
+const cheapestChain = chains => chains.reduce((a, b) => ((chainFees[a] ?? 0.5) <= (chainFees[b] ?? 0.5) ? a : b));
+
+// Stablecoin -> local currency: you pay the network fee from your wallet, the provider pays out
+function offRampQuotes(coin, to, amount, isTick) {
+  const mkt = scMarkets.find(m => m.ccy === to);
+  const usd = coinUsd(coin), mid = (usdRates[to] || 1) * usd;
+  const street = mid;   // no assumed street-rate bonus; payout at the mid-market rate less the provider's spread
+  return offRampVenues.filter(v => v.ccys.includes(to)).map(v => {
+    const chain = cheapestChain(v.chains);
+    const gas = (chainFees[chain] ?? 0.5) / usd;                  // in coin units
+    const spread = Math.max(0.2, v.spread + (isTick ? (Math.random() - 0.5) * 0.06 : 0));
+    const received = Math.max(0, amount - gas) * street * (1 - spread / 100);
+    const offCost = Math.max(0, amount - gas) * spread / 100;
+    const cost = amount - received / mid;
+    return { kind: 'offramp', name: v.name, sub: `${coin} on ${chain} · ${v.speed}`, chain, gasCost: gas, offCost,
+      premium: gas + offCost - cost, cost, costPct: amount ? cost / amount * 100 : 0, rate: amount ? received / amount : 0, received };
+  });
+}
+
+// Local currency -> stablecoin into the recipient's wallet: on-ramp plus network fee
+function onRampQuotes(from, coin, amount, isTick) {
+  const coinInFrom = coinUsd(coin) * (usdRates[from] || 1);
+  return rampsFor(from).filter(r => r.coins.includes(coin)).map(r => {
+    const chain = cheapestChain(r.chains);
+    const spread = Math.max(0.1, r.spread + (isTick ? (Math.random() - 0.5) * 0.06 : 0));
+    const onCost = spread / 100 * amount + r.flatFee * (usdRates[from] || 1);
+    const gasCost = (chainFees[chain] ?? 0.5) * (usdRates[from] || 1);
+    const received = Math.max(0, (amount - onCost - gasCost) / coinInFrom);
+    const cost = onCost + gasCost;
+    return { kind: 'onramp', name: r.name, sub: `${coin} on ${chain} · under 1 min`, chain, onCost, gasCost,
+      cost, costPct: amount ? cost / amount * 100 : 0, rate: amount ? received / amount : 0, received };
+  });
+}
+
+// Every way to make this payment, cheapest first
+function sendQuotes(from, to, amount, isTick) {
+  const mid = perUsd(to) / perUsd(from);
+  if (isCoin(from) && isCoin(to)) return { mid, quotes: [], note: 'Choose a normal currency on one side.' };
+  if (isCoin(from)) return { mid, quotes: offRampQuotes(from, to, amount, isTick).sort((a, b) => a.cost - b.cost), note: `No provider pays out ${to} for ${from} yet.` };
+  if (isCoin(to)) return { mid, quotes: onRampQuotes(from, to, amount, isTick).sort((a, b) => a.cost - b.cost), note: `No provider sells ${to} for ${from} yet.` };
+  // Currency tab: providers you can pay with a bank account or card. Stablecoin routes would need your own
+  // accounts on crypto platforms, so they live on the Stablecoin tab instead.
+  const quotes = fiatQuotes(from, to, amount, isTick).quotes.map(q => ({ ...q, kind: 'transfer' }));
+  const key = `${from}-${to}`;
+  const specialist = Object.values(providerCoverage).some(p => p.corridors !== '*' && p.corridors.includes(key));
+  if (quotes.length && !specialist) {
+    return { mid, quotes, note: '', limited: `Limited data for ${from} → ${to}: showing global providers only. More providers coming as we connect partners.` };
+  }
+  return { mid, quotes: quotes.sort((a, b) => a.cost - b.cost), note: `No provider covers ${from} → ${to} yet.` };
+}
+
 function initTransferCompare() {
   const fromSel = document.getElementById('send-from');
   if (!fromSel) return;
-  if (!fromSel.options.length) {
-    fillCcySelect(fromSel, [...foreignCurrencies, ...africanCurrencies], 'GBP');
-    fillCcySelect(document.getElementById('send-to'), [...africanCurrencies, ...foreignCurrencies], 'NGN');
-  }
+  if (!fromSel.options.length) fillSendSelects();
   updateTransferQuotes();
   startQuoteStream();
 }
 
 function swapCorridorCurrencies() {
+  if (sendMode === 'coin') return zxToast('Can’t swap here', 'On the Stablecoin tab you always send a stablecoin. Use the Currency tab for other pairs.');
   const f = document.getElementById('send-from'), t = document.getElementById('send-to');
   const tmp = f.value; f.value = t.value; t.value = tmp;
   updateTransferQuotes();
@@ -3436,25 +3619,31 @@ function updateTransferQuotes(isTick) {
 
   // A saved recipient belongs to one currency; changing currency drops the choice
   const r = selectedRecipient('fiat');
-  if (r && r.ccy !== to) zxSel.fiat = null;
+  if (r && (r.type === 'crypto' ? !isCoin(to) : r.ccy !== to)) zxSel.fiat = null;
   renderRecipientChip('fiat');
 
-  const { mid, quotes } = fiatQuotes(from, to, amount, isTick);
+  const { mid, quotes, note, limited } = sendQuotes(from, to, amount, isTick);
+  const lim = document.getElementById('send-limited');
+  if (lim) { lim.textContent = limited || ''; lim.hidden = !limited; }
+  const hint = document.getElementById('calc-note');
+  if (hint) hint.textContent = '';
   lastFiatQuotes = quotes;
   document.getElementById('rfq-mid').textContent = `1 ${from} = ${fmtRate(mid)} ${to}`;
   document.getElementById('rfq-updated').textContent = zxTime();
 
   const list = document.getElementById('providers-list');
-  const empty = msg => { list.innerHTML = `<div class="zx-empty">${msg}</div>`; lastFiatQuotes = []; };
+  const empty = msg => { list.innerHTML = `<div class="zx-empty">${msg}</div>`; lastFiatQuotes = []; fillCalc('', null); };
   if (from === to) return empty('Choose two different currencies.');
   if (!amount) return empty('Enter an amount to see what each provider charges.');
-  if (!quotes.length) return empty(`No provider covers ${from} → ${to} yet.`);
+  if (!quotes.length) return empty(note);
 
+  fillCalc('', quotes[0], from, to, quotes.length, 'options');
   list.innerHTML = quotes.map((q, i) => zxQuoteRow({
     i, q, from, recvCcy: to, mid,
-    breakdown: q.fee > 0
-      ? `incl. ${fmtAmt(q.fee)} cost of sending fee`
-      : '',
+    breakdown: q.kind === 'transfer' ? (q.fee > 0 ? `incl. ${fmtAmt(q.fee)} cost of sending fee` : '')
+      : q.kind === 'offramp' ? `network ${fmtAmt(q.gasCost)} + payout ${fmtAmt(q.offCost)}`
+      : q.kind === 'onramp' ? `buying ${to} ${fmtAmt(q.onCost)} + network ${fmtAmt(q.gasCost)}`
+      : `buy ${fmtAmt(q.onCost)} + network ${fmtAmt(q.gasCost)} + payout ${fmtAmt(q.offCost)}`,
     onSend: `beginSend('fiat',${i})`,
   })).join('');
 }
@@ -3462,17 +3651,120 @@ function updateTransferQuotes(isTick) {
 function zxQuoteRow(o) {
   const q = o.q, gain = q.cost < 0;
   const vsMid = (q.rate / o.mid - 1) * 100;
-  const vsMidTxt = Math.abs(vsMid) < 0.005 ? 'No exchange rate fee' : vsMid < 0 ? `Exchange rate fee ${(-vsMid).toFixed(2)}%` : `Exchange rate gain ${vsMid.toFixed(2)}%`;
-  const costTxt = gain ? `+${fmtAmt(-q.cost)} ${o.from}` : `${fmtAmt(q.cost)} ${o.from}`;
-  const pctTxt = gain ? `gain ${(-q.costPct).toFixed(2)}%` : `${q.costPct.toFixed(2)}%`;
+  const rateNote = Math.abs(vsMid) < 0.005 ? 'no exchange rate fee' : vsMid < 0 ? `exchange rate fee ${(-vsMid).toFixed(2)}%` : `exchange rate gain ${vsMid.toFixed(2)}%`;
+  const cost = gain ? `you gain ${fmtAmt(-q.cost)} ${o.from}` : `${fmtAmt(q.cost)} ${o.from} (${q.costPct.toFixed(2)}%)`;
+  const name = q.name.split(' → ')[0];
   return `<div class="zx-q${o.i === 0 ? ' best' : ''}">
-    <div class="zx-q-prov"><span class="zx-rank">${o.i + 1}</span>
-      <div><b>${esc(q.name)}</b><span>${esc(q.sub)}${o.i === 0 ? ' &middot; <em>Best offer</em>' : ''}</span></div></div>
-    <div class="zx-q-c"><span class="k">Exchange rate</span><span class="v">${fmtRate(q.rate)}</span><span class="s${vsMid > 0.005 ? ' up' : ''}">${vsMidTxt}</span></div>
-    <div class="zx-q-c"><span class="k">Cost of sending</span><span class="v${gain ? ' g' : ''}">${costTxt}<i>${pctTxt}</i></span>${o.breakdown ? `<span class="s">${o.breakdown}</span>` : ''}</div>
-    <div class="zx-q-c"><span class="k">Recipient gets</span><span class="v recv">${fmtAmt(q.received)} ${o.recvCcy}</span></div>
-    <button class="zx-send" onclick="${o.onSend}">Send</button>
+    <div class="zx-q-top">
+      <span class="zx-ava" aria-hidden="true">${esc(name.charAt(0))}</span>
+      <span class="zx-q-name"><b>${esc(q.name)}</b><small>${esc(q.sub)}</small></span>
+      ${o.i === 0 ? '<span class="zx-badge-best">Cheapest</span>' : ''}
+    </div>
+    <div class="zx-q-mid">
+      <span><small>Recipient gets</small><b class="zx-q-recv">${fmtAmt(q.received)} ${o.recvCcy}</b></span>
+      <button class="zx-send" onclick="${o.onSend}">Send</button>
+    </div>
+    <div class="zx-q-meta">
+      <span>Exchange rate <b>${fmtRate(q.rate)}</b> · ${rateNote}</span>
+      <span>Cost of sending <b>${cost}</b>${o.breakdown ? ` · ${o.breakdown}` : ''}</span>
+    </div>
   </div>`;
+}
+
+// ===== EXCHANGE RATES: one converter for any pair, and the two rate tables behind a switch =====
+let xrScope = 'africa';
+function xrInit() { xrSetScope(xrScope); }
+function xrConvert() {
+  const from = zxVal('xr-from'), to = zxVal('xr-to'), amt = parseFloat(zxVal('xr-amt')) || 0;
+  if (!from || !to) return;
+  const rate = (usdRates[to] || 1) / (usdRates[from] || 1);
+  document.getElementById('xr-out').textContent = fmtAmt(amt * rate);
+  document.getElementById('xr-rate').textContent = `1 ${from} = ${fmtRate(rate)} ${to}`;
+  document.getElementById('xr-inverse').textContent = `1 ${to} = ${fmtRate(1 / rate)} ${from} · Mid-market rate, before any provider fees.`;
+}
+function xrSwap() {
+  const f = document.getElementById('xr-from'), t = document.getElementById('xr-to');
+  const tmp = f.value; f.value = t.value; t.value = tmp;
+  xrConvert();
+}
+function xrSetScope(s) {
+  xrScope = s;
+  document.getElementById('xr-africa').hidden = s !== 'africa';
+  document.getElementById('xr-world').hidden = s !== 'world';
+  document.querySelectorAll('.xr-scope button').forEach(b => b.classList.toggle('on', b.dataset.scope === s));
+  if (s === 'world') initDiasporaIfNeeded();
+}
+// Hand the pair and amount to Send money, which shows what each provider would actually deliver
+function xrSend() {
+  const amt = zxVal('xr-amt'), from = zxVal('xr-from'), to = zxVal('xr-to');
+  switchLayer(1);
+  const set = (id, v) => { const el = document.getElementById(id); if (el && [...(el.options || [])].some(o => o.value === v)) el.value = v; };
+  set('send-from', from); set('send-to', to);
+  if (amt) document.getElementById('send-amount').value = amt;
+  updateTransferQuotes();
+  window.scrollTo(0, 0);
+}
+
+// Send money has two tabs on one card:
+//   Currency   - normal currencies; every route (apps, banks, stablecoin rails), cheapest first
+//   Stablecoin - you send USDC/USDT/EURC from your own wallet; the recipient gets local currency
+let sendMode = 'fiat';
+const sendPicks = { fiat: { from: 'GBP', to: 'NGN', amount: '1000' }, coin: { from: 'USDC', to: 'KES', amount: '500' } };
+function fillSendSelects() {
+  const f = document.getElementById('send-from'), t = document.getElementById('send-to'), p = sendPicks[sendMode];
+  if (sendMode === 'coin') {
+    f.innerHTML = COINS.map(c => `<option value="${c}">🪙 ${c}</option>`).join('');
+    const payout = [...new Set(offRampVenues.flatMap(v => v.ccys))];
+    fillCcySelect(t, africanCurrencies.filter(c => payout.includes(c)), p.to);
+  } else {
+    fillSendCcySelect(f, [...foreignCurrencies, ...africanCurrencies], p.from);
+    fillSendCcySelect(t, [...africanCurrencies, ...foreignCurrencies], p.to);
+  }
+  f.value = p.from;
+  document.getElementById('send-amount').value = p.amount;
+  document.querySelectorAll('#layer-1 .zx-mode button').forEach(b => b.classList.toggle('on', b.dataset.mode === sendMode));
+  document.querySelector('label[for="send-amount"]').textContent = sendMode === 'coin' ? 'You send from your wallet' : 'You send';
+  document.querySelector('#layer-1 .zx-calc-mid').style.visibility = sendMode === 'coin' ? 'hidden' : '';
+}
+function setSendMode(m) {
+  if (m === 'stable') m = 'coin';
+  if (document.querySelector('.layer-panel.active')?.id !== 'layer-1') switchLayer(1);
+  if (m === sendMode) return;
+  // remember each tab's choices, so switching back and forth doesn't lose them
+  sendPicks[sendMode] = { from: zxVal('send-from'), to: zxVal('send-to'), amount: zxVal('send-amount') };
+  sendMode = m;
+  fillSendSelects();
+  updateTransferQuotes();
+}
+
+// New currencies arrived with the live rates: rebuild the Currency tab pickers, keeping what's selected
+function refreshSendCurrencies() {
+  const f = document.getElementById('send-from');
+  if (!f || !f.options.length || sendMode !== 'fiat') return;
+  sendPicks.fiat = { from: zxVal('send-from'), to: zxVal('send-to'), amount: zxVal('send-amount') };
+  fillSendSelects();
+  updateTransferQuotes();
+}
+
+// The calculator card: best option in plain words, and one button to send with it
+function fillCalc(p, best, from, to, count, kind) {
+  const out = document.getElementById(p === '' ? 'receive-amount' : 'sc-receive-amount');
+  const facts = document.getElementById(p + 'calc-facts'), cta = document.getElementById(p + 'calc-cta');
+  if (!best) {
+    if (out) out.textContent = '—';
+    if (facts) facts.innerHTML = '';
+    if (cta) { cta.disabled = true; cta.textContent = 'Send money'; }
+    return;
+  }
+  out.textContent = fmtAmt(best.received);
+  const cost = best.cost < 0 ? `You gain ${fmtAmt(-best.cost)} ${from}` : `${fmtAmt(best.cost)} ${from} (${best.costPct.toFixed(2)}%)`;
+  const speed = (best.sub || '').split(' · ').pop();
+  facts.innerHTML = `
+    <div class="zx-fact"><span class="zx-fact-i">&#9733;</span><span><small>Cheapest of ${count} ${kind}</small><b>${esc(best.name)}</b></span></div>
+    <div class="zx-fact"><span class="zx-fact-i">&#8721;</span><span><small>Cost of sending</small><b>${cost}</b></span></div>
+    <div class="zx-fact"><span class="zx-fact-i">&#9201;</span><span><small>Arrives</small><b>${esc(speed)}</b></span></div>`;
+  cta.disabled = false;
+  cta.textContent = `Send with ${best.name.split(' → ')[0]}`;
 }
 
 // Quiet refresh: rates move, but not while someone is reading a review screen
@@ -3749,10 +4041,20 @@ function renderStableProviders() {
 // ==================== INTERACTIONS ====================
 
 function switchLayer(idx) {
+  if (idx === 3) { xrScope = 'world'; idx = 2; }
+  // Leaving account creation halfway: confirm, then discard it (like closing the send dialog)
+  if (typeof zxSignup !== 'undefined' && zxSignup && idx !== 7) {
+    openZx(`<h3>Leave account creation?</h3>
+      <p class="zx-p">The details and documents you've entered so far won't be saved.</p>
+      <div class="zx-actions"><button class="zx-btn" onclick="leaveSignup(${idx})">Leave</button>
+        <button class="zx-btn ghost" onclick="closeZx(true)">Continue sign-up</button></div>`);
+    return;
+  }
   // Highlight the clicked tab (match by onclick attribute value)
   document.querySelectorAll('.nav-tab').forEach(t => {
     const onclick = t.getAttribute('onclick') || '';
-    t.classList.toggle('active', onclick.includes(`switchLayer(${idx})`));
+    // Stablecoin is a mode of the Send money tab, not a tab of its own
+    t.classList.toggle('active', onclick.includes(`switchLayer(${idx === 4 ? 1 : idx})`));
   });
   // Show/hide layer panels by their index
   document.querySelectorAll('.layer-panel').forEach((p, i) => p.classList.toggle('active', i === idx));
@@ -3772,9 +4074,12 @@ function switchLayer(idx) {
   mountSearch(idx);
 
   if (idx === 1) initTransferCompare();
-  if (idx === 3) initDiasporaIfNeeded();
+  if (idx === 2) xrInit();
   if (idx === 4) { initStableSend(); renderStableFx(); }
   if (idx === 7) renderAccount();
+  // Market-data status belongs with market data, not on the money-sending screens
+  const live = document.getElementById('data-status-badge');
+  if (live) { live.style.display = (idx === 0 || idx === 5) ? '' : 'none'; live.nextElementSibling.style.display = live.style.display; }
   if (idx === 8) renderTreasury();
 }
 
@@ -3984,10 +4289,10 @@ function stableRoutes(from, to, amount, recip, isTick) {
   const coinInFrom = pegInUsd * fromPerUsd;               // price of 1 coin in sender currency
   const toCrypto = !!(recip && recip.type === 'crypto');
   const mid = toCrypto ? 1 / coinInFrom : (usdRates[to] || 1) / fromPerUsd;
-  const localPerCoin = mkt ? (usdRates[to] || 0) * pegInUsd * (1 + mkt.premium / 100) : 0;
+  const localPerCoin = mkt ? (usdRates[to] || 0) * pegInUsd : 0;   // no assumed street-rate bonus
 
   const routes = [];
-  onRamps.forEach(r => {
+  rampsFor(from).forEach(r => {
     if (!r.coins.includes(scBridge)) return;
     let chain;
     if (toCrypto) {
@@ -4016,7 +4321,7 @@ function stableRoutes(from, to, amount, recip, isTick) {
     const premium = onCost + gasCost + offCost - cost;     // what the street-rate premium gave back
     const speed = chain === 'Ethereum' ? '3–8 min' : chain === 'Tron' ? 'under 2 min' : 'under 1 min';
     routes.push({
-      name: toCrypto ? r.name : `${r.name} → ${mkt.venue}`,
+      name: toCrypto || r.name === mkt.venue ? r.name : `${r.name} → ${mkt.venue}`,
       sub: `${scBridge} on ${chain} · ${speed}`,
       onRamp: r.name, offRamp: toCrypto ? null : mkt.venue, chain,
       onCost, gasCost, offCost, premium, cost,
@@ -4053,13 +4358,14 @@ function updateStableQuotes(isTick) {
   const list = document.getElementById('sc-routes-list');
   const cmp = document.getElementById('sc-compare');
   cmp.innerHTML = '';
-  const empty = msg => { list.innerHTML = `<div class="zx-empty">${msg}</div>`; lastStableRoutes = []; };
+  const empty = msg => { list.innerHTML = `<div class="zx-empty">${msg}</div>`; lastStableRoutes = []; fillCalc('sc-', null); };
   if (!amount) return empty('Enter an amount to see what each route costs.');
   if (!res.routes.length) return empty(res.toCrypto
     ? `No on-ramp sends ${scBridge} on ${esc(recip.network)}. Try another stablecoin, or change the recipient.`
     : `No ${scBridge} routes for ${from} → ${to}. Try another stablecoin.`);
 
   const best = res.routes[0];
+  fillCalc('sc-', best, from, res.recvCcy, res.routes.length, 'routes');
 
   // Against the best ordinary (fiat) provider on the same corridor
   if (!res.toCrypto && from !== to) {
@@ -5586,7 +5892,7 @@ function exportCalendar() {
 // Demo: everything is kept in this browser's localStorage. Nothing is sent anywhere.
 
 const ZX_KEY = 'zena.demo.v1';
-const ZX_DEFAULTS = () => ({ account: null, signedIn: false, balances: { CHF: 0, USD: 0, EUR: 0 }, cards: [], recipients: [], activity: [] });
+const ZX_DEFAULTS = () => ({ account: null, signedIn: false, balances: { CHF: 0, USD: 0, EUR: 0 }, cards: [], banks: [], wallets: [], recipients: [], activity: [] });
 function zxLoad() {
   try { const s = JSON.parse(localStorage.getItem(ZX_KEY)); if (s && typeof s === 'object') return s; } catch (e) {}
   return null;
@@ -5612,10 +5918,12 @@ function openZx(html) {
   document.getElementById('zx-modal').classList.add('open');
   document.body.style.overflow = 'hidden';
 }
-function closeZx() {
+function closeZx(keepFlow) {
   document.getElementById('zx-modal').classList.remove('open');
   document.body.style.overflow = '';
   stopCam();
+  stopCountdown();
+  if (!keepFlow) abortSend();
 }
 document.addEventListener('keydown', e => {
   if (e.key === 'Escape' && document.getElementById('zx-modal')?.classList.contains('open')) closeZx();
@@ -5629,6 +5937,45 @@ function zxToast(title, sub) {
   document.body.appendChild(t);
   requestAnimationFrame(() => t.classList.add('show'));
   setTimeout(() => { t.classList.remove('show'); setTimeout(() => t.remove(), 320); }, 3600);
+}
+
+// ---------- form helpers: required marker, phone number with country code ----------
+const REQ = '<span class="zx-req" aria-hidden="true">*</span>';
+const REQ_NOTE = `<p class="zx-p sm zx-req-note">${REQ} Required</p>`;
+const DIAL_CODES = Object.fromEntries(('AF:93 AL:355 DZ:213 AD:376 AO:244 AG:1268 AR:54 AM:374 AU:61 AT:43 AZ:994 BS:1242 BH:973 ' +
+  'BD:880 BB:1246 BY:375 BE:32 BZ:501 BJ:229 BT:975 BO:591 BA:387 BW:267 BR:55 BN:673 BG:359 BF:226 BI:257 CV:238 KH:855 CM:237 ' +
+  'CA:1 CF:236 TD:235 CL:56 CN:86 CO:57 KM:269 CG:242 CD:243 CR:506 CI:225 HR:385 CU:53 CY:357 CZ:420 DK:45 DJ:253 DM:1767 DO:1809 ' +
+  'EC:593 EG:20 SV:503 GQ:240 ER:291 EE:372 SZ:268 ET:251 FJ:679 FI:358 FR:33 GA:241 GM:220 GE:995 DE:49 GH:233 GR:30 GD:1473 ' +
+  'GT:502 GN:224 GW:245 GY:592 HT:509 HN:504 HK:852 HU:36 IS:354 IN:91 ID:62 IR:98 IQ:964 IE:353 IL:972 IT:39 JM:1876 JP:81 JO:962 ' +
+  'KZ:7 KE:254 KI:686 XK:383 KW:965 KG:996 LA:856 LV:371 LB:961 LS:266 LR:231 LY:218 LI:423 LT:370 LU:352 MO:853 MG:261 MW:265 ' +
+  'MY:60 MV:960 ML:223 MT:356 MH:692 MR:222 MU:230 MX:52 FM:691 MD:373 MC:377 MN:976 ME:382 MA:212 MZ:258 MM:95 NA:264 NR:674 ' +
+  'NP:977 NL:31 NZ:64 NI:505 NE:227 NG:234 KP:850 MK:389 NO:47 OM:968 PK:92 PW:680 PS:970 PA:507 PG:675 PY:595 PE:51 PH:63 PL:48 ' +
+  'PT:351 PR:1787 QA:974 RO:40 RU:7 RW:250 KN:1869 LC:1758 VC:1784 WS:685 SM:378 ST:239 SA:966 SN:221 RS:381 SC:248 SL:232 SG:65 ' +
+  'SK:421 SI:386 SB:677 SO:252 ZA:27 KR:82 SS:211 ES:34 LK:94 SD:249 SR:597 SE:46 CH:41 SY:963 TW:886 TJ:992 TZ:255 TH:66 TL:670 ' +
+  'TG:228 TO:676 TT:1868 TN:216 TR:90 TM:993 TV:688 UG:256 UA:380 AE:971 GB:44 US:1 UY:598 UZ:998 VU:678 VA:379 VE:58 VN:84 ' +
+  'YE:967 ZM:260 ZW:263').split(' ').map(p => p.split(':')));
+const CCY_ISO = { NGN: 'NG', KES: 'KE', UGX: 'UG', ZAR: 'ZA', GHS: 'GH', XOF: 'SN', EGP: 'EG', TZS: 'TZ', ETB: 'ET', MAD: 'MA', RWF: 'RW',
+  ZMW: 'ZM', USD: 'US', GBP: 'GB', EUR: 'DE', CAD: 'CA', AUD: 'AU', CHF: 'CH', AED: 'AE', SAR: 'SA', CNY: 'CN', INR: 'IN' };
+function flagOf(iso) { return iso.replace(/./g, ch => String.fromCodePoint(127397 + ch.charCodeAt(0))); }
+const DIAL_LIST = (() => {
+  let names = null;
+  try { names = new Intl.DisplayNames(['en'], { type: 'region' }); } catch (e) {}
+  return Object.keys(DIAL_CODES).map(iso => ({ iso, code: DIAL_CODES[iso], name: (names && names.of(iso)) || iso }))
+    .sort((a, b) => a.name.localeCompare(b.name, 'en'));
+})();
+function phoneField(id, iso, number) {
+  return `<div class="zx-phone">
+    <select class="zx-in" id="${id}-cc" aria-label="Country code">${DIAL_LIST.map(c =>
+      `<option value="${c.iso}"${c.iso === iso ? ' selected' : ''}>${flagOf(c.iso)} +${c.code} ${esc(c.name)}</option>`).join('')}</select>
+    <input class="zx-in" id="${id}" type="tel" inputmode="tel" placeholder="712 345 678" value="${esc(number || '')}" autocomplete="off">
+  </div>`;
+}
+// Returns "+254 712345678", or null if the number isn't plausible for an international mobile number
+function readPhone(id) {
+  const code = DIAL_CODES[zxVal(id + '-cc')];
+  const digits = zxVal(id).replace(/\D/g, '').replace(/^0+/, '');
+  if (!code || digits.length < 6 || digits.length > 12) return null;
+  return `+${code} ${digits}`;
 }
 
 // ---------- recipients ----------
@@ -5647,62 +5994,77 @@ function recipLabel(r) {
   return `${esc(r.network)} wallet ${esc(r.address.slice(0, 6))}…${esc(r.address.slice(-4))}`;
 }
 function recipAllowed(mode, r) {
-  if (mode === 'fiat') return r.type !== 'crypto';
+  if (mode === 'fiat') return isCoin(zxVal('send-to')) ? r.type === 'crypto' : r.type !== 'crypto';
   return r.type === 'crypto' || scMarkets.some(m => m.ccy === r.ccy);
 }
 
 function renderRecipientChip(mode) {
   const el = document.getElementById(mode === 'fiat' ? 'fx-recip' : 'sc-recip');
   if (!el) return;
-  const r = selectedRecipient(mode);
-  el.innerHTML = r
-    ? `<span class="zx-chip"><span class="zx-chip-k">To</span><b>${esc(r.name)}</b><span>${recipLabel(r)}</span>
-         <button onclick="openRecipientPicker('${mode}')">Change</button>
-         <button onclick="clearRecipient('${mode}')" aria-label="Remove recipient">&times;</button></span>`
-    : '';
+  // The recipient is chosen fresh for every transfer, after picking a provider; nothing is pre-filled here
+  el.innerHTML = '';
 }
 
 let zxPickMode = 'fiat', zxAfterPick = null, zxRecipType = 'bank';
 
-function openRecipientPicker(mode, after) {
+function openRecipientPicker(mode, after, notice) {
   zxPickMode = mode;
   zxAfterPick = after || null;
-  const saved = zxState.recipients.filter(r => recipAllowed(mode, r));
-  const types = mode === 'stable' ? ['crypto', 'bank', 'mobile'] : ['bank', 'mobile'];
-  openZx(`<h3>Who are you sending to?</h3>
-    ${saved.length ? `<div class="zx-sub">Saved recipients</div>
-      <div class="zx-rlist">${saved.map(r => `<button class="zx-ritem" onclick="pickRecipient('${r.id}')">
-        <b>${esc(r.name)}</b><span>${recipLabel(r)} &middot; ${r.type === 'crypto' ? 'receives crypto' : esc(r.ccy)}</span></button>`).join('')}</div>
-      <div class="zx-sub">Or add someone new</div>` : `<div class="zx-sub">How should they receive it?</div>`}
+  const manage = mode === 'manage';
+  const saved = manage ? [] : zxState.recipients.filter(r => recipAllowed(mode, r));
+  const types = mode === 'fiat' ? (isCoin(zxVal('send-to')) ? ['crypto'] : ['bank', 'mobile'])
+    : mode === 'stable' ? ['crypto', 'bank', 'mobile'] : ['bank', 'mobile', 'crypto'];
+  const newForm = `<div class="zx-sub">How should they receive the money?</div>
     <div class="zx-seg" id="zx-rtype">${types.map(t => `<button data-t="${t}" onclick="setRecipType('${t}')">${RECIP_TYPES[t]}</button>`).join('')}</div>
-    <div id="zx-rform"></div>`);
+    <div id="zx-rform"></div>`;
+  openZx(manage ? `<h3>Add a recipient</h3>${newForm}` : `<h3>Who are you sending to?</h3>
+    ${notice ? `<div class="zx-note" style="margin:0 0 12px">${esc(notice)}</div>` : ''}
+    <div class="zx-tabs" role="tablist">
+      <button role="tab" data-tab="saved" onclick="setPickTab('saved')" ${saved.length ? '' : 'disabled'}>Saved recipients (${saved.length})</button>
+      <button role="tab" data-tab="new" onclick="setPickTab('new')">+ Add new recipient</button>
+    </div>
+    <div id="zx-tab-saved">
+      <p class="zx-p sm" style="margin:0 0 10px">Tap a person to continue. No need to enter their details again.</p>
+      <div class="zx-rlist">${saved.map(r => `<button class="zx-ritem" onclick="pickRecipient('${r.id}')">
+        <span class="zx-ritem-main"><b>${esc(r.name)}</b><span>${RECIP_TYPES[r.type]} · ${recipLabel(r)} · ${r.type === 'crypto' ? 'receives crypto' : esc(r.ccy)}</span></span>
+        <span class="zx-ritem-go">Choose &rarr;</span></button>`).join('')}</div>
+      <div class="zx-actions"><button class="zx-btn ghost" onclick="closeZx()">Cancel</button></div>
+    </div>
+    <div id="zx-tab-new">${newForm}</div>`);
   setRecipType(types[0]);
+  if (!manage) setPickTab(saved.length ? 'saved' : 'new');
+}
+function setPickTab(t) {
+  document.querySelectorAll('.zx-tabs button').forEach(b => b.classList.toggle('on', b.dataset.tab === t));
+  document.getElementById('zx-tab-saved').hidden = t !== 'saved';
+  document.getElementById('zx-tab-new').hidden = t !== 'new';
 }
 
 function setRecipType(t) {
   zxRecipType = t;
   document.querySelectorAll('#zx-rtype button').forEach(b => b.classList.toggle('on', b.dataset.t === t));
   const mode = zxPickMode;
-  const toNow = zxVal(mode === 'fiat' ? 'send-to' : 'sc-send-to');
-  const ccys = mode === 'stable' ? scMarkets.map(m => m.ccy) : [...africanCurrencies, ...foreignCurrencies];
-  const ccySelect = `<label class="zx-l" for="zr-ccy">Country / currency they receive</label>
-    <select class="zx-in" id="zr-ccy" onchange="refreshMobileProviders()">${ccys.filter(c => currencyLibrary[c]).map(c =>
-      `<option value="${c}"${c === toNow ? ' selected' : ''}>${currencyLibrary[c].flag} ${currencyLibrary[c].country} — ${c}</option>`).join('')}</select>`;
+  const toNow = mode === 'manage' ? 'KES' : zxVal(mode === 'fiat' ? 'send-to' : 'sc-send-to');
+  const ccys = mode === 'stable' ? scMarkets.map(m => m.ccy) : allSendCurrencies();
+  const ccySelect = `<label class="zx-l" for="zr-ccy">Country / currency they receive ${REQ}</label>
+    <select class="zx-in" id="zr-ccy" onchange="refreshMobileProviders()">${ccys.map(c =>
+      `<option value="${c}"${c === toNow ? ' selected' : ''}>${ccyInfo(c).flag} ${esc(ccyInfo(c).country)} — ${c}</option>`).join('')}</select>`;
   let fields = '';
   if (t === 'bank') fields = `${ccySelect}
-    <label class="zx-l" for="zr-bank">Bank name</label><input class="zx-in" id="zr-bank" autocomplete="off">
-    <label class="zx-l" for="zr-account">Account number or IBAN</label><input class="zx-in" id="zr-account" autocomplete="off">
+    <label class="zx-l" for="zr-bank">Bank name ${REQ}</label><input class="zx-in" id="zr-bank" autocomplete="off">
+    <label class="zx-l" for="zr-account">Account number or IBAN ${REQ}</label><input class="zx-in" id="zr-account" autocomplete="off">
     <label class="zx-l" for="zr-swift">SWIFT / BIC <span class="opt">(optional)</span></label><input class="zx-in" id="zr-swift" autocomplete="off">`;
   else if (t === 'mobile') fields = `${ccySelect}
-    <label class="zx-l" for="zr-provider">Mobile money provider</label><select class="zx-in" id="zr-provider"></select>
-    <label class="zx-l" for="zr-phone">Mobile number, with country code</label><input class="zx-in" id="zr-phone" type="tel" placeholder="+254 712 345 678" autocomplete="off">`;
+    <label class="zx-l" for="zr-provider">Mobile money provider ${REQ}</label><select class="zx-in" id="zr-provider"></select>
+    <label class="zx-l" for="zr-phone">Mobile number ${REQ}</label>${phoneField('zr-phone', CCY_ISO[toNow] || 'KE')}`;
   else fields = `
-    <label class="zx-l" for="zr-network">Network</label>
+    <label class="zx-l" for="zr-network">Network ${REQ}</label>
     <select class="zx-in" id="zr-network">${CRYPTO_NETWORKS.map(n => `<option>${n}</option>`).join('')}</select>
-    <label class="zx-l" for="zr-address">Wallet address</label><input class="zx-in" id="zr-address" autocomplete="off" spellcheck="false">
+    <label class="zx-l" for="zr-address">Wallet address ${REQ}</label><input class="zx-in" id="zr-address" autocomplete="off" spellcheck="false">
     <div class="zx-note">Check the network carefully. Coins sent on the wrong network can be lost for good.</div>`;
   document.getElementById('zx-rform').innerHTML = `
-    <label class="zx-l" for="zr-name">${t === 'crypto' ? 'Recipient name' : 'Full name, as on their account'}</label><input class="zx-in" id="zr-name" autocomplete="off">
+    ${REQ_NOTE}
+    <label class="zx-l" for="zr-name">${t === 'crypto' ? 'Recipient name' : 'Full name, as on their account'} ${REQ}</label><input class="zx-in" id="zr-name" autocomplete="off">
     ${fields}
     <div class="zx-err" id="zr-err"></div>
     <div class="zx-actions"><button class="zx-btn" onclick="saveRecipient()">Save recipient</button><button class="zx-btn ghost" onclick="closeZx()">Cancel</button></div>`;
@@ -5714,6 +6076,10 @@ function refreshMobileProviders() {
   if (!sel) return;
   const list = MOBILE_MONEY[zxVal('zr-ccy')] || [];
   sel.innerHTML = list.length ? list.map(p => `<option>${p}</option>`).join('') : `<option value="">Not available, use a bank account</option>`;
+  // Suggest the matching country code for the recipient's country
+  const ccy = zxVal('zr-ccy'), cc = document.getElementById('zr-phone-cc');
+  const iso = CCY_ISO[ccy] || (DIAL_CODES[ccy.slice(0, 2)] ? ccy.slice(0, 2) : null);
+  if (cc && iso) cc.value = iso;
 }
 
 function saveRecipient() {
@@ -5734,9 +6100,9 @@ function saveRecipient() {
       if (r.account.length < 5) return zxErr('zr-err', 'Enter the account number or IBAN.');
     } else {
       r.provider = zxVal('zr-provider');
-      r.phone = zxVal('zr-phone');
+      r.phone = readPhone('zr-phone');
       if (!r.provider) return zxErr('zr-err', `Mobile money isn’t available for ${r.ccy}. Use a bank account instead.`);
-      if (r.phone.replace(/\D/g, '').length < 8) return zxErr('zr-err', 'Enter the mobile number, with country code.');
+      if (!r.phone) return zxErr('zr-err', 'Enter a valid mobile number (6–12 digits, without the country code).');
     }
   }
   zxState.recipients.push(r);
@@ -5748,14 +6114,62 @@ function pickRecipient(id) {
   const r = zxState.recipients.find(x => x.id === id);
   if (!r) return;
   const mode = zxPickMode;
-  zxSel[mode] = id;
+  if (mode === 'manage') {
+    closeZx(true);
+    zxToast('Recipient saved', r.name);
+    renderAccount();
+    return;
+  }
+  // Exact match required: a recipient in another currency must be confirmed, never switched silently
+  const toNow = zxVal(mode === 'fiat' ? 'send-to' : 'sc-send-to');
+  if (r.type !== 'crypto' && r.ccy !== toNow) return confirmRecipientCurrency(r, toNow);
+  applyRecipient(r);
+}
+
+function applyRecipient(r) {
+  const mode = zxPickMode;
+  zxSel[mode] = r.id;
   if (r.type !== 'crypto') {
     const sel = document.getElementById(mode === 'fiat' ? 'send-to' : 'sc-send-to');
     if (sel && [...sel.options].some(o => o.value === r.ccy)) sel.value = r.ccy;
   }
-  closeZx();
+  closeZx(true);
   mode === 'fiat' ? updateTransferQuotes() : updateStableQuotes();
   if (zxAfterPick) { const f = zxAfterPick; zxAfterPick = null; f(); }
+}
+
+// "Still send to this person?" with a 10-second countdown; no answer = recipient removed
+let zxCountdown = null;
+function stopCountdown() { if (zxCountdown) clearInterval(zxCountdown); zxCountdown = null; }
+function confirmRecipientCurrency(r, toNow) {
+  const sel = document.getElementById(zxPickMode === 'fiat' ? 'send-to' : 'sc-send-to');
+  const canSwitch = sel && [...sel.options].some(o => o.value === r.ccy);
+  openZx(`<h3>Still send to ${esc(r.name)}?</h3>
+    <p class="zx-p">${esc(r.name)} receives <b>${esc(r.ccy)}</b>, but you're sending to <b>${esc(toNow)}</b>.
+    ${canSwitch ? `If you continue, the currency changes to ${esc(r.ccy)} and the prices are updated.` : `${esc(r.ccy)} isn't available here, so please choose someone else.`}</p>
+    <div class="zx-cd"><div class="zx-cd-bar"><i id="cd-bar"></i></div>
+      <span>Removing this recipient in <b id="cd-n">10</b> s</span></div>
+    <div class="zx-actions">
+      ${canSwitch ? `<button class="zx-btn" onclick="stopCountdown();applyRecipient(zxState.recipients.find(x => x.id === '${r.id}'))">Yes, send to ${esc(r.name)} in ${esc(r.ccy)}</button>` : ''}
+      <button class="zx-btn ghost" onclick="declineRecipient()">No, choose someone else</button>
+    </div>`);
+  let left = 10;
+  stopCountdown();
+  zxCountdown = setInterval(() => {
+    left--;
+    const n = document.getElementById('cd-n'), bar = document.getElementById('cd-bar');
+    if (n) n.textContent = left;
+    if (bar) bar.style.width = (left * 10) + '%';
+    if (left <= 0) declineRecipient(true);
+  }, 1000);
+}
+function declineRecipient(timedOut) {
+  stopCountdown();
+  zxSel[zxPickMode] = null;
+  openRecipientPicker(zxPickMode, zxAfterPick, timedOut
+    ? 'No answer, so that recipient was removed from this transfer. Please choose or add the correct recipient.'
+    : 'Please choose or add the correct recipient.');
+  setPickTab('new');
 }
 
 function clearRecipient(mode) {
@@ -5769,16 +6183,28 @@ let zxPending = null;   // { mode, name, snapshot }
 function beginSend(mode, idx) {
   const q = (mode === 'fiat' ? lastFiatQuotes : lastStableRoutes)[idx];
   if (!q) return;
-  zxPending = { mode, name: q.name };
-  if (!selectedRecipient(mode)) return openRecipientPicker(mode, continueSend);
-  continueSend();
+  zxSel[mode] = null;   // never reuse the last recipient by default
+  zxPending = { mode, name: q.name, onRamp: q.onRamp };
+  openRecipientPicker(mode, continueSend);
+}
+
+// Cancelling at any step (Cancel, ×, Esc, clicking outside) drops the transfer and the recipient choice
+function abortSend() {
+  if (!zxPending) return;
+  const mode = zxPending.mode;
+  zxPending = null;
+  zxSel[mode] = null;
+  mode === 'fiat' ? updateTransferQuotes() : updateStableQuotes();
 }
 
 // Re-price at the moment of review; the recipient may have changed the corridor
 function currentPendingQuote() {
   const mode = zxPending.mode;
   mode === 'fiat' ? updateTransferQuotes() : updateStableQuotes();
-  return (mode === 'fiat' ? lastFiatQuotes : lastStableRoutes).find(q => q.name === zxPending.name) || null;
+  // A crypto recipient changes the route name (no off-ramp), so stablecoin routes are matched on the on-ramp
+  return mode === 'fiat'
+    ? lastFiatQuotes.find(q => q.name === zxPending.name) || null
+    : lastStableRoutes.find(q => q.onRamp === zxPending.onRamp) || null;
 }
 
 function continueSend() {
@@ -5786,8 +6212,7 @@ function continueSend() {
   const q = currentPendingQuote();
   if (!q) {
     const n = zxPending.name;
-    zxPending = null;
-    closeZx();
+    closeZx();   // also clears the transfer and recipient
     zxToast(`${n} doesn’t cover this route`, 'Pick another provider from the list.');
     return;
   }
@@ -5796,8 +6221,8 @@ function continueSend() {
       <p class="zx-p">You verify once, with Zena. We pass your verified profile to ${esc(q.name)}, so you don’t upload your
       documents again for every provider you use.</p>
       <div class="zx-actions">
-        <button class="zx-btn" onclick="closeZx();startSignup('personal')">Open personal account</button>
-        <button class="zx-btn ghost" onclick="closeZx();startSignup('org')">Open organisation account</button>
+        <button class="zx-btn" onclick="closeZx(true);startSignup('personal')">Open personal account</button>
+        <button class="zx-btn ghost" onclick="closeZx(true);startSignup('org')">Open organisation account</button>
       </div>
       ${zxState.account ? `<p class="zx-p sm">Already have one? <a href="#" onclick="event.preventDefault();openSignIn()">Sign in</a></p>` : ''}`);
     return;
@@ -5818,7 +6243,13 @@ function showReview(q) {
   const amount = parseFloat(zxVal(mode === 'fiat' ? 'send-amount' : 'sc-send-amount')) || 0;
   const recvCcy = mode === 'fiat' ? zxVal('send-to') : (r.type === 'crypto' ? scBridge : zxVal('sc-send-to'));
   const line = (k, v, cls) => `<div${cls ? ` class="${cls}"` : ''}><span>${k}</span><b>${v}</b></div>`;
-  const costLines = mode === 'fiat'
+  const costLines = q.kind === 'offramp'
+    ? line(`Network fee (${esc(q.chain)})`, `${fmtAmt(q.gasCost)} ${from}`)
+      + line(`Payout: ${esc(q.name)} pays out ${recvCcy}`, `${fmtAmt(q.offCost)} ${from}`)
+      + (q.premium >= 0.005 ? line('Street-rate premium (in your favour)', `−${fmtAmt(q.premium)} ${from}`, 'gain') : '')
+    : q.kind === 'onramp'
+    ? line(`${esc(q.name)} buys ${recvCcy}`, `${fmtAmt(q.onCost)} ${from}`) + line(`Network fee (${esc(q.chain)})`, `${fmtAmt(q.gasCost)} ${from}`)
+    : (mode === 'fiat' && q.kind !== 'stable')
     ? line('Exchange spread fee', `${fmtAmt(q.markup)} ${from}`)
       + (q.fee > 0 ? line('Cost of sending fee', `${fmtAmt(q.fee)} ${from}`) : '')
     : line(`On-ramp: ${esc(q.onRamp)} buys ${scBridge}`, `${fmtAmt(q.onCost)} ${from}`)
@@ -5827,11 +6258,18 @@ function showReview(q) {
       + (q.premium >= 0.005 ? line('Street-rate premium (in your favour)', `−${fmtAmt(q.premium)} ${from}`, 'gain') : '');
   const gain = q.cost < 0;
 
-  const bal = zxState.balances[from];
+  const bal = isCoin(from) ? undefined : zxState.balances[from];
   const payOpts = [];
-  if (bal !== undefined) payOpts.push(`<option value="wallet"${bal < amount ? ' disabled' : ''}>Zena wallet: ${fmtAmt(bal)} ${from}${bal < amount ? ' (not enough)' : ''}</option>`);
-  zxState.cards.forEach(c => payOpts.push(`<option value="card:${c.id}">${esc(c.brand)} ····${esc(c.last4)}</option>`));
-  payOpts.push(`<option value="bank">Bank transfer (details shown after you confirm)</option>`);
+  if (isCoin(from)) {
+    zxState.wallets.forEach(w => payOpts.push(`<option value="wallet:${w.id}">Crypto wallet: ${esc(walletLabel(w))}</option>`));
+    payOpts.push(`<option value="add">+ Connect a crypto wallet…</option>`);
+  } else {
+    zxState.banks.forEach(b => payOpts.push(`<option value="bank:${b.id}">Bank account: ${esc(bankLabel(b))} (direct debit)</option>`));
+    zxState.cards.forEach(c => payOpts.push(`<option value="card:${c.id}">Card: ${esc(c.brand)} ····${esc(c.last4)}</option>`));
+    if (bal !== undefined && bal > 0) payOpts.push(`<option value="wallet"${bal < amount ? ' disabled' : ''}>Zena wallet: ${fmtAmt(bal)} ${from}${bal < amount ? ' (not enough)' : ''}</option>`);
+    payOpts.push(`<option value="add">+ Add a payment method…</option>`);
+    payOpts.push(`<option value="bank">Bank transfer (details shown after you confirm)</option>`);
+  }
 
   zxPending.snapshot = { from, amount, recvCcy, received: q.received, cost: q.cost, provider: q.name, recipient: r.name };
   openZx(`<h3>Review your transfer</h3>
@@ -5843,11 +6281,12 @@ function showReview(q) {
       ${line(`${esc(r.name)} gets`, `${fmtAmt(q.received)} ${recvCcy}`, 'big')}
     </div>
     <div class="zx-lines">
-      ${line('To', `${esc(r.name)} · ${recipLabel(r)}`)}
+      <div><span>To</span><b>${esc(r.name)} · ${recipLabel(r)} <a href="#" class="zx-change" onclick="event.preventDefault();openRecipientPicker('${mode}', continueSend)">Change</a></b></div>
       ${line('Sent by', `${esc(q.name)} · ${esc(q.sub)}`)}
     </div>
     <label class="zx-l" for="zx-payby">Pay with</label>
-    <select class="zx-in" id="zx-payby">${payOpts.join('')}</select>
+    <select class="zx-in" id="zx-payby" onchange="if(this.value==='add')openAddMethod(continueSend)">${payOpts.join('')}</select>
+    ${isCoin(from) ? `<p class="zx-p sm">You approve the payment in your wallet app; ${from} goes to ${esc(q.name)}, who pays out ${recvCcy}. Zena never holds your coins.</p>` : ''}
     <div class="zx-err" id="zx-rev-err"></div>
     <div class="zx-actions"><button class="zx-btn" onclick="confirmSend()">Confirm and send</button><button class="zx-btn ghost" onclick="closeZx()">Cancel</button></div>
     <p class="zx-p sm">Demo only: no money moves. In production, ${esc(q.name)} carries out the transfer under its own licence,
@@ -5858,7 +6297,11 @@ function confirmSend() {
   const s = zxPending && zxPending.snapshot;
   if (!s) return;
   const pay = zxVal('zx-payby');
+  if (pay === 'add') return openAddMethod(continueSend);
   let payLabel = 'bank transfer';
+  const w = zxState.wallets.find(x => 'wallet:' + x.id === pay), bk = zxState.banks.find(x => 'bank:' + x.id === pay);
+  if (w) payLabel = walletLabel(w);
+  if (bk) payLabel = `${bankLabel(bk)} (direct debit)`;
   if (pay === 'wallet') {
     if ((zxState.balances[s.from] || 0) < s.amount) return zxErr('zx-rev-err', 'Not enough in your wallet. Add money or choose another way to pay.');
     zxState.balances[s.from] -= s.amount;
@@ -5874,10 +6317,15 @@ function confirmSend() {
   });
   trLogFromSend(zxPending.mode, s);
   zxSave();
+  const doneMode = zxPending.mode;
   zxPending = null;
+  zxSel[doneMode] = null;   // the next transfer starts with no recipient chosen
+  doneMode === 'fiat' ? updateTransferQuotes() : updateStableQuotes();
   openZx(`<div class="zx-done">&#10003;</div><h3>Transfer submitted</h3>
     <p class="zx-p">${esc(s.recipient)} will get <b>${fmtAmt(s.received)} ${esc(s.recvCcy)}</b> through ${esc(s.provider)}.
-    ${pay === 'bank' ? 'In production, you would now see the bank details to pay into.' : ''}</p>
+    ${pay === 'bank' ? 'In production, you would now see the bank details to pay into.' : ''}
+    ${w ? 'In production, you would now approve the payment in your wallet app.' : ''}
+    ${bk ? 'In production, you would approve the direct debit in your banking app.' : ''}</p>
     <div class="zx-actions"><button class="zx-btn" onclick="closeZx();switchLayer(7)">Go to wallet</button><button class="zx-btn ghost" onclick="closeZx()">Done</button></div>`);
 }
 
@@ -5901,7 +6349,7 @@ const ZX_REASONS = ['Family support', 'School fees', 'Hospital or medical bills'
 const SIGNUP_FIELDS = {
   personal: [
     ['first', 'First name', 'text', 1], ['last', 'Last name', 'text', 1],
-    ['email', 'Email', 'email', 1], ['phone', 'Mobile number', 'tel', 1],
+    ['email', 'Email', 'email', 1], ['phone', 'Mobile number', 'phone', 1],
     ['dob', 'Date of birth', 'date', 1], ['nationality', 'Nationality', 'country', 1],
     ['country', 'Country of residence', 'country', 1], ['address', 'Street and number', 'text', 1],
     ['postcode', 'Postcode', 'text', 1], ['city', 'City', 'text', 1],
@@ -5914,7 +6362,7 @@ const SIGNUP_FIELDS = {
     ['address', 'Registered address', 'text', 1], ['city', 'Postcode and city', 'text', 1],
     ['website', 'Website', 'text', 0], ['first', 'Contact person: first name', 'text', 1],
     ['last', 'Contact person: last name', 'text', 1], ['role', 'Their role', 'text', 1],
-    ['email', 'Work email', 'email', 1], ['phone', 'Phone', 'tel', 1],
+    ['email', 'Work email', 'email', 1], ['phone', 'Phone', 'phone', 1],
     ['volume', 'Expected monthly volume', 'select:Under CHF 10,000|CHF 10,000–50,000|CHF 50,000–250,000|Over CHF 250,000', 1],
     ['corridors', 'Main countries you pay into', 'text', 1],
   ],
@@ -5948,11 +6396,12 @@ function startSignup(type) {
 function signupFieldHtml([key, label, type, req]) {
   const v = esc(zxSignup.data[key] || '');
   const id = `su-${key}`;
-  const lab = `<label class="zx-l" for="${id}">${label}${req ? '' : ' <span class="opt">(optional)</span>'}</label>`;
+  const lab = `<label class="zx-l" for="${id}">${label} ${req ? REQ : '<span class="opt">(optional)</span>'}</label>`;
+  if (type === 'phone') return `<div>${lab}${phoneField(id, zxSignup.data[key + 'Cc'] || 'CH', zxSignup.data[key + 'Num'])}</div>`;
   if (type === 'reasons') {
     const main = zxSignup.data.purpose || '', other = zxSignup.data.purpose2 || [];
     return `<div class="zx-reasons">${lab}
-      <select class="zx-in" id="${id}"><option value="">Choose…</option>${ZX_REASONS.map(o =>
+      <select class="zx-in" id="${id}" onchange="syncReasons()"><option value="">Choose…</option>${ZX_REASONS.map(o =>
         `<option${o === main ? ' selected' : ''}>${esc(o)}</option>`).join('')}</select>
       <span class="zx-l">Other reasons <span class="opt">(optional, up to 4 more)</span></span>
       <div class="zx-chips">${ZX_REASONS.map(o => `<label class="zx-chipbox"><input type="checkbox" name="su-purpose2" value="${esc(o)}"
@@ -5973,14 +6422,14 @@ function renderSignup(root) {
     `<span class="${i + 1 === s.step ? 'on' : i + 1 < s.step ? 'done' : ''}">${i + 1}. ${t}</span>`).join('')}</div>`;
   let body = '';
   if (s.step === 1) {
-    body = `<div class="zx-formgrid">${SIGNUP_FIELDS[s.type].map(signupFieldHtml).join('')}</div>
+    body = `${REQ_NOTE}<div class="zx-formgrid">${SIGNUP_FIELDS[s.type].map(signupFieldHtml).join('')}</div>
       <div class="zx-err" id="su-err"></div>
       <div class="zx-actions"><button class="zx-btn" onclick="signupNext()">Continue</button><button class="zx-btn ghost" onclick="cancelSignup()">Cancel</button></div>`;
   } else if (s.step === 2) {
     body = `<p class="zx-p sm">Documents as photos or PDFs; the selfie is taken live with your camera. In this demo nothing leaves your device.
       <a href="#" onclick="event.preventDefault();cancelSignup(true)">Why do we ask for these?</a></p>
       ${SIGNUP_DOCS[s.type].map(([k, label, hint, req]) => `<div class="zx-doc">
-        <div>${label}${req ? '' : ' <span class="zx-muted">(optional)</span>'}<small>${hint}</small>
+        <div>${label} ${req ? REQ : '<span class="zx-muted">(optional)</span>'}<small>${hint}</small>
           ${s.docs[k] ? `<span class="ok">&#10003; ${esc(s.docs[k])}</span>` : ''}</div>
         ${k === 'selfie'
           ? `<span class="zx-selfie">${s.selfieImg ? `<img src="${s.selfieImg}" alt="Your selfie">` : ''}
@@ -6010,18 +6459,27 @@ function renderSignup(root) {
     <span class="zx-tag">${org ? 'Organisation account' : 'Personal account'}</span>
     <h3>${org ? 'Open an organisation account' : 'Open your personal account'}</h3>
     ${stepBar}${body}</div>`;
+  if (s.step === 1) syncReasons();
 }
 
 function signupNext() {
   const s = zxSignup;
   if (s.step === 1) {
-    for (const [key, label, , req] of SIGNUP_FIELDS[s.type]) {
+    for (const [key, label, type, req] of SIGNUP_FIELDS[s.type]) {
+      if (type === 'phone') {
+        s.data[key + 'Cc'] = zxVal(`su-${key}-cc`);
+        s.data[key + 'Num'] = zxVal(`su-${key}`);
+        s.data[key] = readPhone(`su-${key}`);
+        if (!s.data[key]) return zxErr('su-err', `Please enter a valid ${label.toLowerCase()}: choose the country code, then 6–12 digits.`);
+        continue;
+      }
       s.data[key] = zxVal(`su-${key}`);
       if (req && !s.data[key]) return zxErr('su-err', `Please fill in: ${label}.`);
     }
     if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(s.data.email)) return zxErr('su-err', 'That email address doesn’t look right.');
     if (s.type === 'personal') {
-      s.data.purpose2 = [...document.querySelectorAll('input[name="su-purpose2"]:checked')].map(x => x.value).filter(v => v !== s.data.purpose);
+      s.data.purpose2 = [...document.querySelectorAll('input[name="su-purpose2"]:checked')].map(x => x.value);
+      if (s.data.purpose2.includes(s.data.purpose)) return zxErr('su-err', 'Your main reason can’t also be one of your other reasons.');
     }
   } else if (s.step === 2) {
     const missing = SIGNUP_DOCS[s.type].find(([k, , , req]) => req && !s.docs[k]);
@@ -6032,6 +6490,16 @@ function signupNext() {
   window.scrollTo(0, 0);
 }
 function signupBack() { zxSignup.step--; renderAccount(); }
+// The main reason can't be picked again as an "other" reason
+function syncReasons() {
+  const main = zxVal('su-purpose');
+  document.querySelectorAll('input[name="su-purpose2"]').forEach(b => {
+    const same = !!main && b.value === main;
+    if (same) b.checked = false;
+    b.disabled = same;
+    b.closest('.zx-chipbox').classList.toggle('off', same);
+  });
+}
 function limitReasons(el) {
   if (document.querySelectorAll('input[name="su-purpose2"]:checked').length > 4) {
     el.checked = false;
@@ -6051,7 +6519,7 @@ async function openSelfie() {
     <div class="zx-cam"><video id="cam-v" autoplay playsinline muted></video></div>
     <div class="zx-err" id="cam-err"></div>
     <div class="zx-actions"><button class="zx-btn" id="cam-shot" onclick="takeSelfie()" disabled>Take photo</button>
-      <button class="zx-btn ghost" onclick="closeZx()">Cancel</button></div>`);
+      <button class="zx-btn ghost" onclick="closeZx(true)">Cancel</button></div>`);
   try {
     zxCamStream = await navigator.mediaDevices.getUserMedia({ video: { facingMode: 'user' }, audio: false });
     document.getElementById('cam-v').srcObject = zxCamStream;
@@ -6075,8 +6543,14 @@ function takeSelfie() {
   ctx.drawImage(v, 0, 0);
   zxSignup.selfieImg = c.toDataURL('image/jpeg', 0.8);
   zxSignup.docs.selfie = `Live selfie taken at ${zxTime()}`;
-  closeZx();
+  closeZx(true);
   renderAccount();
+}
+
+function leaveSignup(idx) {
+  zxSignup = null;
+  closeZx();   // also cancels any transfer that was waiting for this sign-up
+  switchLayer(idx);
 }
 
 function cancelSignup(toKyc) {
@@ -6115,7 +6589,7 @@ function doSignIn() {
   zxState.signedIn = true;
   zxSave();
   refreshTopAcct();
-  closeZx();
+  closeZx(true);
   if (!resumePendingSend()) renderAccount();
 }
 function signOut() { zxState.signedIn = false; zxSave(); renderAccount(); }
@@ -6166,7 +6640,7 @@ function accountIntroHtml() {
       <ul>
         <li>Every provider compared on the true, all-in cost</li>
         <li>Pay out to a bank account, mobile money or a crypto wallet</li>
-        <li>A wallet holding CHF, USD and EUR, with your card linked</li>
+        <li>Pay straight from your bank account, card or crypto wallet. No need to top up first</li>
         <li>Saved recipients, so repeat transfers take seconds</li>
       </ul>
       <p class="zx-p sm">Verification usually takes minutes. You’ll need a photo ID, a live selfie, proof of address and proof of income.</p>
@@ -6234,14 +6708,20 @@ const ZX_CONVERT_FEE = 0.4;   // %, always shown before the customer converts
 function renderWallet(root) {
   const a = zxState.account;
   const ccys = Object.keys(zxState.balances);
-  const cards = zxState.cards.length
-    ? zxState.cards.map(c => `<div class="zx-item"><div><b>${esc(c.brand)} ····${esc(c.last4)}</b><small>${esc(c.name)} · expires ${esc(c.exp)}</small></div>
-        <button class="zx-link" onclick="removeCard('${c.id}')">Remove</button></div>`).join('')
-    : `<div class="zx-empty">No card linked yet. Link one to add money to your wallet or pay for transfers.</div>`;
+  const methodItems = [
+    ...zxState.banks.map(b => `<div class="zx-item"><div><b>🏦 ${esc(bankLabel(b))}</b><small>Bank account · ${esc(b.holder)} · ${esc(b.country)}</small></div>
+        <button class="zx-link" onclick="removeMethod('banks','${b.id}')">Remove</button></div>`),
+    ...zxState.cards.map(c => `<div class="zx-item"><div><b>💳 ${esc(c.brand)} ····${esc(c.last4)}</b><small>Card · ${esc(c.name)} · expires ${esc(c.exp)}</small></div>
+        <button class="zx-link" onclick="removeCard('${c.id}')">Remove</button></div>`),
+    ...zxState.wallets.map(w => `<div class="zx-item"><div><b>🪙 ${esc(w.app)} ····${esc(w.address.slice(-4))}</b><small>Crypto wallet · ${esc(w.network)}</small></div>
+        <button class="zx-link" onclick="removeMethod('wallets','${w.id}')">Remove</button></div>`),
+  ];
+  const cards = methodItems.length ? methodItems.join('')
+    : `<div class="zx-empty">Nothing linked yet. Link a bank account, card or crypto wallet to pay for transfers straight from it.</div>`;
   const recips = zxState.recipients.length
     ? zxState.recipients.map(r => `<div class="zx-item"><div><b>${esc(r.name)}</b><small>${RECIP_TYPES[r.type]} · ${recipLabel(r)}${r.ccy ? ' · ' + esc(r.ccy) : ''}</small></div>
         <button class="zx-link" onclick="removeRecipient('${r.id}')">Remove</button></div>`).join('')
-    : `<div class="zx-empty">Recipients you add when sending appear here.</div>`;
+    : `<div class="zx-empty">No recipients yet. Add one here, or when you send money.</div>`;
   const acts = zxState.activity.length
     ? zxState.activity.slice(0, 20).map(x => `<div class="zx-item"><div><b>${esc(x.title)}</b><small>${esc(x.sub || '')} · ${new Date(x.t).toLocaleDateString('en-GB')} ${zxTime(x.t)}</small></div>
         ${x.amt ? `<span class="amt${x.amt > 0 ? ' in' : ''}">${x.amt > 0 ? '+' : '−'}${fmtAmt(Math.abs(x.amt))} ${esc(x.ccy)}</span>` : ''}</div>`).join('')
@@ -6261,9 +6741,9 @@ function renderWallet(root) {
       </div>`).join('')}</div>
     <div class="zx-cols">
       <div>
-        <div class="zx-sec"><span class="zx-h">Cards</span><button class="zx-link" onclick="openLinkCard()">+ Link a card</button></div>
+        <div class="zx-sec"><span class="zx-h">Payment methods</span><button class="zx-link" onclick="openAddMethod()">+ Add payment method</button></div>
         ${cards}
-        <div class="zx-sec"><span class="zx-h">Recipients</span></div>
+        <div class="zx-sec"><span class="zx-h">Recipients</span><button class="zx-link" onclick="openRecipientPicker('manage')">+ Add recipient</button></div>
         ${recips}
       </div>
       <div>
@@ -6310,14 +6790,90 @@ function cardBrand(n) {
   return 'Card';
 }
 
+// Payment methods: pay straight from where the money already is, no need to top up Zena first.
+// Demo: only a label and the last 4 characters are kept; nothing is charged or connected for real.
+const WALLET_APPS = ['MetaMask', 'Trust Wallet', 'Coinbase Wallet', 'Phantom', 'Ledger', 'Other'];
+let zxAfterMethod = null;   // where to go after linking (e.g. back to a transfer's review screen)
+function bankLabel(b) { return `${b.bank} ····${b.last4}`; }
+function walletLabel(w) { return `${w.app} · ${w.network} ····${w.address.slice(-4)}`; }
+
+function openAddMethod(after) {
+  zxAfterMethod = after || null;
+  openZx(`<h3>Add a payment method</h3>
+    <p class="zx-p sm" style="margin:-4px 0 14px">Pay straight from where your money already is. No need to move it into Zena first.</p>
+    <div class="zx-method-grid">
+      <button class="zx-method" onclick="openLinkBank()"><span aria-hidden="true">🏦</span><b>Bank account</b><small>Pay by direct debit</small></button>
+      <button class="zx-method" onclick="openLinkCard()"><span aria-hidden="true">💳</span><b>Debit or credit card</b><small>Visa, Mastercard, Amex</small></button>
+      <button class="zx-method" onclick="openLinkWallet()"><span aria-hidden="true">🪙</span><b>Crypto wallet</b><small>USDC, USDT, EURC</small></button>
+    </div>
+    <div class="zx-actions"><button class="zx-btn ghost" onclick="methodCancel()">Cancel</button></div>`);
+}
+function methodCancel() {
+  const f = zxAfterMethod;
+  zxAfterMethod = null;
+  if (f && zxPending) f(); else closeZx();
+}
+function methodDone(title, sub) {
+  zxSave();
+  zxToast(title, sub);
+  const f = zxAfterMethod;
+  zxAfterMethod = null;
+  if (f && zxPending) f(); else { closeZx(true); renderAccount(); }
+}
+
+function openLinkBank() {
+  openZx(`<h3>Link a bank account</h3>
+    <div class="zx-note">In production you'd connect securely through open banking and approve in your banking app, without typing your details. Demo: only the bank name and last 4 digits are kept.</div>
+    ${REQ_NOTE}
+    <label class="zx-l" for="lb-holder">Account holder ${REQ}</label><input class="zx-in" id="lb-holder" autocomplete="off">
+    <label class="zx-l" for="lb-bank">Bank name ${REQ}</label><input class="zx-in" id="lb-bank" autocomplete="off" placeholder="e.g. UBS, Barclays, Equity Bank">
+    <label class="zx-l" for="lb-country">Country ${REQ}</label>
+    <select class="zx-in" id="lb-country">${ZX_COUNTRIES.map(c => `<option${c === 'Switzerland' ? ' selected' : ''}>${esc(c)}</option>`).join('')}</select>
+    <label class="zx-l" for="lb-iban">IBAN or account number ${REQ}</label><input class="zx-in" id="lb-iban" autocomplete="off" placeholder="CH93 0076 2011 6238 5295 7">
+    <div class="zx-err" id="lb-err"></div>
+    <div class="zx-actions"><button class="zx-btn" onclick="saveBank()">Link bank account</button><button class="zx-btn ghost" onclick="methodCancel()">Cancel</button></div>`);
+}
+function saveBank() {
+  const holder = zxVal('lb-holder'), bank = zxVal('lb-bank'), iban = zxVal('lb-iban').replace(/\s+/g, '');
+  if (holder.length < 2) return zxErr('lb-err', 'Enter the account holder’s name.');
+  if (!bank) return zxErr('lb-err', 'Enter the bank name.');
+  if (iban.length < 6) return zxErr('lb-err', 'Enter the IBAN or account number.');
+  const b = { id: 'b' + Date.now().toString(36), holder, bank, country: zxVal('lb-country'), last4: iban.slice(-4) };
+  zxState.banks.push(b);
+  document.getElementById('lb-iban').value = '';
+  methodDone('Bank account linked', bankLabel(b));
+}
+
+function openLinkWallet() {
+  openZx(`<h3>Connect a crypto wallet</h3>
+    <div class="zx-note">In production you'd connect with WalletConnect and approve in your wallet app. Zena only ever sees your public address, never your keys.</div>
+    ${REQ_NOTE}
+    <label class="zx-l" for="lw-app">Wallet app ${REQ}</label>
+    <select class="zx-in" id="lw-app">${WALLET_APPS.map(a => `<option>${a}</option>`).join('')}</select>
+    <label class="zx-l" for="lw-net">Network ${REQ}</label>
+    <select class="zx-in" id="lw-net">${CRYPTO_NETWORKS.map(n => `<option>${n}</option>`).join('')}</select>
+    <label class="zx-l" for="lw-addr">Wallet address ${REQ}</label><input class="zx-in" id="lw-addr" autocomplete="off" spellcheck="false">
+    <div class="zx-err" id="lw-err"></div>
+    <div class="zx-actions"><button class="zx-btn" onclick="saveWallet()">Connect wallet</button><button class="zx-btn ghost" onclick="methodCancel()">Cancel</button></div>`);
+}
+function saveWallet() {
+  const address = zxVal('lw-addr');
+  if (address.length < 20) return zxErr('lw-err', 'That wallet address looks too short.');
+  const w = { id: 'w' + Date.now().toString(36), app: zxVal('lw-app'), network: zxVal('lw-net'), address };
+  zxState.wallets.push(w);
+  methodDone('Wallet connected', walletLabel(w));
+}
+function removeMethod(kind, id) { zxState[kind] = zxState[kind].filter(x => x.id !== id); zxSave(); renderAccount(); }
+
 function openLinkCard() {
   openZx(`<h3>Link a card</h3>
     <div class="zx-note">Demo: please don’t enter a real card. Use the test number 4242 4242 4242 4242. Only the brand and last four digits are kept, in this browser.</div>
-    <label class="zx-l" for="lc-name">Name on card</label><input class="zx-in" id="lc-name" autocomplete="off">
-    <label class="zx-l" for="lc-num">Card number</label><input class="zx-in" id="lc-num" inputmode="numeric" autocomplete="off" placeholder="4242 4242 4242 4242">
-    <label class="zx-l" for="lc-exp">Expiry (MM/YY)</label><input class="zx-in" id="lc-exp" autocomplete="off" placeholder="12/28">
+    ${REQ_NOTE}
+    <label class="zx-l" for="lc-name">Name on card ${REQ}</label><input class="zx-in" id="lc-name" autocomplete="off">
+    <label class="zx-l" for="lc-num">Card number ${REQ}</label><input class="zx-in" id="lc-num" inputmode="numeric" autocomplete="off" placeholder="4242 4242 4242 4242">
+    <label class="zx-l" for="lc-exp">Expiry (MM/YY) ${REQ}</label><input class="zx-in" id="lc-exp" autocomplete="off" placeholder="12/28">
     <div class="zx-err" id="lc-err"></div>
-    <div class="zx-actions"><button class="zx-btn" onclick="saveCard()">Link card</button><button class="zx-btn ghost" onclick="closeZx()">Cancel</button></div>`);
+    <div class="zx-actions"><button class="zx-btn" onclick="saveCard()">Link card</button><button class="zx-btn ghost" onclick="methodCancel()">Cancel</button></div>`);
 }
 function saveCard() {
   const name = zxVal('lc-name'), num = zxVal('lc-num').replace(/\D/g, ''), exp = zxVal('lc-exp');
@@ -6329,10 +6885,7 @@ function saveCard() {
   if (yy < now.getFullYear() || (yy === now.getFullYear() && mm < now.getMonth() + 1)) return zxErr('lc-err', 'That card has expired.');
   zxState.cards.push({ id: 'c' + Date.now().toString(36), brand: cardBrand(num), last4: num.slice(-4), exp, name });
   document.getElementById('lc-num').value = '';
-  zxSave();
-  closeZx();
-  zxToast('Card linked', `${cardBrand(num)} ····${num.slice(-4)}`);
-  renderAccount();
+  methodDone('Card linked', `${cardBrand(num)} ····${num.slice(-4)}`);
 }
 
 function openTopUp(c) {
@@ -6800,12 +7353,13 @@ function trOpenPayable() {
   const T = tr();
   const d = new Date(Date.now() + 30 * 864e5).toISOString().slice(0, 10);
   openZx(`<h3>Planned payment</h3>
-    <label class="zx-l" for="pp-desc">Payee and reference</label><input class="zx-in" id="pp-desc" placeholder="Supplier, city · INV-123">
+    ${REQ_NOTE}
+    <label class="zx-l" for="pp-desc">Payee and reference ${REQ}</label><input class="zx-in" id="pp-desc" placeholder="Supplier, city · INV-123">
     <div class="zx-formgrid">
-      <div><label class="zx-l" for="pp-amt">Amount owed</label><input class="zx-in" id="pp-amt" type="number"></div>
+      <div><label class="zx-l" for="pp-amt">Amount owed ${REQ}</label><input class="zx-in" id="pp-amt" type="number"></div>
       <div><label class="zx-l" for="pp-to">In currency</label><select class="zx-in" id="pp-to">${trCcyOptions(africanCurrencies, 'KES')}</select></div>
       <div><label class="zx-l" for="pp-from">Paid from</label><select class="zx-in" id="pp-from">${trCcyOptions(foreignCurrencies, T.base)}</select></div>
-      <div><label class="zx-l" for="pp-due">Due date</label><input class="zx-in" id="pp-due" type="date" value="${d}"></div>
+      <div><label class="zx-l" for="pp-due">Due date ${REQ}</label><input class="zx-in" id="pp-due" type="date" value="${d}"></div>
     </div>
     <div class="zx-err" id="pp-err"></div>
     <div class="zx-actions"><button class="zx-btn" onclick="trAddPayable()">Add</button><button class="zx-btn ghost" onclick="closeZx()">Cancel</button></div>`);
@@ -6839,9 +7393,9 @@ function trOpenPay(p) {
       <div><label class="zx-l" for="tp-from">Pay from</label><select class="zx-in" id="tp-from" onchange="trPayRefresh()">${trCcyOptions(foreignCurrencies.concat(africanCurrencies), trPayDraft.from)}</select></div>
       <div><label class="zx-l" for="tp-to">Into</label><select class="zx-in" id="tp-to" onchange="trPayRefresh()">${trCcyOptions(africanCurrencies.concat(foreignCurrencies), trPayDraft.to)}</select></div>
     </div>
-    <label class="zx-l" for="tp-amt">Amount to send</label><input class="zx-in" id="tp-amt" type="number" value="${trPayDraft.amount}" oninput="trPayRefresh()">
+    <label class="zx-l" for="tp-amt">Amount to send ${REQ}</label><input class="zx-in" id="tp-amt" type="number" value="${trPayDraft.amount}" oninput="trPayRefresh()">
     <div class="zx-formgrid">
-      <div><label class="zx-l" for="tp-ben">Beneficiary</label><input class="zx-in" id="tp-ben" value="${esc(trPayDraft.beneficiary)}"></div>
+      <div><label class="zx-l" for="tp-ben">Beneficiary ${REQ}</label><input class="zx-in" id="tp-ben" value="${esc(trPayDraft.beneficiary)}"></div>
       <div><label class="zx-l" for="tp-ref">Reference <span class="opt">(invoice, grant or project code)</span></label><input class="zx-in" id="tp-ref" value="${esc(trPayDraft.reference)}"></div>
     </div>
     <div class="zx-sub">Choose a route</div>
@@ -6997,8 +7551,9 @@ renderCorridors();
 refreshTopAcct();
 startQuoteStream();
 // Deep links from the landing page: index.html#treasury, #send, #stablecoin, #account
-const DEEP_LINKS = { treasury: 8, send: 1, stablecoin: 4, account: 7, markets: 0, news: 5 };
+const DEEP_LINKS = { treasury: 8, send: 1, stablecoin: 1, account: 7, markets: 0, news: 5, rates: 2 };
 if (DEEP_LINKS[location.hash.slice(1)] !== undefined) switchLayer(DEEP_LINKS[location.hash.slice(1)]);
+if (location.hash === '#stablecoin') setSendMode('coin');
 applyThemeIcon();
 renderProviders(corridors[0]);
 renderCrossMatrix();
@@ -7043,6 +7598,12 @@ async function fetchLiveRates() {
       Object.entries(liveMap).forEach(([ccy, rate]) => {
         if (rate && !isNaN(rate)) { usdRates[ccy] = rate; updated++; }
       });
+      // Every other currency the service quotes, so any pair can be compared on Send money
+      const before = Object.keys(usdRates).length;
+      Object.entries(data.rates).forEach(([ccy, rate]) => {
+        if (/^[A-Z]{3}$/.test(ccy) && rate > 0 && !COINS.includes(ccy)) usdRates[ccy] = rate;
+      });
+      if (Object.keys(usdRates).length > before && typeof refreshSendCurrencies === 'function') refreshSendCurrencies();
       if (updated > 5) {
         liveDataConnected = true;
         // Refresh displays
