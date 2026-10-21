@@ -296,6 +296,7 @@
     -webkit-text-fill-color: transparent;
     text-indent: 14px; /* balance the trailing letter-spacing */
   }
+  .home-motto { margin: 18px 0 0; font-size: clamp(17px, 2.6vw, 22px); font-weight: 700; color: var(--text-primary); letter-spacing: -.2px; }
   .home-tagline {
     font-size: clamp(13px, 2vw, 16px);
     font-weight: 400;
@@ -2252,6 +2253,18 @@
   .zx-doc .ok { color: var(--accent-green); font-size: 12px; }
   .zx-doc input[type=file] { font-size: 12px; color: var(--text-secondary); max-width: 240px; }
   .zx-reasons { grid-column: 1 / -1; }
+  /* Rate guarantee + source-of-funds pre-flight */
+  .bl-lock { display: inline-block; margin-left: 6px; padding: 1px 6px; border-radius: 3px; font-size: 9.5px; font-weight: 700; letter-spacing: .3px; background: rgba(16,185,129,0.15); color: var(--accent-green); }
+  .bl-nolock { display: inline-block; margin-left: 6px; padding: 1px 6px; border-radius: 3px; font-size: 9.5px; font-weight: 600; background: var(--bg-secondary); color: var(--text-muted); }
+  .bl-hold { display: inline-block; margin-left: 5px; padding: 1px 6px; border-radius: 3px; font-size: 9.5px; font-weight: 700; background: rgba(245,158,11,0.16); color: var(--accent-orange); }
+  .zx-send-page .zx-q.has-hold:not(.best) { background: rgba(245,158,11,0.035); }
+  .zx-send-page .zx-q.has-hold:not(.best):hover { background: rgba(245,158,11,0.06); }
+  .sof-warn { background: rgba(245,158,11,0.07); border: 1px solid rgba(245,158,11,0.3); border-radius: 12px; padding: 12px 15px; margin-bottom: 12px; }
+  .sof-head { font-size: 13px; font-weight: 700; color: var(--accent-orange); margin-bottom: 5px; }
+  .sof-body { font-size: 12px; color: var(--text-secondary); line-height: 1.6; }
+  .sof-body b { color: var(--text-primary); }
+  .sof-tip { color: var(--accent-green); display: inline-block; margin-top: 5px; }
+  .sof-est { font-size: 11px; color: var(--text-muted); margin-top: 6px; }
   .zx-cd { margin: 14px 0 4px; font-size: 13px; color: var(--text-secondary); }
   .zx-cd-bar { height: 6px; background: var(--bg-secondary); border-radius: 3px; overflow: hidden; margin-bottom: 6px; }
   .zx-cd-bar i { display: block; height: 100%; width: 100%; background: var(--best); transition: width 1s linear; }
@@ -2621,6 +2634,7 @@
   <h2 class="zx-list-h">All options</h2>
   <p class="zx-list-sub">Cheapest first, as of <span id="rfq-updated">&mdash;</span>. Cost of sending = exchange spread fee + cost of sending fee.</p>
   <p class="zx-limited" id="send-limited" hidden></p>
+  <div id="sof-warning" class="sof-warn" style="display:none"></div>
   <div id="providers-list"></div>
   <p class="zx-foot"><b>Prototype: prices are illustrative, not live quotes.</b></p>
 </div>
@@ -3143,6 +3157,7 @@
     <div class="home-brand">
       <h1 class="home-title">ZENA</h1>
       <p class="home-tagline">Intelligence <span class="amp">&amp;</span> Payment System</p>
+      <p class="home-motto">Together, let's make sending money cheaper.</p>
     </div>
 
     <!-- Daily quote -->
@@ -3427,19 +3442,24 @@ const currencyToCB = {
 };
 
 // Provider availability per corridor type (to simulate realistic coverage)
+// ⚠️ lockHours / sofThreshold / holdHours are INDICATIVE PLACEHOLDERS: verify against each provider's
+//    actual terms before showing publicly. A wrong lock duration in public can cost a provider relationship.
+//    lockHours    = how long the quoted rate is guaranteed (0 = re-quoted at settlement)
+//    sofThreshold = USD-equivalent amount above which source-of-funds evidence is likely requested
+//    holdHours    = typical review delay once source-of-funds is triggered
 const providerCoverage = {
-  'LemFi':        { corridors: ['GBP-NGN','GBP-KES','GBP-GHS','GBP-UGX','USD-NGN','EUR-NGN','CAD-NGN'], spread: 0.8, fee: 0, speed: 'Instant' },
-  'Wise':         { corridors: '*', spread: 1.2, fee: 4.50, speed: '1-2 hours' },
-  'NALA':         { corridors: ['GBP-KES','GBP-UGX','GBP-NGN','USD-KES','USD-UGX','USD-NGN','KES-UGX','KES-NGN'], spread: 1.5, fee: 0, speed: 'Instant' },
-  'TapTap Send':  { corridors: ['GBP-NGN','GBP-KES','GBP-GHS','GBP-ETB','USD-NGN','USD-KES','USD-ETB','EUR-XOF','EUR-MAD'], spread: 1.8, fee: 0, speed: '< 30 min' },
-  'Africhange':   { corridors: ['GBP-NGN','CAD-NGN','USD-NGN','EUR-NGN'], spread: 2.1, fee: 0, speed: '1-4 hours' },
-  'WorldRemit':   { corridors: '*', spread: 2.8, fee: 3.99, speed: 'Minutes' },
-  'Chipper Cash':  { corridors: ['NGN-KES','NGN-GHS','NGN-UGX','KES-UGX','KES-TZS','GHS-NGN','ZAR-NGN','USD-NGN','USD-KES','USD-GHS'], spread: 1.9, fee: 0, speed: 'Instant' },
-  'Sendwave':     { corridors: ['USD-KES','USD-UGX','USD-TZS','USD-GHS','USD-NGN','USD-ETB','GBP-KES','GBP-NGN'], spread: 1.6, fee: 0, speed: '< 5 min' },
-  'Remitly':      { corridors: ['USD-NGN','USD-KES','USD-EGP','USD-ETB','GBP-NGN','GBP-KES','EUR-MAD','EUR-XOF','CAD-NGN'], spread: 2.4, fee: 2.99, speed: '< 1 hour' },
-  'Western Union':{ corridors: '*', spread: 4.5, fee: 8.99, speed: 'Minutes' },
-  'MoneyGram':    { corridors: '*', spread: 4.8, fee: 7.99, speed: '1-2 days' },
-  'Eversend':     { corridors: ['KES-UGX','KES-NGN','UGX-KES','NGN-KES','GBP-KES','GBP-UGX','GBP-NGN','EUR-KES'], spread: 2.0, fee: 0, speed: '< 10 min' },
+  'LemFi':        { corridors: ['GBP-NGN','GBP-KES','GBP-GHS','GBP-UGX','USD-NGN','EUR-NGN','CAD-NGN'], spread: 0.8, fee: 0, speed: 'Instant', lockHours: 12, sofThreshold: 2000, holdHours: 4 },
+  'Wise':         { corridors: '*', spread: 1.2, fee: 4.50, speed: '1-2 hours', lockHours: 48, sofThreshold: 2500, holdHours: 8 },
+  'NALA':         { corridors: ['GBP-KES','GBP-UGX','GBP-NGN','USD-KES','USD-UGX','USD-NGN','KES-UGX','KES-NGN'], spread: 1.5, fee: 0, speed: 'Instant', lockHours: 12, sofThreshold: 5000, holdHours: 6 },
+  'TapTap Send':  { corridors: ['GBP-NGN','GBP-KES','GBP-GHS','GBP-ETB','USD-NGN','USD-KES','USD-ETB','EUR-XOF','EUR-MAD'], spread: 1.8, fee: 0, speed: '< 30 min', lockHours: 0, sofThreshold: 3000, holdHours: 12 },
+  'Africhange':   { corridors: ['GBP-NGN','CAD-NGN','USD-NGN','EUR-NGN'], spread: 2.1, fee: 0, speed: '1-4 hours', lockHours: 0, sofThreshold: 3000, holdHours: 12 },
+  'WorldRemit':   { corridors: '*', spread: 2.8, fee: 3.99, speed: 'Minutes', lockHours: 24, sofThreshold: 2500, holdHours: 24 },
+  'Chipper Cash':  { corridors: ['NGN-KES','NGN-GHS','NGN-UGX','KES-UGX','KES-TZS','GHS-NGN','ZAR-NGN','USD-NGN','USD-KES','USD-GHS'], spread: 1.9, fee: 0, speed: 'Instant', lockHours: 0, sofThreshold: 2000, holdHours: 8 },
+  'Sendwave':     { corridors: ['USD-KES','USD-UGX','USD-TZS','USD-GHS','USD-NGN','USD-ETB','GBP-KES','GBP-NGN'], spread: 1.6, fee: 0, speed: '< 5 min', lockHours: 24, sofThreshold: 2999, holdHours: 4 },
+  'Remitly':      { corridors: ['USD-NGN','USD-KES','USD-EGP','USD-ETB','GBP-NGN','GBP-KES','EUR-MAD','EUR-XOF','CAD-NGN'], spread: 2.4, fee: 2.99, speed: '< 1 hour', lockHours: 24, sofThreshold: 3000, holdHours: 36 },
+  'Western Union':{ corridors: '*', spread: 4.5, fee: 8.99, speed: 'Minutes', lockHours: 24, sofThreshold: 3000, holdHours: 24 },
+  'MoneyGram':    { corridors: '*', spread: 4.8, fee: 7.99, speed: '1-2 days', lockHours: 24, sofThreshold: 3000, holdHours: 24 },
+  'Eversend':     { corridors: ['KES-UGX','KES-NGN','UGX-KES','NGN-KES','GBP-KES','GBP-UGX','GBP-NGN','EUR-KES'], spread: 2.0, fee: 0, speed: '< 10 min', lockHours: 0, sofThreshold: 2000, holdHours: 8 },
 };
 
 const quickCorridorList = [
@@ -3586,6 +3606,18 @@ function swapCorridorCurrencies() {
   updateTransferQuotes();
 }
 
+// Annualised FX volatility by destination currency: prices what a rate guarantee is worth on a corridor.
+const CORRIDOR_VOL = {
+  NGN: 0.28, GHS: 0.22, ZMW: 0.20, ETB: 0.18, EGP: 0.15, ZAR: 0.14,
+  KES: 0.12, TZS: 0.12, UGX: 0.12, RWF: 0.10, MAD: 0.09, GBP: 0.08,
+  XOF: 0.07, XAF: 0.07, EUR: 0.07, USD: 0.07, INR: 0.04,
+};
+// Cost of carrying `hours` of FX risk, as % of notional (short-dated option approximation: 0.4 · vol · √t)
+function lockValuePct(toCcy, hours) {
+  const vol = CORRIDOR_VOL[toCcy] ?? 0.15;
+  return 0.4 * vol * Math.sqrt(hours / 24 / 365) * 100;
+}
+
 // Cost model (no free lunch): every provider earns through a fee, a markup in the rate, or both.
 //   rate     = mid x (1 - spread)             what the provider quotes
 //   received = (amount - fee) x rate          what actually lands
@@ -3606,7 +3638,12 @@ function fiatQuotes(from, to, amount, isTick) {
     const received = (amount - fee) * rate;
     const markup = (amount - fee) * spread / 100;
     const cost = fee + markup;
-    quotes.push({ name, sub: info.speed, spread, fee, markup, cost, costPct: amount ? cost / amount * 100 : 0, rate, received });
+    // Source-of-funds thresholds are USD-equivalent, so any send currency compares correctly
+    const amountUsd = amount / (usdRates[from] || 1);
+    quotes.push({ name, sub: info.speed, spread, fee, markup, cost, costPct: amount ? cost / amount * 100 : 0, rate, received,
+      lockHours: info.lockHours ?? 0,
+      sofTriggered: amountUsd >= (info.sofThreshold ?? Infinity),
+      holdHours: info.holdHours ?? 0 });
   });
   return { mid, quotes: quotes.sort((a, b) => a.cost - b.cost) };
 }
@@ -3635,7 +3672,8 @@ function updateTransferQuotes(isTick) {
   const empty = msg => { list.innerHTML = `<div class="zx-empty">${msg}</div>`; lastFiatQuotes = []; fillCalc('', null); };
   if (from === to) return empty('Choose two different currencies.');
   if (!amount) return empty('Enter an amount to see what each provider charges.');
-  if (!quotes.length) return empty(note);
+  if (!quotes.length) { hideSofWarning(); return empty(note); }
+  renderSofWarning(quotes, amount, from, to);
 
   fillCalc('', quotes[0], from, to, quotes.length, 'options');
   list.innerHTML = quotes.map((q, i) => zxQuoteRow({
@@ -3654,10 +3692,17 @@ function zxQuoteRow(o) {
   const rateNote = Math.abs(vsMid) < 0.005 ? 'no exchange rate fee' : vsMid < 0 ? `exchange rate fee ${(-vsMid).toFixed(2)}%` : `exchange rate gain ${vsMid.toFixed(2)}%`;
   const cost = gain ? `you gain ${fmtAmt(-q.cost)} ${o.from}` : `${fmtAmt(q.cost)} ${o.from} (${q.costPct.toFixed(2)}%)`;
   const name = q.name.split(' → ')[0];
-  return `<div class="zx-q${o.i === 0 ? ' best' : ''}">
+  // Rate guarantee and likely source-of-funds hold (transfer providers only; stablecoin routes don't carry these terms)
+  const hasTerms = q.lockHours !== undefined;
+  const lockBadge = !hasTerms ? '' : q.lockHours > 0
+    ? `<span class="bl-lock" title="Rate guaranteed for ${q.lockHours}h">&#128274; ${q.lockHours}h</span>`
+    : `<span class="bl-nolock" title="Rate re-quoted at settlement">no lock</span>`;
+  const sofFlag = hasTerms && q.sofTriggered
+    ? `<span class="bl-hold" title="Source-of-funds review likely at this amount">&#9888; ~${q.holdHours}h hold</span>` : '';
+  return `<div class="zx-q${o.i === 0 ? ' best' : ''}${hasTerms && q.sofTriggered ? ' has-hold' : ''}">
     <div class="zx-q-top">
       <span class="zx-ava" aria-hidden="true">${esc(name.charAt(0))}</span>
-      <span class="zx-q-name"><b>${esc(q.name)}</b><small>${esc(q.sub)}</small></span>
+      <span class="zx-q-name"><b>${esc(q.name)}</b><small>${esc(q.sub)}${lockBadge}${sofFlag}</small></span>
       ${o.i === 0 ? '<span class="zx-badge-best">Cheapest</span>' : ''}
     </div>
     <div class="zx-q-mid">
@@ -3744,6 +3789,32 @@ function refreshSendCurrencies() {
   sendPicks.fiat = { from: zxVal('send-from'), to: zxVal('send-to'), amount: zxVal('send-amount') };
   fillSendSelects();
   updateTransferQuotes();
+}
+
+// Pre-flight warning: at this amount, which providers will likely hold the transfer for a source-of-funds check,
+// what that delay is worth in FX exposure, and which cheapest provider avoids it. `quotes` is sorted cheapest-first.
+function hideSofWarning() { const el = document.getElementById('sof-warning'); if (el) el.style.display = 'none'; }
+function renderSofWarning(quotes, amount, from, to) {
+  const warnEl = document.getElementById('sof-warning');
+  if (!warnEl) return;
+  const rated = quotes.filter(q => q.sofTriggered !== undefined);
+  const held = rated.filter(q => q.sofTriggered);
+  const clear = rated.filter(q => !q.sofTriggered);
+  if (!held.length) { warnEl.style.display = 'none'; return; }
+  const worstHold = Math.max(...held.map(q => q.holdHours));
+  const exposurePct = lockValuePct(to, worstHold);
+  const escape = clear[0];
+  warnEl.style.display = 'block';
+  warnEl.innerHTML =
+    `<div class="sof-head">&#9888;&nbsp; ${amount.toLocaleString()} ${from} will likely be held for a source-of-funds check</div>
+     <div class="sof-body">
+       <b>${held.length} of ${rated.length}</b> providers on this corridor ask for evidence at this amount &mdash;
+       usually a bank statement showing where the money came from. Expect up to <b>~${worstHold}h</b> delay.
+       Across that window the rate is worth roughly <b>${exposurePct.toFixed(2)}%</b>
+       (&asymp;&nbsp;${(amount * exposurePct / 100).toFixed(2)} ${from}) in exposure &mdash; unless it is locked.
+       ${escape ? `<br><span class="sof-tip">&#8594; <b>${esc(escape.name)}</b> is unlikely to ask at this amount, and locks for ${escape.lockHours || 0}h.</span>` : ''}
+     </div>
+     <div class="sof-est">Indicative: lock and review times are placeholders until confirmed with each provider.</div>`;
 }
 
 // The calculator card: best option in plain words, and one button to send with it
